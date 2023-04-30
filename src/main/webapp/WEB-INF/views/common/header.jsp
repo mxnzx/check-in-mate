@@ -56,7 +56,7 @@
 									<!-- KakaoMap API Page --></li>
 								<li class="nav-item"><a class="nav-link" href="">나의여행계획</a></li>
 								<li class="nav-item"><a class="nav-link" href="">핫플자랑하기</a></li>
-								<li class="nav-item"><a class="nav-link" href="${root}/board?action=board">여행정보공유</a></li>
+								<li class="nav-item"><a class="nav-link" href="${root}/board/list?pgno=1&key=&word=">여행정보공유</a></li>
 							</ul>
 							<ul class="navbar-nav mb-2 mb-lg-0 m-2">
 								<%@ include file="confirm.jsp"%>
