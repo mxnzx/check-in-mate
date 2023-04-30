@@ -6,27 +6,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.util.DBUtil;
 
 
-
+@Repository("BoardDaoImpl")
 public class BoardDaoImpl implements BoardDao {
-	
-	private static BoardDao boardDao;
+
 	private DBUtil dbUtil;
 	
-	private BoardDaoImpl() {
-		dbUtil = DBUtil.getInstance();
-	}
-
-	public static BoardDao getBoardDao() {
-		if(boardDao == null)
-			boardDao = new BoardDaoImpl();
-		return boardDao;
+	@Autowired
+	public BoardDaoImpl(DBUtil dbUtil) {
+		super();
+		this.dbUtil = dbUtil;
 	}
 
 	@Override
@@ -85,7 +84,6 @@ public class BoardDaoImpl implements BoardDao {
 				boardDto.setContent(rs.getString("content"));
 				boardDto.setHit(rs.getInt("hit"));
 				boardDto.setRegisterTime(rs.getString("register_time"));
-				
 				list.add(boardDto);
 			}
 		} finally {

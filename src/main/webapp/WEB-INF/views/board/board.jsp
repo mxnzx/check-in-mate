@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="../common/header.jsp"%>
 
 <!-- 게시판 보드 자리 -->
 <div class="row justify-content-center">
@@ -67,11 +67,23 @@
 	</div>
 	<div class="row">${navigation.navigator}</div>
 </div>
-<form id="form-param" method="get" action="">
+<!-- <form id="form-param" method="get" action="">
 	<input type="hidden" id="p-action" name="action" value=""> <input
 		type="hidden" id="p-pgno" name="pgno" value=""> <input
 		type="hidden" id="p-key" name="key" value=""> <input
 		type="hidden" id="p-word" name="word" value="">
+</form> -->
+
+<form id="form-param" method="get" action="">
+	<input type="hidden" name="pgno" id="pgno" value="${pgno}"> <input
+		type="hidden" name="key" value="${key}"> <input type="hidden"
+		name="word" value="${word}">
+</form>
+<form id="form-no-param" method="get" action="${root}/board/view">
+	<input type="hidden" name="pgno" value="${pgno}"> <input
+		type="hidden" name="key" value="${key}"> <input type="hidden"
+		name="word" value="${word}"> <input type="hidden"
+		id="articleno" name="articleno" value="">
 </form>
 </div>
 <script>
@@ -86,7 +98,9 @@
 
 	document.querySelector("#btn-mv-register").addEventListener("click",
 			function() {
-				location.href = "${root}/board?action=mvwrite";
+				let form = document.querySelector("#form-param");
+				form.setAttribute("action", "${root}/board/write");
+				form.submit();
 			});
 
 	document.querySelector("#btn-search").addEventListener("click", function() {
@@ -99,7 +113,7 @@
 		option = this.options[this.selectedIndex];
 		option = option.value;
 		console.log(option);
-		location.href = "${root}/board?action=" +option;
+		location.href = "${root}/board?action=" + option;
 	});
 
 	let pages = document.querySelectorAll(".page-link");
@@ -121,9 +135,9 @@
 </script>
 </div>
 <!-- 하단 Footer -->
-<%@ include file="/common/footer.jsp"%>
+<%@ include file="../common/footer.jsp"%>
 <!-- 로그인 모달창 -->
-<%@ include file="/common/login-modal.jsp"%>
+<%@ include file="../common/login-modal.jsp"%>
 <!--회원가입 모달-->
-<%@ include file="/common/join-modal.jsp"%>
+<%@ include file="../common/join-modal.jsp"%>
 

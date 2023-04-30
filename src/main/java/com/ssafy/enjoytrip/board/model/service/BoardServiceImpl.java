@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.dao.BoardDao;
 import com.ssafy.enjoytrip.board.model.dao.BoardDaoImpl;
@@ -14,24 +18,22 @@ import com.ssafy.enjoytrip.util.PageNavigation;
 import com.ssafy.enjoytrip.util.SizeConstant;
 
 
-
+@Service("BoardServiceImpl")
 public class BoardServiceImpl implements BoardService {
 	
-	private static BoardService boardService = new BoardServiceImpl();
 	private BoardDao boardDao;
 	
-	private BoardServiceImpl() {
-		boardDao = BoardDaoImpl.getBoardDao();
+	@Autowired
+	public BoardServiceImpl(BoardDao boardDao) {
+		super();
+		this.boardDao = boardDao;
 	}
-
-	public static BoardService getBoardService() {
-		return boardService;
-	}
-
+	
 	@Override
 	public void writeArticle(BoardDto boardDto) throws Exception {
 		boardDao.writeArticle(boardDto);
 	}
+
 
 	public List<BoardDto> sortListArticle(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<String, Object>();
