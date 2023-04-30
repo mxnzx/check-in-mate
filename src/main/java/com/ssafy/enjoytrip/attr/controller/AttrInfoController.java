@@ -21,81 +21,85 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
 import com.ssafy.enjoytrip.attr.model.dao.AttrInfoDaoImpl;
 
 
-@WebServlet("/navigator")
+@Controller
+@RequestMapping("/navigator")
 public class AttrInfoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private AttrInfoDaoImpl attrInfoDaoImpl;
     
-    
-    public void init() throws ServletException 
-    {
-    	attrInfoDaoImpl = attrInfoDaoImpl.getTripService();
-    }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {    
-        request.setCharacterEncoding("utf-8");
-        doGet(request, response);
-    }
-    
-    
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
-        String action = request.getParameter("action");
-        String path = "";
-        
-        // // "지역별여행지" 페이지 호출 시
-        if ("serchTrip".equals(action)) 
-        { 	
-            System.out.println("도시 정보 가져오기 이벤트 발생.");
-            path = getInfo(request, response);
-            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            dispatcher.forward(request, response);
-        } 
-        
-        // 검색 항목 지정 후 "검색" 버튼 클릭 이벤트 발생 시
-        else if ("showmap".equals(action)) 
-        {
-            path = showMap(request, response);
-            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            dispatcher.forward(request, response);
-        }
-    }
+//    
+//    public void init() throws ServletException 
+//    {
+//    	attrInfoDaoImpl = attrInfoDaoImpl.getTripService();
+//    }
 
-
-    // 선택된 정보를 바탕으로 관광지 정보를 DB에서 수집한다.
-    private String showMap(HttpServletRequest request, HttpServletResponse response) 
-    {
-        int sido = Integer.parseInt(request.getParameter("sido"));
-        int gugun = Integer.parseInt(request.getParameter("gugun"));
-        int type = Integer.parseInt(request.getParameter("type"));
-        try {
-            List < AttrInfoDto > tripInfo = attrInfoDaoImpl.getAttrInfo(sido, gugun, type);
-            request.setAttribute("attrinfo", tripInfo);
-            return "/map/map.jsp";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "/map/map.jsp";
-        }
+    @GetMapping("searchTrip")
+    public String searchTrip() {
+    	return "redirect:/attr/attr";
     }
     
-    
-    // "지역별 여행지" 네비게이션 이벤트 발생 시 SelectBox 내의 도시 정보를 가져오기 위한 기초 자료를 DB에서 가져온다.
-    private String getInfo(HttpServletRequest request, HttpServletResponse response) 
-    {
-        HttpSession session = request.getSession();
-        try {
-            List < SidoDto > citylist = attrInfoDaoImpl.getCities();
-            session.setAttribute("cities", citylist);  //도시 정보를 세션에 저장한다.
-            return "/map/map.jsp";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "/map/map.jsp";
-        }
-    }
+//    
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+//    {
+//        String action = request.getParameter("action");
+//        String path = "";
+//        
+//        // // "지역별여행지" 페이지 호출 시
+//        if ("serchTrip".equals(action)) 
+//        { 	
+//            System.out.println("도시 정보 가져오기 이벤트 발생.");
+//            path = getInfo(request, response);
+//            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+//            dispatcher.forward(request, response);
+//        } 
+//        
+//        // 검색 항목 지정 후 "검색" 버튼 클릭 이벤트 발생 시
+//        else if ("showmap".equals(action)) 
+//        {
+//            path = showMap(request, response);
+//            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+//            dispatcher.forward(request, response);
+//        }
+//    }
+//
+//
+//    // 선택된 정보를 바탕으로 관광지 정보를 DB에서 수집한다.
+//    private String showMap(HttpServletRequest request, HttpServletResponse response) 
+//    {
+//        int sido = Integer.parseInt(request.getParameter("sido"));
+//        int gugun = Integer.parseInt(request.getParameter("gugun"));
+//        int type = Integer.parseInt(request.getParameter("type"));
+//        try {
+//            List < AttrInfoDto > tripInfo = attrInfoDaoImpl.getAttrInfo(sido, gugun, type);
+//            request.setAttribute("attrinfo", tripInfo);
+//            return "/attr/attr.jsp";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "/attr/attr.jsp";
+//        }
+//    }
+//    
+//    
+//    // "지역별 여행지" 네비게이션 이벤트 발생 시 SelectBox 내의 도시 정보를 가져오기 위한 기초 자료를 DB에서 가져온다.
+//    private String getInfo(HttpServletRequest request, HttpServletResponse response) 
+//    {
+//        HttpSession session = request.getSession();
+//        try {
+//            List < SidoDto > citylist = attrInfoDaoImpl.getCities();
+//            session.setAttribute("cities", citylist);  //도시 정보를 세션에 저장한다.
+//            return "/map/map.jsp";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "/map/map.jsp";
+//        }
+//    }
 }
