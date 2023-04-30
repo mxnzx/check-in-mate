@@ -21,31 +21,58 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
-import com.ssafy.enjoytrip.attr.model.dao.AttrInfoDaoImpl;
+import com.ssafy.enjoytrip.attr.model.service.AttrInfoService;
 
 
-@Controller
+@Controller("AttrInfoController")
 @RequestMapping("/navigator")
 public class AttrInfoController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private AttrInfoDaoImpl attrInfoDaoImpl;
     
-//    
-//    public void init() throws ServletException 
-//    {
-//    	attrInfoDaoImpl = attrInfoDaoImpl.getTripService();
-//    }
+	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+    private AttrInfoService attrInfoService;
+    
+    //DI를 위함
+    public AttrInfoController(AttrInfoService attrInfoService) {
+		super();
+		this.attrInfoService = attrInfoService;
+		
+	}
 
     @GetMapping("searchTrip")
-    public String searchTrip() {
-    	return "redirect:/attr/attr";
+    public ModelAndView searchTrip(ModelAndView mav) {
+    	//지역정보 가지고 와야함.
+    	try {
+    		List<SidoDto> list = attrInfoService.getCities();
+    		mav.addObject("cities", list);
+    		mav.setViewName("attr/attr");
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		mav.setViewName("error");
+    	}
+    	return mav;
     }
+ // "지역별 여행지" 네비게이션 이벤트 발생 시 SelectBox 내의 도시 정보를 가져오기 위한 기초 자료를 DB에서 가져온다.
+//  private String getInfo(HttpServletRequest request, HttpServletResponse response) 
+//  {
+//      HttpSession session = request.getSession();
+//      try {
+//          List < SidoDto > citylist = attrInfoDaoImpl.getCities();
+//          session.setAttribute("cities", citylist);  //도시 정보를 세션에 저장한다.
+//          return "/map/map.jsp";
+//      } catch (Exception e) {
+//          e.printStackTrace();
+//          return "/map/map.jsp";
+//      }
+//  }
     
 //    
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
@@ -89,17 +116,5 @@ public class AttrInfoController extends HttpServlet {
 //    }
 //    
 //    
-//    // "지역별 여행지" 네비게이션 이벤트 발생 시 SelectBox 내의 도시 정보를 가져오기 위한 기초 자료를 DB에서 가져온다.
-//    private String getInfo(HttpServletRequest request, HttpServletResponse response) 
-//    {
-//        HttpSession session = request.getSession();
-//        try {
-//            List < SidoDto > citylist = attrInfoDaoImpl.getCities();
-//            session.setAttribute("cities", citylist);  //도시 정보를 세션에 저장한다.
-//            return "/map/map.jsp";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "/map/map.jsp";
-//        }
-//    }
+//    
 }

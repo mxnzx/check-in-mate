@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="../common/header.jsp"%>
 
 
 
@@ -215,13 +215,13 @@
 </div>
 <!--중앙 content End-->
 <!-- 하단 Footer -->
-<%@ include file="/common/footer.jsp"%>
+<%@ include file="../common/footer.jsp"%>
 
 
 
 <!-- 하단 Footer End  -->
 <!-- 로그인 모달창 -->
-<%@ include file="/common/login-modal.jsp"%>
+<%@ include file="../common/login-modal.jsp"%>
 <!--회원가입 모달-->
-<%@ include file="/common/join-modal.jsp"%>
+<%@ include file="../common/join-modal.jsp"%>
 
