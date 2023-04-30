@@ -11,15 +11,15 @@
 		<div class="col-lg-8 col-md-10 col-sm-12">
 			<form id="form-modify" method="POST" action="">
 				<input type="hidden" name="action" value="modify"> <input
-					type="hidden" name="articleno" value="${board.articleNo}">
+					type="hidden" name="articleno" value="${article.articleNo}">
 				<div class="mb-3">
 					<label for="subject" class="form-label">제목 : </label> <input
 						type="text" class="form-control" id="subject" name="subject"
-						value="${board.subject}" />
+						value="${article.subject}" />
 				</div>
 				<div class="mb-3">
 					<label for="content" class="form-label">내용 : </label>
-					<textarea class="form-control" id="content" name="content" rows="7">${board.content}</textarea>
+					<textarea class="form-control" id="content" name="content" rows="7">${article.content}</textarea>
 				</div>
 				<div class="col-auto text-center">
 					<button type="button" id="btn-modify"
@@ -41,12 +41,12 @@
 			return;
 		} else {
 			let form = document.querySelector("#form-modify");
-			form.setAttribute("action", "${root}/board");
+			form.setAttribute("action", "${root}/article");
 			form.submit();
 		}
 	});
 	document.querySelector("#btn-list").addEventListener("click", function() {
-		location.href = "${root}/board?action=notice&pgno=1&key=&word=";
+		location.href = "${root}/article?action=notice&pgno=1&key=&word=";
 	});
 </script>
 </div>

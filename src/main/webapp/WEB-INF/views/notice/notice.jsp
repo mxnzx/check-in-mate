@@ -6,7 +6,7 @@
 <div class="row justify-content-center">
 	<div class="col-lg-8 col-md-10 col-sm-12">
 		<h2 class="my-3 py-3 shadow-sm bg-light text-center">
-			<mark class="basic">자유게시판</mark>
+			<mark class="basic">공지게시판</mark>
 		</h2>
 	</div>
 	<div class="col-lg-8 col-md-10 col-sm-12">

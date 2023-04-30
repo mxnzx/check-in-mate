@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp" %>
-	<c:if test="${board eq null}">
+	<c:if test="${article eq null}">
 		<script>
 		alert("글이 삭제되었거나 부적절한 URL 접근입니다.");
-		location.href = "${root}/board?action=list";
+		location.href = "${root}/article?action=list";
 		</script>
 	</c:if>
 
@@ -17,7 +17,7 @@
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <div class="row my-2">
-            <h2 class="text-secondary px-5">${board.articleNo}. ${board.subject}</h2>
+            <h2 class="text-secondary px-5">${article.articleNo}. ${article.subject}</h2>
           </div>
           <div class="row">
             <div class="col-md-8">
@@ -27,22 +27,22 @@
                   src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
                 />
                 <p>
-                  <span class="fw-bold">${board.userId}</span> <br />
-                  <span class="text-secondary fw-light"> ${board.registerTime} 조회 : ${board.hit} </span>
+                  <span class="fw-bold">${article.userId}</span> <br />
+                  <span class="text-secondary fw-light"> ${article.registerTime} 조회 : ${article.hit} </span>
                 </p>
               </div>
             </div>
             <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
             <div class="divider mb-3"></div>
             <div class="text-secondary">
-              ${board.content}
+              ${article.content}
             </div>
             <div class="divider mt-3 mb-3"></div>
             <div class="d-flex justify-content-end">
               <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">
                 글목록
               </button>
-              <c:if test="${userinfo.userId eq board.userId}">
+              <c:if test="${userinfo.userId eq 'admin123'}">
               <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1">
                 글수정
               </button>
@@ -58,14 +58,14 @@
     </div>
     <script>
       document.querySelector("#btn-list").addEventListener("click", function () {
-        location.href = "${root}/board?action=list";
+        location.href = "${root}/article?action=list";
       });
       document.querySelector("#btn-mv-modify").addEventListener("click", function () {
-        location.href = "${root}/board?action=mvmodify&articleno=${board.articleNo}";
+        location.href = "${root}/article?action=mvmodify&articleno=${article.articleNo}";
       });
       document.querySelector("#btn-delete").addEventListener("click", function () {
         alert("게시글을 삭제하였습니다. ");
-        location.href = "${root}/board?action=delete&articleno=${board.articleNo}";
+        location.href = "${root}/article?action=delete&articleno=${article.articleNo}";
       });
     </script>
     </div>
