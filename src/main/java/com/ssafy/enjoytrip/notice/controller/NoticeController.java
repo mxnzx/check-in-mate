@@ -131,5 +131,19 @@ public class NoticeController extends HttpServlet {
 		redirectAttributes.addAttribute("key", "");
 		redirectAttributes.addAttribute("word", "");
 		return "redirect:/notice/list";
-	}	
+	}
+	
+	// 글보기 
+	@GetMapping("/view")
+	public String view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
+			throws Exception {
+		//logger.debug("view articleNo : {}", articleNo);
+		NoticeDto noticeDto = noticeService.getArticle(articleNo);
+		noticeService.updateHit(articleNo);
+		model.addAttribute("notice", noticeDto);
+		model.addAttribute("pgno", map.get("pgno"));
+		model.addAttribute("key", map.get("key"));
+		model.addAttribute("word", map.get("word"));
+		return "notice/view";
+	}
 }

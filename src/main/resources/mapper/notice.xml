@@ -48,4 +48,11 @@
 		order by n.article_no desc
 		limit #{start}, #{listsize} 
 	</select>
+	
+	<select id="getArticle" parameterType="int" resultMap="viewArticle">
+		select n.article_no, n.notice_user_id, n.subject, n.content, n.hit, n.register_time, m.user_name 
+		from notice n, member m
+		where n.notice_user_id = m.user_id
+		and n.article_no = #{articleNo}
+	</select>	
 </mapper>	

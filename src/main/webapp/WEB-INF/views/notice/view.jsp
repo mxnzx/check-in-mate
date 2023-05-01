@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp" %>
-	<c:if test="${article eq null}">
+<%@ include file="../common/header.jsp" %>
+	<c:if test="${notice eq null}">
 		<script>
 		alert("글이 삭제되었거나 부적절한 URL 접근입니다.");
 		location.href = "${root}/article?action=list";
@@ -17,7 +17,7 @@
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <div class="row my-2">
-            <h2 class="text-secondary px-5">${article.articleNo}. ${article.subject}</h2>
+            <h2 class="text-secondary px-5">${notice.articleNo}. ${notice.subject}</h2>
           </div>
           <div class="row">
             <div class="col-md-8">
@@ -27,15 +27,15 @@
                   src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
                 />
                 <p>
-                  <span class="fw-bold">${article.userId}</span> <br />
-                  <span class="text-secondary fw-light"> ${article.registerTime} 조회 : ${article.hit} </span>
+                  <span class="fw-bold">${notice.userId}</span> <br />
+                  <span class="text-secondary fw-light"> ${notice.registerTime} 조회 : ${notice.hit} </span>
                 </p>
               </div>
             </div>
             <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
             <div class="divider mb-3"></div>
             <div class="text-secondary">
-              ${article.content}
+              ${notice.content}
             </div>
             <div class="divider mt-3 mb-3"></div>
             <div class="d-flex justify-content-end">
@@ -70,7 +70,7 @@
     </script>
     </div>
     <!-- 로그인 모달창 -->
-<%@ include file="/common/login-modal.jsp"%>
+<%@ include file="../user/login-modal.jsp"%>
 <!--회원가입 모달-->
-<%@ include file="/common/join-modal.jsp"%>
-<%@ include file="/common/footer.jsp" %>
+<%@ include file="../user/join-modal.jsp"%>
+<%@ include file="../common/footer.jsp" %>

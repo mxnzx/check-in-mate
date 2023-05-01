@@ -64,8 +64,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public NoticeDto getArticle(int articleNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return noticeMapper.getArticle(articleNo);
 	}
 
 	@Override
