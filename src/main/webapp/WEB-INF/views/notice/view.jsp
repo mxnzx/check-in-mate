@@ -4,7 +4,7 @@
 	<c:if test="${notice eq null}">
 		<script>
 		alert("글이 삭제되었거나 부적절한 URL 접근입니다.");
-		location.href = "${root}/article?action=list";
+		location.href = "${root}/notice/list";
 		</script>
 	</c:if>
 
@@ -42,7 +42,7 @@
               <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">
                 글목록
               </button>
-              <c:if test="${userinfo.userId eq 'admin123'}">
+              <c:if test="${userinfo.userId eq 'admin'}">
               <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1">
                 글수정
               </button>
@@ -50,6 +50,17 @@
                 글삭제
               </button>
               </c:if>
+            <form id="form-no-param" method="get" action="${root}/notice">
+				<input type="hidden" id="npgno" name="pgno" value="${pgno}">
+				<input type="hidden" id="nkey" name="key" value="${key}">
+				<input type="hidden" id="nword" name="word" value="${word}">
+				<input type="hidden" id="articleno" name="articleno" value="${notice.articleNo}">
+			</form>
+			<form id="form-param" method="get" action="">
+      			<input type="hidden" id="pgno" name="pgno" value="${pgno}">
+      			<input type="hidden" id="key" name="key" value="${key}">
+      			<input type="hidden" id="word" name="word" value="${word}">
+    		</form>              
             </div>
           </div>
         </div>
@@ -57,16 +68,23 @@
     </div>
     </div>
     <script>
-      document.querySelector("#btn-list").addEventListener("click", function () {
-        location.href = "${root}/article?action=list";
-      });
-      document.querySelector("#btn-mv-modify").addEventListener("click", function () {
-        location.href = "${root}/article?action=mvmodify&articleno=${article.articleNo}";
-      });
-      document.querySelector("#btn-delete").addEventListener("click", function () {
-        alert("게시글을 삭제하였습니다. ");
-        location.href = "${root}/article?action=delete&articleno=${article.articleNo}";
-      });
+	document.querySelector("#btn-list").addEventListener("click", function () {
+	  	let form = document.querySelector("#form-param");
+	  	form.setAttribute("action", "${root}/notice/list");
+      	form.submit();
+  	});
+	document.querySelector("#btn-mv-modify").addEventListener("click", function () {
+    	let form = document.querySelector("#form-no-param");
+   		form.setAttribute("action", "${root}/notice/modify");
+    	form.submit();
+  	});
+	document.querySelector("#btn-delete").addEventListener("click", function () {
+		if(confirm("정말 삭제하시겠습니까?")) {
+			let form = document.querySelector("#form-no-param");
+      	  	form.setAttribute("action", "${root}/notice/delete");
+          	form.submit();
+		}
+	});
     </script>
     </div>
     <!-- 로그인 모달창 -->

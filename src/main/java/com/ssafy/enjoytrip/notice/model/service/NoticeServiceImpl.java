@@ -58,8 +58,31 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		PageNavigation pageNavigation = new PageNavigation();
+
+		int naviSize = SizeConstant.NAVIGATION_SIZE;
+		int sizePerPage = SizeConstant.LIST_SIZE;
+		int currentPage = Integer.parseInt(map.get("pgno"));
+
+		pageNavigation.setCurrentPage(currentPage);
+		pageNavigation.setNaviSize(naviSize);
+		Map<String, Object> param = new HashMap<String, Object>();
+		String key = map.get("key");
+		if ("userid".equals(key))
+			key = "user_id";
+		param.put("key", key == null ? "" : key);
+		param.put("word", map.get("word") == null ? "" : map.get("word"));
+		int totalCount = noticeMapper.getTotalArticleCount(param);
+		pageNavigation.setTotalCount(totalCount);
+		int totalPageCount = (totalCount - 1) / sizePerPage + 1;
+		pageNavigation.setTotalPageCount(totalPageCount);
+		boolean startRange = currentPage <= naviSize;
+		pageNavigation.setStartRange(startRange);
+		boolean endRange = (totalPageCount - 1) / naviSize * naviSize < currentPage;
+		pageNavigation.setEndRange(endRange);
+		pageNavigation.makeNavigator();
+
+		return pageNavigation;
 	}
 
 	@Override
@@ -69,20 +92,17 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public void updateHit(int articleNo) throws Exception {
-		// TODO Auto-generated method stub
-		
+		noticeMapper.updateHit(articleNo);
 	}
 
 	@Override
 	public void modifyArticle(NoticeDto noticeDto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		noticeMapper.modifyArticle(noticeDto);
 	}
 
 	@Override
 	public void deleteArticle(int articleNo) throws Exception {
-		// TODO Auto-generated method stub
-		
+		noticeMapper.deleteArticle(articleNo);
 	}
 
 	@Override

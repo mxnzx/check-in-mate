@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.member.model.MemberDto;
 import com.ssafy.enjoytrip.notice.model.NoticeDto;
 import com.ssafy.enjoytrip.notice.model.service.NoticeService;
@@ -145,5 +144,41 @@ public class NoticeController extends HttpServlet {
 		model.addAttribute("key", map.get("key"));
 		model.addAttribute("word", map.get("word"));
 		return "notice/view";
+	}
+	
+	@GetMapping("/modify")
+	public String modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
+			throws Exception {
+		//logger.debug("modify articleNo : {}", articleNo);
+		NoticeDto noticeDto = noticeService.getArticle(articleNo);
+		model.addAttribute("notice", noticeDto);
+		model.addAttribute("pgno", map.get("pgno"));
+		model.addAttribute("key", map.get("key"));
+		model.addAttribute("word", map.get("word"));
+		return "notice/modify";
+	}
+	
+	// 글 수정하기
+	@PostMapping("/modify")
+	public String modify(NoticeDto noticeDto, @RequestParam Map<String, String> map,
+			RedirectAttributes redirectAttributes) throws Exception {
+		//logger.debug("modify boardDto : {}", boardDto);
+		noticeService.modifyArticle(noticeDto);
+		System.out.println(noticeDto);
+		redirectAttributes.addAttribute("pgno", map.get("pgno"));
+		redirectAttributes.addAttribute("key", map.get("key"));
+		redirectAttributes.addAttribute("word", map.get("word"));
+		return "redirect:/notice/list";
+	}	
+
+	@GetMapping("/delete")
+	public String delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
+			RedirectAttributes redirectAttributes) throws Exception {
+		//logger.debug("delete articleNo : {}", articleNo);
+		noticeService.deleteArticle(articleNo);
+		redirectAttributes.addAttribute("pgno", map.get("pgno"));
+		redirectAttributes.addAttribute("key", map.get("key"));
+		redirectAttributes.addAttribute("word", map.get("word"));
+		return "redirect:/notice/list";
 	}
 }

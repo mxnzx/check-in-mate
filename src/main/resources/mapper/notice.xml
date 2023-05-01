@@ -49,10 +49,35 @@
 		limit #{start}, #{listsize} 
 	</select>
 	
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(article_no)
+		from notice
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>	
+	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
 		select n.article_no, n.notice_user_id, n.subject, n.content, n.hit, n.register_time, m.user_name 
 		from notice n, member m
 		where n.notice_user_id = m.user_id
 		and n.article_no = #{articleNo}
-	</select>	
+	</select>
+
+	<update id="updateHit" parameterType="int">
+		update notice
+		set hit = hit + 1
+		where article_no = #{articleNo}
+	</update>
+		
+	<update id="modifyArticle" parameterType="noticeDto">
+		update notice
+		set subject = #{subject}, content = #{content}
+		where article_no = #{articleNo}
+	</update>	
+
+	<delete id="deleteArticle" parameterType="int">
+		delete from notice
+		where article_no = #{articleNo}
+	</delete> 	
 </mapper>	

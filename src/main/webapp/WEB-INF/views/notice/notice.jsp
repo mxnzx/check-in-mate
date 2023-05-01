@@ -55,7 +55,7 @@
 					<tr class="text-center">
 						<th scope="row">${notice.articleNo}</th>
 						<td class="text-start"><a href="#"
-							class="article-title link-dark" data-no="${notice.articleNo}"
+							class="notice-title link-dark" data-no="${notice.articleNo}"
 							style="text-decoration: none"> ${notice.subject} </a></td>
 						<td>${notice.userId}</td>
 						<td>${notice.hit}</td>
@@ -81,14 +81,13 @@
 </form>
 </div>
 <script>
-	let titles = document.querySelectorAll(".article-title");
-	titles.forEach(function(title) {
-		title.addEventListener("click", function() {
-			console.log(this.getAttribute("data-no"));
-			location.href = "${root}/article?action=view&articleno="
-					+ this.getAttribute("data-no");
-		});
-	});
+let titles = document.querySelectorAll(".notice-title");
+titles.forEach(function (title) {
+  title.addEventListener("click", function () {
+    document.querySelector("#articleno").value = this.getAttribute("data-no");
+    document.querySelector("#form-no-param").submit();
+  });
+});	
 
 	document.querySelector("#btn-mv-register").addEventListener("click",
 			function() {
@@ -99,7 +98,7 @@
 
 	document.querySelector("#btn-search").addEventListener("click", function() {
 		let form = document.querySelector("#form-search");
-		form.setAttribute("action", "${root}/article");
+		form.setAttribute("action", "${root}/notice/list");
 		form.submit();
 	});
 	document.querySelector("#sort_list").addEventListener("change", function() {
@@ -110,22 +109,15 @@
 		location.href = "${root}/article?action=" +option;
 	});
 
-	let pages = document.querySelectorAll(".page-link");
-	pages.forEach(function(page) {
-		page.addEventListener("click", function() {
-			console.log(this.parentNode.getAttribute("data-pg"));
-			document.querySelector("#p-action").value = "notice";
-			document.querySelector("#p-pgno").value = this.parentNode
-					.getAttribute("data-pg");
-			document.querySelector("#p-key").value = "${param.key}";
-			document.querySelector("#p-word").value = "${param.word}";
-			document.querySelector("#form-param").submit();
-		});
-	});
-	let msg = '${msg}';
-	if (msg != "") {
-		alert(msg);
-	};
+    let pages = document.querySelectorAll(".page-link");
+    pages.forEach(function (page) {
+      page.addEventListener("click", function () {
+     	  document.querySelector("#pgno").value = this.parentNode.getAttribute("data-pg");
+        let form = document.querySelector("#form-param");
+        form.setAttribute("action", "${root}/notice/list");
+        form.submit();
+      });
+    });	
 </script>
 </div>
 <!-- 하단 Footer -->
