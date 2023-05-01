@@ -23,21 +23,16 @@ public class AttrInfoServiceImpl implements AttrInfoService {
 
 	@Override
 	public List<SidoDto> sidoList() throws Exception {
-		// TODO Auto-generated method stub
 		return attrInfoDao.sidoList();
 	}
 
 	@Override
 	public List<GugunDto> gugunList(String sidoCode) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return attrInfoDao.gugunList(sidoCode);
 	}
 
 	@Override
 	public List<AttrInfoDto> attrList() throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 }

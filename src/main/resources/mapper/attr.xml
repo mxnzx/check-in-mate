@@ -38,6 +38,12 @@
 		select * from sido
 	</select>
 	
+	<select id="gugunList" parameterType="String" resultMap="gugunList">
+		select *
+		from gugun
+		where sido_code = #{sidoCode}
+		
+	</select>
 	
 
 

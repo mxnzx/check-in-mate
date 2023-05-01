@@ -74,27 +74,26 @@ window.onload = init();
 function init() {
     fetchAllAreas(areaUrl);
 }
-//시도 목록 가져와서 옵션값으로 추가한
+//시도 목록 가져와서 옵션값으로 추가한다
 function fetchAllAreas(areaUrl) {
     fetch(areaUrl, { method: "GET" })
   .then((response) => response.json())
-  .then((data) => makeOption(data));
+  .then((data) => makeOptionforSido(data));
 }
 
-//바뀐 시도 값을 가지고 구군 목록을 가져온다.
-const searchSidoSelect = document.querySelector('#search-sido');
 
-searchSidoSelect.addEventListener('change', function() {
-  fetchGugunList(this.value); // 선택된 함수로 구군을 가져온다
+//바뀐 시도 값을 가지고 구군 목록을 가져온다.
+document.getElementById("search-sido").addEventListener("change", function() {
+  const selectedSido = this.options[this.selectedIndex].value;	//sido-code
+  fetchGugunList(selectedSido); // 함수 실행하기
 });
 
 function fetchGugunList(selectedSido) {
-  // 선택된 값으로 실행될 함수 내용을 작성합니다.
-  console.log(`선택된 값은 ${selectedValue} 입니다.`);
-  const gugunUrl = "/navigator/"
-  fetch(areaUrl, { method: "GET" })
+  console.log(selectedSido);
+  const gugunUrl = "/navigator/searchGugun?sidoCode="+selectedSido;
+  fetch(gugunUrl, { method: "GET" })
   .then((response) => response.json())
-  .then((data) => makeOption(data));
+  .then((data) => makeOptionforGugun(data));
 }
 
 
@@ -106,7 +105,7 @@ function fetchGugunList(selectedSido) {
 
 // fetch(areaUrl, { method: "GET" }).then(function (response) { return response.json() }).then(function (data) { makeOption(data); });
 
-function makeOption(data) {
+function makeOptionforSido(data) {
   let areas = data;
   console.log(areas);
   let sel = document.getElementById("search-sido");
@@ -116,6 +115,18 @@ function makeOption(data) {
     opt.appendChild(document.createTextNode(area.sidoName));
     sel.appendChild(opt);  
   });
+}
+
+function makeOptionforGugun(data) {
+	  let areas = data;
+	  console.log(areas);
+	  let sel = document.getElementById("search-gugun");
+	  areas.forEach((gugun) => {
+	    let opt = document.createElement("option");
+	    opt.setAttribute("value", gugun.gugunCode);
+	    opt.appendChild(document.createTextNode(gugun.gugunName));
+	    sel.appendChild(opt);  
+	  });
 }
 // 검색 버튼을 누르면..
 // 지역, 유형, 검색어 얻기.

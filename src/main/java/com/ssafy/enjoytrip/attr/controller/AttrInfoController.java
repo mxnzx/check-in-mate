@@ -25,9 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssafy.enjoytrip.attr.model.GugunDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
 import com.ssafy.enjoytrip.attr.model.service.AttrInfoService;
 
@@ -54,7 +56,6 @@ public class AttrInfoController {
     		List<SidoDto> sidos;
 			try {
 				sidos = attrInfoService.sidoList();
-				System.out.println(sidos);
 				return sidos;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -65,10 +66,12 @@ public class AttrInfoController {
     
   //2. 시도 목록을 선택하면 sido_code가 일치하는 구군 목록을 가지고 온다
     @GetMapping("searchGugun")
-    public List<SidoDto> searchGugun() {
-    		List<SidoDto> guguns;
+    public List<GugunDto> searchGugun(@RequestParam("sidoCode") String sidoCode) {
+    	System.out.println(">>>>>>"+sidoCode);
+    		List<GugunDto> guguns;
 			try {
-				guguns = attrInfoService.sidoList();
+				
+				guguns = attrInfoService.gugunList(sidoCode);
 				System.out.println(guguns);
 				return guguns;
 			} catch (Exception e) {
