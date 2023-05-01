@@ -73,11 +73,11 @@
 										</c:if>
 										<c:if test="${not empty userinfo}">
 											<li><a class="dropdown-item" id="logout=dropdown"
-												href="${root}/user?action=logout">로그아웃</a></li>
+												href="${root}/user/logout">로그아웃</a></li>
 										</c:if>
 										<c:if test="${not empty userinfo}">
 											<li><a class="dropdown-item"
-												href="${root}/user/mypage.jsp">마이페이지</a></li>
+												href="${root}/user/mypage">마이페이지</a></li>
 										</c:if>
 									</ul></li>
 							</ul>

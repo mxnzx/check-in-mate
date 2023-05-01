@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp" %>
+<%@ include file="../common/header.jsp" %>
 	<c:if test="${cookie.ssafy_id.value ne null}">
 		<c:set var="idck" value=" checked"/>
 		<c:set var="saveid" value="${cookie.ssafy_id.value}"/>
@@ -32,8 +32,8 @@
               <input
                 type="text"
                 class="form-control"
-                id="userid-login"
-                name="userid-login"
+                id="userid"
+                name="userid"
                 placeholder="아이디..."
                	value="${saveid}"
               />
@@ -43,8 +43,8 @@
               <input
                 type="password"
                 class="form-control"
-                id="userpwd-login"
-                name="userpwd-login"
+                id="userpwd"
+                name="userpwd"
                 placeholder="비밀번호..."
               />
             </div>
@@ -63,23 +63,23 @@
    	</script>
     <script>
       document.querySelector("#btn-login").addEventListener("click", function () {
-        if (!document.querySelector("#userid-login").value) {
+        if (!document.querySelector("#userid").value) {
           alert("아이디 입력!!");
           return;
-        } else if (!document.querySelector("#userpwd-login").value) {
+        } else if (!document.querySelector("#userpwd").value) {
           alert("비밀번호 입력!!");
           return;
         } else {
           let form = document.querySelector("#form-login");
-          form.setAttribute("action", "${root}/user?action=login");
+          form.setAttribute("action", "${root}/user/login");
           form.submit();
         }
       });
     </script>
     </div>
     <!-- 로그인 모달창 -->
-	<%@ include file="/common/login-modal.jsp" %>
+	<%@ include file="login-modal.jsp" %>
 
 	<!--회원가입 모달-->
-	<%@ include file="/common/join-modal.jsp" %>
-<%@ include file="/common/footer.jsp" %>
+	<%@ include file="join-modal.jsp" %>
+<%@ include file="../common/footer.jsp" %>

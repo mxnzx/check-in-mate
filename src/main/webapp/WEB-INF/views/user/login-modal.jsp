@@ -20,16 +20,16 @@
 						<div class="row mb-1 text-center">
 							<div class="col-3">아이디</div>
 							<div class="col">
-								<input type="text" placeholder="id" class="form-control"
-									id="userid-login" name="userid-login" value="${saveid}" />
+								<input type="text" placeholder="id" class="form-label"
+									id="userid" name="userid" value="${saveid}" />
 							</div>
 
 						</div>
 						<div class="row mb-1 text-center">
 							<div class="col-3">비밀번호</div>
 							<div class="col">
-								<input type="password" placeholder="pw" class="form-control"
-									id="userpwd-login" name="userpwd-login">
+								<input type="password" placeholder="pw" class="form-label"
+									id="userpwd" name="userpwd">
 							</div>
 						</div>
 					</div>
@@ -49,15 +49,15 @@
 <script>
 	//로그인 로직
 	document.querySelector("#btn-login").addEventListener("click", function() {
-		if (!document.querySelector("#userid-login").value) {
+		if (!document.querySelector("#userid").value) {
 			alert("아이디 입력!!");
 			return;
-		} else if (!document.querySelector("#userpwd-login").value) {
+		} else if (!document.querySelector("#userpwd").value) {
 			alert("비밀번호 입력!!");
 			return;
 		} else {
 			let form = document.querySelector("#form-login");
-			form.setAttribute("action", "${root}/user?action=login");
+			form.setAttribute("action", "${root}/user/login");
 			console.log("login");
 			form.submit();
 		}
