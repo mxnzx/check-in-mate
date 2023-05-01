@@ -57,7 +57,7 @@
 						<td class="text-start"><a href="#"
 							class="board-title link-dark" data-no="${board.articleNo}"
 							style="text-decoration: none"> ${board.subject} </a></td>
-						<td>${board.userId}</td>
+						<td>${board.userName}</td>
 						<td>${board.hit}</td>
 						<td>${board.registerTime}</td>
 					</tr>
@@ -112,7 +112,7 @@
 
 	document.querySelector("#btn-search").addEventListener("click", function() {
 		let form = document.querySelector("#form-search");
-		form.setAttribute("action", "${root}/board");
+		form.setAttribute("action", "${root}/board/list");
 		form.submit();
 	});
 	document.querySelector("#sort_list").addEventListener("change", function() {
@@ -123,7 +123,7 @@
 		location.href = "${root}/board?action=" + option;
 	});
 
-	let pages = document.querySelectorAll(".page-link");
+/* 	let pages = document.querySelectorAll(".page-link");
 	pages.forEach(function(page) {
 		page.addEventListener("click", function() {
 			console.log(this.parentNode.getAttribute("data-pg"));
@@ -138,7 +138,16 @@
 	let msg = '${msg}';
 	if (msg != "") {
 		alert(msg);
-	};
+	}; */
+    let pages = document.querySelectorAll(".page-link");
+    pages.forEach(function (page) {
+      page.addEventListener("click", function () {
+     	  document.querySelector("#pgno").value = this.parentNode.getAttribute("data-pg");
+        let form = document.querySelector("#form-param");
+        form.setAttribute("action", "${root}/board/list");
+        form.submit();
+      });
+    });	
 </script>
 </div>
 <!-- 하단 Footer -->
