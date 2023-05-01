@@ -53,7 +53,7 @@ public class BoardController extends HttpServlet {
 	private String key;
 	private String word;
 	private String queryStrig;
-
+	private String uploadPath;
 	private BoardService boardService;
 
 	@Autowired
@@ -62,12 +62,13 @@ public class BoardController extends HttpServlet {
 		this.boardService = boardService;
 	}
 
-	
+	// 여행정보 공유 리스트 출력 
 	@GetMapping("/list")
 	public ModelAndView list(@RequestParam Map<String, String> map) throws Exception {
 		//logger.debug("list parameter pgno : {}", map.get("pgno"));
 		ModelAndView mav = new ModelAndView();
 		List<BoardDto> list = boardService.listArticle(map);
+		System.out.println(list);
 		PageNavigation pageNavigation = boardService.makePageNavigation(map);
 		mav.addObject("boards", list);
 		mav.addObject("navigation", pageNavigation);
@@ -77,7 +78,7 @@ public class BoardController extends HttpServlet {
 		mav.setViewName("board/board");
 		return mav;
 	}
-	
+	// 글쓰기 페이지로 이동 
 	@GetMapping("/write")
 	public String write(@RequestParam Map<String, String> map, Model model) {
 		//logger.debug("write call parameter {}", map);
@@ -87,14 +88,16 @@ public class BoardController extends HttpServlet {
 		return "board/write";
 	}
 	
-	// 아이디 관련 아직 아이디를 못가져와서 임시 주석처리 
+	// 글쓰기 
 	@PostMapping("/write")
 	public String write(BoardDto boardDto, HttpSession session,
 			RedirectAttributes redirectAttributes) throws Exception {
 		//logger.debug("write boardDto : {}", boardDto);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		System.out.println(memberDto.getUserId());
+		System.out.println(">>>>>>>" + memberDto);
 		boardDto.setUserId(memberDto.getUserId());
+		System.out.println("boardDto >>>  "+boardDto);
+		System.out.println("MemberDto >>>  "+memberDto);
 
 //		FileUpload 관련 설정.
 		//logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
@@ -133,20 +136,56 @@ public class BoardController extends HttpServlet {
 		redirectAttributes.addAttribute("word", "");
 		return "redirect:/board/list";
 	}	
-	
+	// 글보기 
 	@GetMapping("/view")
 	public String view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
 			throws Exception {
 		//logger.debug("view articleNo : {}", articleNo);
 		BoardDto boardDto = boardService.getArticle(articleNo);
 		boardService.updateHit(articleNo);
-		model.addAttribute("boards", boardDto);
+		model.addAttribute("board", boardDto);
 		model.addAttribute("pgno", map.get("pgno"));
 		model.addAttribute("key", map.get("key"));
 		model.addAttribute("word", map.get("word"));
 		return "board/view";
 	}
 	
+	@GetMapping("/modify")
+	public String modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
+			throws Exception {
+		//logger.debug("modify articleNo : {}", articleNo);
+		BoardDto boardDto = boardService.getArticle(articleNo);
+		model.addAttribute("board", boardDto);
+		System.out.println("모디파이"+boardDto );
+		model.addAttribute("pgno", map.get("pgno"));
+		model.addAttribute("key", map.get("key"));
+		model.addAttribute("word", map.get("word"));
+		return "board/modify";
+	}
+	
+	// 글 수정하기
+	@PostMapping("/modify")
+	public String modify(BoardDto boardDto, @RequestParam Map<String, String> map,
+			RedirectAttributes redirectAttributes) throws Exception {
+		//logger.debug("modify boardDto : {}", boardDto);
+		boardService.modifyArticle(boardDto);
+		System.out.println(boardDto);
+		redirectAttributes.addAttribute("pgno", map.get("pgno"));
+		redirectAttributes.addAttribute("key", map.get("key"));
+		redirectAttributes.addAttribute("word", map.get("word"));
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
+			RedirectAttributes redirectAttributes) throws Exception {
+		//logger.debug("delete articleNo : {}", articleNo);
+		boardService.deleteArticle(articleNo, uploadPath);
+		redirectAttributes.addAttribute("pgno", map.get("pgno"));
+		redirectAttributes.addAttribute("key", map.get("key"));
+		redirectAttributes.addAttribute("word", map.get("word"));
+		return "redirect:/board/list";
+	}
 //	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 //			throws ServletException, IOException {
 //		String action = request.getParameter("action");
