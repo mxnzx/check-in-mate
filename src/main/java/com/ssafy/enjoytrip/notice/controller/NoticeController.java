@@ -16,6 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.ssafy.enjoytrip.member.model.MemberDto;
 import com.ssafy.enjoytrip.notice.model.NoticeDto;
 import com.ssafy.enjoytrip.notice.model.service.NoticeService;
@@ -24,257 +31,34 @@ import com.ssafy.enjoytrip.util.PageNavigation;
 import com.ssafy.enjoytrip.util.ParameterCheck;
 
 
-
-@WebServlet("/article")
+@Controller
+@RequestMapping("/notice")
 public class NoticeController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	private int pgno;
-	private String key;
-	private String word;
-	private String queryStrig;
 
 	private NoticeService noticeService;
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		noticeService = NoticeServiceImpl.getNoticeService();
+	@Autowired
+	public NoticeController(NoticeService noticeService) {
+		super();
+		this.noticeService = noticeService;
 	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String action = request.getParameter("action");
-
-		pgno = ParameterCheck.notNumberToOne(request.getParameter("pgno"));
-		key = ParameterCheck.nullToBlank(request.getParameter("key"));
-		word = ParameterCheck.nullToBlank(request.getParameter("word"));
-		queryStrig = "?pgno=" + pgno + "&key=" + key + "&word=" + URLEncoder.encode(word, "utf-8");
-
-		String path = "";
-		if ("notice".equals(action)) {
-			path = list(request, response);
-			forward(request, response, path);
-		} else if ("sort_hit".equals(action)) {
-			path = sortHit(request, response);
-			forward(request, response, path);
-		} else if ("view".equals(action)) {
-			path = view(request, response);
-			forward(request, response, path);
-		} else if ("mvwrite".equals(action)) {
-			path = mvwrite(request, response);
-			forward(request, response, path);
-		} else if ("write".equals(action)) {
-			path = write(request, response);
-			redirect(request, response, path);
-		} else if ("mvmodify".equals(action)) {
-			path = mvModify(request, response);
-			forward(request, response, path);
-		} else if ("modify".equals(action)) {
-			path = modify(request, response);
-			forward(request, response, path);
-		} else if ("delete".equals(action)) {
-			path = delete(request, response);
-			redirect(request, response, path);
-		} else if ("deleteArticleAll".equals(action)) {
-			path = deleteArticleAll(request, response);
-			forward(request, response, path);
-		} else {
-			redirect(request, response, path);
-		}
+	
+	// 공지사항 리스트 출력 
+	@GetMapping("/list")
+	public ModelAndView list(@RequestParam Map<String, String> map) throws Exception {
+		//logger.debug("list parameter pgno : {}", map.get("pgno"));
+		ModelAndView mav = new ModelAndView();
+		List<NoticeDto> list = noticeService.listArticle(map);
+		System.out.println(list);
+		MemberDto memberDto = new MemberDto();
+		mav.addObject(memberDto);
+		PageNavigation pageNavigation = noticeService.makePageNavigation(map);
+		mav.addObject("boards", list);
+		mav.addObject("navigation", pageNavigation);
+		mav.addObject("pgno", map.get("pgno"));
+		mav.addObject("key", map.get("key"));
+		mav.addObject("word", map.get("word"));
+		mav.setViewName("notice/notice");
+		return mav;
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		doGet(request, response);
-	}
-
-	private void forward(HttpServletRequest request, HttpServletResponse response, String path)
-			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-		dispatcher.forward(request, response);
-	}
-
-	private void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {
-		response.sendRedirect(request.getContextPath() + path);
-	}
-
-	private String sortHit(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		try {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("pgno", pgno + "");
-			map.put("key", key);
-			map.put("word", word);
-
-			//
-			List<NoticeDto> list = noticeService.sortListArticle(map);
-			request.setAttribute("articles", list);
-
-			PageNavigation pageNavigation = noticeService.makePageNavigation(map);
-			request.setAttribute("navigation", pageNavigation);
-
-			return "/notice/notice.jsp" + queryStrig;
-		} catch (Exception e) {
-			e.printStackTrace();
-			request.setAttribute("msg", "글목록 출력 중 문제 발생!!!");
-			return "/error/error.jsp";
-		}
-	}
-
-	private String list(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		try {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("pgno", pgno + "");
-			map.put("key", key);
-			map.put("word", word);
-
-			//
-			List<NoticeDto> list = noticeService.listArticle(map);
-			request.setAttribute("articles", list);
-
-			PageNavigation pageNavigation = noticeService.makePageNavigation(map);
-			request.setAttribute("navigation", pageNavigation);
-			System.out.println("notice controller list출력 실행");
-			return "/notice/notice.jsp" + queryStrig;
-		} catch (Exception e) {
-			e.printStackTrace();
-			request.setAttribute("msg", "글목록 출력 중 문제 발생!!!");
-			return "/error/error.jsp";
-		}
-	}
-
-	private String view(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		if (memberDto != null) {
-			int articleNo = Integer.parseInt(request.getParameter("articleno"));
-			System.out.println("articleNo" + articleNo);
-			try {
-				NoticeDto noticeDto = noticeService.getArticle(articleNo);
-				noticeService.updateHit(articleNo);
-				request.setAttribute("article", noticeDto);
-
-				return "/notice/view.jsp";
-			} catch (Exception e) {
-				e.printStackTrace();
-				request.setAttribute("msg", "글내용 출력 중 문제 발생!!!");
-				return "/error/error.jsp";
-			}
-		} else {
-			request.setAttribute("msg", "로그인 후 이용이 가능합니다. ");
-			return "/article?action=notice";
-		}
-	}
-
-	private String mvwrite(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		if (memberDto != null && memberDto.getUserId().equals("admin123")) {
-			System.out.println("공지 글쓰기로 이동");
-			return "/notice/write.jsp";
-		} else {
-			request.setAttribute("msg", "관리자만 이용이 가능합니다. ");
-			return "/article?action=notice";
-		}
-	}
-
-	private String write(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		if (memberDto != null) {
-			NoticeDto noticeDto = new NoticeDto();
-			noticeDto.setUserId(memberDto.getUserId());
-			noticeDto.setSubject(request.getParameter("subject"));
-			noticeDto.setContent(request.getParameter("content"));
-			try {
-				noticeService.writeArticle(noticeDto);
-				return "/article?action=notice";
-			} catch (Exception e) {
-				e.printStackTrace();
-				request.setAttribute("msg", "글작성 중 문제 발생!!!");
-				return "/error/error.jsp";
-			}
-		} else
-			return "/user/login.jsp";
-	}
-
-	private String mvModify(HttpServletRequest request, HttpServletResponse response) {
-		// TODO : 수정하고자하는 글의 글번호를 얻는다.
-		// TODO : 글번호에 해당하는 글정보를 얻고 글정보를 가지고 modify.jsp로 이동.
-		try {
-			HttpSession session = request.getSession();
-			MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-			if (memberDto != null) {
-				int articleNo = Integer.parseInt(request.getParameter("articleno"));
-				NoticeDto noticeDto = noticeService.getArticle(articleNo);
-				request.setAttribute("article", noticeDto);
-
-				return "/notice/modify.jsp";
-			} else
-				return "/user/login.jsp";
-		} catch (Exception e) {
-			e.printStackTrace();
-			request.setAttribute("msg", "글내용 얻는 중 문제 발생!!!");
-			return "/error/error.jsp";
-		}
-	}
-
-	private String modify(HttpServletRequest request, HttpServletResponse response) {
-		// TODO : 수정 할 글정보를 얻고 NoticeDto에 set.
-		// TODO : noticeDto를 파라미터로 service의 modifyArticle() 호출.
-		// TODO : 글수정 완료 후 view.jsp로 이동.(이후의 프로세스를 생각해 보세요.)
-		HttpSession session = request.getSession();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		if (memberDto != null) {
-			NoticeDto noticeDto = new NoticeDto();
-			noticeDto.setArticleNo(Integer.parseInt(request.getParameter("articleno")));
-			noticeDto.setSubject(request.getParameter("subject"));
-			noticeDto.setContent(request.getParameter("content"));
-
-			try {
-				noticeService.modifyArticle(noticeDto);
-				return "/article?action=notice&pgno=1&key=&word=";
-			} catch (Exception e) {
-				e.printStackTrace();
-				request.setAttribute("msg", "글수정 중 문제 발생!!!");
-				return "/error/error.jsp";
-			}
-
-		} else
-			return "/user/login.jsp";
-	}
-
-	private String delete(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		if (memberDto != null) {
-			int articleNo = Integer.parseInt(request.getParameter("articleno"));
-
-			try {
-				noticeService.deleteArticle(articleNo);
-				return "/article?action=notice&pgno=1&key=&word=";
-			} catch (Exception e) {
-				e.printStackTrace();
-				request.setAttribute("msg", "글삭제 중 문제 발생!!!");
-				return "/error/error.jsp";
-			}
-
-		} else
-			return "/user/login.jsp";
-	}
-
-	private String deleteArticleAll(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			noticeService.deleteArticleAll(request.getParameter("id"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "/user?action=delete";
-	}
-
 }

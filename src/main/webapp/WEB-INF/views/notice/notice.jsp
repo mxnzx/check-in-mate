@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="../common/header.jsp"%>
 
 <!-- 게시판 보드 자리 -->
 <div class="row justify-content-center">
@@ -121,9 +121,9 @@
 </script>
 </div>
 <!-- 하단 Footer -->
-<%@ include file="/common/footer.jsp"%>
+<%@ include file="../common/footer.jsp"%>
 <!-- 로그인 모달창 -->
-<%@ include file="/common/login-modal.jsp"%>
+<%@ include file="../user/login-modal.jsp"%>
 <!--회원가입 모달-->
-<%@ include file="/common/join-modal.jsp"%>
+<%@ include file="../user/join-modal.jsp"%>
 

@@ -3,8 +3,41 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	
-<mapper namespace="com.ssafy.enjoytrip.notice.model.dao.NoticeDao">
+<mapper namespace="com.ssafy.enjoytrip.notice.model.mapper.NoticeMapper">
+
+	<resultMap type="noticeDto" id="noticeArticle">
+		<result column="article_no" property="articleNo"/>
+		<result column="notice_user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
 
 
+	<resultMap type="noticeDto" id="viewArticle" extends="noticeArticle">
+<!-- 	<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/> -->
+	</resultMap>
+	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
 
+	<select id="listArticle" parameterType="map" resultMap="noticeArticle">
+
+ 		select n.article_no, n.notice_user_id, n.subject, n.content, n.hit, n.register_time, m.user_name
+		from notice n, member m 
+		where n.notice_user_id = m.user_id
+ 		<include refid="search"></include>
+		order by n.article_no desc
+		limit #{start}, #{listsize} 
+	</select>
 </mapper>	
