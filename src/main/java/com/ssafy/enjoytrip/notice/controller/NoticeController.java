@@ -20,10 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.member.model.MemberDto;
 import com.ssafy.enjoytrip.notice.model.NoticeDto;
 import com.ssafy.enjoytrip.notice.model.service.NoticeService;
@@ -80,4 +83,53 @@ public class NoticeController extends HttpServlet {
 			return "user/login";
 		}
 	}
+	
+	//  공지 글쓰기 
+	@PostMapping("/write")
+	public String write(NoticeDto noticeDto, HttpSession session,
+			RedirectAttributes redirectAttributes) throws Exception {
+		//logger.debug("write boardDto : {}", boardDto);
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		System.out.println(">>>>>>>" + memberDto);
+		noticeDto.setUserId(memberDto.getUserId());
+		//System.out.println("boardDto >>>  "+boardDto);
+		//System.out.println("MemberDto >>>  "+memberDto);
+
+//		FileUpload 관련 설정.
+		//logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
+		
+// 파일 업로드 다운로드 부분 주석처리
+//		if (!files[0].isEmpty()) {
+////			String realPath = servletContext.getRealPath(UPLOAD_PATH);
+////			String realPath = servletContext.getRealPath("/resources/img");
+//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+//			String saveFolder = uploadPath + File.separator + today;
+//			logger.debug("저장 폴더 : {}", saveFolder);
+//			File folder = new File(saveFolder);
+//			if (!folder.exists())
+//				folder.mkdirs();
+//			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
+//			for (MultipartFile mfile : files) {
+//				FileInfoDto fileInfoDto = new FileInfoDto();
+//				String originalFileName = mfile.getOriginalFilename();
+//				if (!originalFileName.isEmpty()) {
+//					String saveFileName = UUID.randomUUID().toString()
+//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+//					fileInfoDto.setSaveFolder(today);
+//					fileInfoDto.setOriginalFile(originalFileName);
+//					fileInfoDto.setSaveFile(saveFileName);
+//					logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+//					mfile.transferTo(new File(folder, saveFileName));
+//				}
+//				fileInfos.add(fileInfoDto);
+//			}
+//			boardDto.setFileInfos(fileInfos);
+//		}
+
+		noticeService.writeArticle(noticeDto);
+		redirectAttributes.addAttribute("pgno", "1");
+		redirectAttributes.addAttribute("key", "");
+		redirectAttributes.addAttribute("word", "");
+		return "redirect:/notice/list";
+	}	
 }

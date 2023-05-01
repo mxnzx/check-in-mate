@@ -42,7 +42,7 @@
 					return;
 				} else {
 					let form = document.querySelector("#form-register");
-					form.setAttribute("action", "${root}/article");
+					form.setAttribute("action", "${root}/notice/write");
 					form.submit();
 				}
 			});
