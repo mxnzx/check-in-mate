@@ -80,21 +80,28 @@
 		name="word" value="${word}">
 </form>
 <form id="form-no-param" method="get" action="${root}/board/view">
-	<input type="hidden" name="pgno" value="${pgno}"> <input
-		type="hidden" name="key" value="${key}"> <input type="hidden"
-		name="word" value="${word}"> <input type="hidden"
-		id="articleno" name="articleno" value="">
+	<input type="hidden" name="pgno" value="${pgno}"> 
+	<input type="hidden" name="key" value="${key}"> 
+	<input type="hidden" name="word" value="${word}"> 
+	<input type="hidden" id="articleno" name="articleno" value="">
 </form>
 </div>
 <script>
-	let titles = document.querySelectorAll(".board-title");
+/* 	let titles = document.querySelectorAll(".board-title");
 	titles.forEach(function(title) {
 		title.addEventListener("click", function() {
 			console.log(this.getAttribute("data-no"));
 			location.href = "${root}/board?action=view&articleno="
 					+ this.getAttribute("data-no");
 		});
-	});
+	}); */
+    let titles = document.querySelectorAll(".board-title");
+    titles.forEach(function (title) {
+      title.addEventListener("click", function () {
+        document.querySelector("#articleno").value = this.getAttribute("data-no");
+        document.querySelector("#form-no-param").submit();
+      });
+    });	
 
 	document.querySelector("#btn-mv-register").addEventListener("click",
 			function() {
