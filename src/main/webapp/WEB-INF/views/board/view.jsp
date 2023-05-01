@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp" %>
+<%@ include file="../common/header.jsp" %>
 	<c:if test="${board eq null}">
 		<script>
 		alert("글이 삭제되었거나 부적절한 URL 접근입니다.");
@@ -70,7 +70,7 @@
     </script>
     </div>
     <!-- 로그인 모달창 -->
-<%@ include file="/common/login-modal.jsp"%>
+<%@ include file="../user/login-modal.jsp"%>
 <!--회원가입 모달-->
-<%@ include file="/common/join-modal.jsp"%>
-<%@ include file="/common/footer.jsp" %>
+<%@ include file="../user/join-modal.jsp"%>
+<%@ include file="../common/footer.jsp" %>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="../common/header.jsp"%>
 
 	<div class="row justify-content-center">
 		<div class="col-lg-8 col-md-10 col-sm-12">
@@ -50,4 +50,4 @@
 	});
 </script>
 </div>
-<%@ include file="/common/footer.jsp"%>
+<%@ include file="../common/footer.jsp"%>
