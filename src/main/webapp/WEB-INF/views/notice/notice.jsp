@@ -51,15 +51,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="article" items="${articles}">
+				<c:forEach var="notice" items="${notices}">
 					<tr class="text-center">
-						<th scope="row">${article.articleNo}</th>
+						<th scope="row">${notice.articleNo}</th>
 						<td class="text-start"><a href="#"
-							class="article-title link-dark" data-no="${article.articleNo}"
-							style="text-decoration: none"> ${article.subject} </a></td>
-						<td>${article.userId}</td>
-						<td>${article.hit}</td>
-						<td>${article.registerTime}</td>
+							class="article-title link-dark" data-no="${notice.articleNo}"
+							style="text-decoration: none"> ${notice.subject} </a></td>
+						<td>${notice.userId}</td>
+						<td>${notice.hit}</td>
+						<td>${notice.registerTime}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

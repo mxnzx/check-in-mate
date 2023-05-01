@@ -53,7 +53,7 @@ public class NoticeController extends HttpServlet {
 		MemberDto memberDto = new MemberDto();
 		mav.addObject(memberDto);
 		PageNavigation pageNavigation = noticeService.makePageNavigation(map);
-		mav.addObject("boards", list);
+		mav.addObject("notices", list);
 		mav.addObject("navigation", pageNavigation);
 		mav.addObject("pgno", map.get("pgno"));
 		mav.addObject("key", map.get("key"));
