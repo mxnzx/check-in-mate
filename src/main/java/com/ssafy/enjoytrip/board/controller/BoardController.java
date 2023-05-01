@@ -92,8 +92,9 @@ public class BoardController extends HttpServlet {
 	public String write(BoardDto boardDto, HttpSession session,
 			RedirectAttributes redirectAttributes) throws Exception {
 		//logger.debug("write boardDto : {}", boardDto);
-		//MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		//boardDto.setUserId(memberDto.getUserId());
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		System.out.println(memberDto.getUserId());
+		boardDto.setUserId(memberDto.getUserId());
 
 //		FileUpload 관련 설정.
 		//logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
