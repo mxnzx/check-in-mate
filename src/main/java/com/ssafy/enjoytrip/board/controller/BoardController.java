@@ -69,6 +69,8 @@ public class BoardController extends HttpServlet {
 		ModelAndView mav = new ModelAndView();
 		List<BoardDto> list = boardService.listArticle(map);
 		System.out.println(list);
+		MemberDto memberDto = new MemberDto();
+		mav.addObject(memberDto);
 		PageNavigation pageNavigation = boardService.makePageNavigation(map);
 		mav.addObject("boards", list);
 		mav.addObject("navigation", pageNavigation);
@@ -80,12 +82,20 @@ public class BoardController extends HttpServlet {
 	}
 	// 글쓰기 페이지로 이동 
 	@GetMapping("/write")
-	public String write(@RequestParam Map<String, String> map, Model model) {
+	public String write(@RequestParam Map<String, String> map, Model model ,HttpServletRequest request, HttpServletResponse response) {
 		//logger.debug("write call parameter {}", map);
-		model.addAttribute("pgno", map.get("pgno"));
-		model.addAttribute("key", map.get("key"));
-		model.addAttribute("word", map.get("word"));
-		return "board/write";
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		if(memberDto != null) {			
+			model.addAttribute("pgno", map.get("pgno"));
+			model.addAttribute("key", map.get("key"));
+			model.addAttribute("word", map.get("word"));
+			return "board/write";
+		}
+		else {
+			request.setAttribute("msg", "로그인 후 이용이 가능합니다. ");
+			return "user/login";
+		}
 	}
 	
 	// 글쓰기 
@@ -156,7 +166,6 @@ public class BoardController extends HttpServlet {
 		//logger.debug("modify articleNo : {}", articleNo);
 		BoardDto boardDto = boardService.getArticle(articleNo);
 		model.addAttribute("board", boardDto);
-		System.out.println("모디파이"+boardDto );
 		model.addAttribute("pgno", map.get("pgno"));
 		model.addAttribute("key", map.get("key"));
 		model.addAttribute("word", map.get("word"));
