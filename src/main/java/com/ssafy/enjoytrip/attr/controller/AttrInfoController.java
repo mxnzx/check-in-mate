@@ -25,13 +25,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssafy.enjoytrip.attr.model.SidoDto;
 import com.ssafy.enjoytrip.attr.model.service.AttrInfoService;
 
 
-@Controller("AttrInfoController")
+@RestController
 @RequestMapping("/navigator")
 public class AttrInfoController {
 
@@ -45,19 +46,25 @@ public class AttrInfoController {
 		
 	}
 
-    //1. 페이지로 들어온다
-    //2. 프론트가 변경된 시도 코드를 가지고 온다
-    //3. 시도 목록을 선택하면 sido_code가 일치하는 구군 목록을 가지고 온다
-    //4. 시도&구군&컨텐츠 값이 모두 들어와있고, 검색 버튼을 누르면 해당 3개의 값이 맞는 attraction_info를 가지고 리스트로 출력한다
+    //1. 페이지로 들어오면 시도 코드를 가지고 온다
+    //2. 시도 목록을 선택하면 sido_code가 일치하는 구군 목록을 가지고 온다
+    //3. 시도&구군&컨텐츠 값이 모두 들어와있고, 검색 버튼을 누르면 해당 3개의 값이 맞는 attraction_info를 가지고 리스트로 출력한다
     @GetMapping("searchTrip")
-    public ModelAndView searchTrip(ModelAndView mav) {
-    	try {
-    		mav.setViewName("attr/attr");
-    	} catch(Exception e) {
-    		e.printStackTrace();
-    		mav.setViewName("error");
-    	}
-    	return mav;
+    public List<SidoDto> searchTrip() {
+    		List<SidoDto> sidos;
+			try {
+				sidos = attrInfoService.sidoList();
+				return sidos;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	return null;
     }
+    
+    
+    
+    
+    
 
 }

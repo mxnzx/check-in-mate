@@ -4,7 +4,7 @@
  
 <mapper namespace="com.ssafy.enjoytrip.attr.model.dao.AttrInfoDao">
 
-<!-- 
+
 	<resultMap type="SidoDto" id="sidoList">
 		<result column="sido_code" property="sidoCode" />
 		<result column="sido_name" property="sidoName" />
@@ -34,12 +34,12 @@
 		<result column="mlevel" property="mLevel" />
 	</resultMap>
 	
-	<select id="">
-		
+	<select id="sidoList" resultMap="sidoList">
+		select * from sido
 	</select>
 	
 	
--->
+
 
 </mapper>
 

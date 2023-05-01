@@ -16,16 +16,21 @@
 				<div class="alert alert-primary text-center fw-bold" role="alert">
 					전국 관광지 정보</div>
 				<!-- 관광지 검색 start -->
-				<form id="form-search" method="POST" class="d-flex"
-					onsubmit="return false;" role="search">
-					<select id="search-city" class="form-select me-2">
-						<option value="0" selected>검색 할 지역 선택</option>
-						<c:forEach var="city" items="${cities}">
-							<option value="${city.sidoCode}">${city.sidoName}</option>
+				<form id="form-search" method="POST" class="d-flex" onsubmit="return false;" role="search">
+
+					
+					<select id="search-sido" class="form-select me-2">
+						<option value="0" selected>지역 선택</option>
+						<c:forEach var="sido" items="${sidoList}">
+							<option value="${sido.sidoCode}">${sido.sidoName}</option>
 						</c:forEach>
-					</select> <select id="search-gugun" class="form-select me-2">
-						<option value="0" selected>구군 항목</option>
-					</select> <select id="search-content-id" class="form-select me-2">
+					</select> 
+					
+					<select id="search-gugun" class="form-select me-2">
+						<option value="0" selected>구군 선택</option>
+					</select>
+					
+					<select id="search-content-id" class="form-select me-2">
 						<option value="0" selected>관광지 유형</option>
 						<option value="12">관광지</option>
 						<option value="14">문화시설</option>
@@ -36,9 +41,15 @@
 						<option value="38">쇼핑</option>
 						<option value="39">음식점</option>
 					</select>
+					
+					
+					
 					<button id="btn-search" class="btn btn-outline-success"
 						type="button">검색</button>
+						
 				</form>
+				
+				
 			</div>
 			<!-- 관광지 검색 Select Form End -->
 			<div class="row">
@@ -70,28 +81,28 @@
 		<div class="col-7">
 			<div class="map container">
 				<div id="map" style="height: 600px"></div>
-				<!-- 	KakaoAPI 활용을 위한 appKey Setting.
-		        			★ root 서버 주소 세팅 필요. (127.0.0.1:8088, 8081, 8080, 9018)
-		        	 -->
+				<!-- 	KakaoAPI 활용을 위한 appKey Setting. ★ root 서버 주소 세팅 필요. (127.0.0.1:8088, 8081, 8080, 9018)  -->
 				<script type="text/javascript"
-					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=846de1180d8d9b6e255d19db1db819b3">
-							</script>
+							 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=846de1180d8d9b6e255d19db1db819b3">
+				</script>
 
 				<!-- 카카오맵 API 초기 화면 보여주기  -->
 				<script>
-					        	// 카카오지도
-					            var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-					              mapOption = {
-					                center: new kakao.maps.LatLng(37.500613, 127.036431), // 지도의 중심좌표
-					                level: 5, // 지도의 확대 레벨
-					              };
+					// 카카오지도
+					var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+						  mapOption = {
+								center: new kakao.maps.LatLng(37.500613, 127.036431), // 지도의 중심좌표
+					            level: 5, // 지도의 확대 레벨
+						   };
 					
-					            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					            var map = new kakao.maps.Map(mapContainer, mapOption);
-		        			</script>
+					 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+					var map = new kakao.maps.Map(mapContainer, mapOption);
+		       </script>
 				<!-- 시, 구군 정보 토글에 불러오기 -->
 				<script>
-									//시 정보 선택 시 발생하는 구군 항목 업데이트
+				
+					//시 정보
+					//시 정보 선택 시 발생하는 구군 항목 업데이트
 								document.querySelector("#search-city").addEventListener("change", function () {
 								  	   let seleted_code = this[this.selectedIndex].value;
 								  	   if (seleted_code) {
