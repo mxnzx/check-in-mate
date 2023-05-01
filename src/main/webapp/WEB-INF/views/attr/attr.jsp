@@ -2,28 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp"%>
 
-
-
-<!-- 공공데이터 포털 접근 Encoding key: 선택한 도시 정보에 대한 구군 정보를 가져오기 위한 목적으로 활용 -->
-<c:set var="serviceKey"
-	value="32LhEcAt92tVnlXIsGrJ6fSn2BqC1XtzUqxU432qhzk3Lu8%2BU5TEwxJTzLsAW7xmu3JCvM3CfPxBYO7nu82Pqg%3D%3D" />
-
 <!--중앙 content Start-->
-<div class="container">
-	<div class="row">
-		<div class="col-5" style="height: 600px;">
-			<div class="row">
-				<div class="alert alert-primary text-center fw-bold" role="alert">
-					전국 관광지 정보</div>
-				<!-- 관광지 검색 start -->
-				<form id="form-search" method="POST" class="d-flex" onsubmit="return false;" role="search">
-
+	<div class="container">
+		<div class="row">
+			<div class="col-5" style="height: 600px;">
+				<div class="row">
+					<div class="alert alert-primary text-center fw-bold" role="alert">
+						전국 관광지 정보</div>
+					<!-- 관광지 검색 start -->			
+					<form id="form-search" method="POST" class="d-flex" onsubmit="return false;" role="search">
 					
 					<select id="search-sido" class="form-select me-2">
 						<option value="0" selected>지역 선택</option>
-						<c:forEach var="sido" items="${sidoList}">
-							<option value="${sido.sidoCode}">${sido.sidoName}</option>
-						</c:forEach>
 					</select> 
 					
 					<select id="search-gugun" class="form-select me-2">
@@ -42,197 +32,236 @@
 						<option value="39">음식점</option>
 					</select>
 					
-					
-					
-					<button id="btn-search" class="btn btn-outline-success"
-						type="button">검색</button>
+					<button id="search-btn" class="btn btn-outline-success" type="button">검색</button>
 						
 				</form>
-				
-				
-			</div>
-			<!-- 관광지 검색 Select Form End -->
-			<div class="row">
-				<div class="row container" style="overflow: auto; height: 450px;">
-					<table class="table table-striped align-middle">
-						<thead>
-							<tr>
-								<th>대표이미지</th>
-								<th>관광지명</th>
-								<th>주소</th>
-								<!-- 위도 경도 삭제 -->
-							</tr>
-						</thead>
-						<tbody id="trip-list"></tbody>
-						<!-- DB에서 가져온 관광지 정보는 attrinfo에 담겨져 있으므로 이를 foreach로 꺼내와 출력 -->
-						<c:forEach var="attr" items="${attrinfo}">
-							<tr onclick="moveCenter(${attr.latitude}, ${attr.longitude});">
-								<td><img src="${attr.imgUrl}" width="100px"></td>
-								<td>${attr.title}</td>
-								<td>${attr.address}</td>
-								<!-- 위도 경도 삭제 -->
-							</tr>
-						</c:forEach>
-					</table>
+				</div>
+				<div class="row">
+					<div class="row container" style="overflow: auto; height: 450px;">
+						<table class="table table-striped align-middle"
+							style="display: none">
+							<thead>
+								<tr>
+									<th>대표이미지</th>
+									<th>관광지명</th>
+									<th>주소</th>
+								</tr>
+							</thead>
+							<tbody id="trip-list"></tbody>
+						</table>
+					</div>
 				</div>
 			</div>
-		</div>
-		<!-- kakaoMap API  start  -->
-		<div class="col-7">
-			<div class="map container">
-				<div id="map" style="height: 600px"></div>
-				<!-- 	KakaoAPI 활용을 위한 appKey Setting. ★ root 서버 주소 세팅 필요. (127.0.0.1:8088, 8081, 8080, 9018)  -->
-				<script type="text/javascript"
-							 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=846de1180d8d9b6e255d19db1db819b3">
-				</script>
-
-				<!-- 카카오맵 API 초기 화면 보여주기  -->
-				<script>
-					// 카카오지도
-					var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-						  mapOption = {
-								center: new kakao.maps.LatLng(37.500613, 127.036431), // 지도의 중심좌표
-					            level: 5, // 지도의 확대 레벨
-						   };
-					
-					 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new kakao.maps.Map(mapContainer, mapOption);
-		       </script>
-				<!-- 시, 구군 정보 토글에 불러오기 -->
-				<script>
-				
-					//시 정보
-					//시 정보 선택 시 발생하는 구군 항목 업데이트
-								document.querySelector("#search-city").addEventListener("change", function () {
-								  	   let seleted_code = this[this.selectedIndex].value;
-								  	   if (seleted_code) {
-								  	       getRegionDetail(seleted_code);
-								  	   }
-								  });
-							
-								// "도시" 정보를 선택하면 이벤트로 발생하는 "지역구" 정보 가져오기
-								function getRegionDetail(data) {
-									let Region_Code_T10_2 = "https://apis.data.go.kr/B551011/KorService1/areaCode1?"
-							          	+ "serviceKey=${serviceKey}"
-							          	+ "&numOfRows=100"
-							          	+ "&MobileOS=ETC"
-							          	+ "&MobileApp=AppTest"
-							          	+ "&_type=json"
-							          	+ "&areaCode=" + data;
-							
-							      	fetch(Region_Code_T10_2).then((response) => response.json())
-							          .then((text) => {
-							              let RDetails = text.response.body.items.item;
-							              let TagSet = "";
-							              let Select_div = document.querySelector("#search-gugun");
-							
-							              if (RDetails) {
-							                  RDetails.forEach(function (city) {
-							                      let Rcode = city.code;
-							                      let Rname = city.name;
-							
-							                      TagSet += "<option value=" + Rcode + ">" + Rname + "</option>";
-							                  });
-							              }
-							              Select_div.innerHTML = TagSet;
-							          });
-							  	}
-							  	  
-							  
-							    // 관광지 정보 가져오기 이벤트 ("검색" 버튼 이벤트) --> DB select 조건에 필요한 매개변수 담아서 던짐.
-							    document.getElementById("btn-search").addEventListener("click", () => {
-							    	//window.alert("검색 버튼 클릭됨");
-							    	//document.querySelector("table").setAttribute("style", "display: ;");
-							    	let sidoCode = document.querySelector("#search-city").value;
-							    	let gugunCode = document.querySelector("#search-gugun").value;
-							    	let typeCode = document.querySelector("#search-content-id").value;
-							    	
-							    	//console.log(sidoCode, gugunCode, typeCode);
-							    	//console.log("${root}/navigator?action=showmap&sido="+sidoCode+"&gugun="+gugunCode+"&type="+typeCode)
-							    	
-							      	let form = document.querySelector("#form-search");
-							        form.setAttribute("action", "${root}/navigator?action=showmap&sido="+sidoCode+"&gugun="+gugunCode+"&type="+typeCode);
-							        form.submit();
-							    });
-							    	
-							    function moveCenter(lat, lng) {
-							      map.setCenter(new kakao.maps.LatLng(lat, lng));
-							    }
-							</script>
-
-
-				<!-- 검색 이벤트가 발생해서 DB에서 관광지 정보를 가져왔다면 session의 attrinfo에 값이 담겨진다. 그 때 출력. -->
-				<c:if test="${not empty attrinfo}">
-					<script>
-	        		// 마커 이미지 경로
-	        	    var Simg = "./assets/img/maker/Simg.png";  // 쇼핑
-	        		var Cimg = "./assets/img/maker/Cimg.png";  // 문화
-	        		var Eimg = "./assets/img/maker/Eimg.png";  // 행사
-	        		var Fimg = "./assets/img/maker/Fimg.png";  // 음식 
-	        		var Pimg = "./assets/img/maker/Pimg.png";  // 숙박
-	        		var Rimg = "./assets/img/maker/Rimg.png";  // 레포츠
-	        		var Timg = "./assets/img/maker/Timg.png";  // 여행
-				        			var pos = new kakao.maps.LatLng(${attrinfo[0].latitude}, ${attrinfo[0].longitude});
-				        			map.setCenter(pos);
-		        				</script>
-
-					<c:forEach var="position" items="${attrinfo}">
-						<script>
-				        				var imageSize = new kakao.maps.Size(24,35);
-				        				var imageSrc = '';
-				        				if (${position.contentId} == 12) {     //관광지(여행)
-				        					imageSrc = Timg;
-				        				}
-				        				else if (${position.contentId} == 14){ //문화
-				        					imageSrc = Cimg;
-				        				}
-				        				else if (${position.contentId} == 15){ //축제공연행사
-				        					imageSrc = Eimg;
-				        				}
-				        				else if (${position.contentId} == 28){ //레포츠
-				        					imageSrc = Rimg;
-				        				}
-				        				else if (${position.contentId} == 32){ //숙박
-				        					imageSrc = Pimg;
-				        				}
-				        				else if (${position.contentId} == 38){ //쇼핑
-				        					imageSrc = Simg;
-				        				}
-				        				else if (${position.contentId} == 39){ //음식점
-				        					imageSrc = Fimg;
-				        				}
-				        				else {
-				        					imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-				        				}
-				        				
-				        				var makerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-				        				
-				        				//마커 생성
-				        				var marker = new kakao.maps.Marker({
-									        map: map, // 마커를 표시할 지도
-									        position: new kakao.maps.LatLng(${position.latitude}, ${position.longitude}), // 마커를 표시할 위치
-									        title : "${position.title}", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-									        image : makerImage // 마커 이미지 
-									    });
-		        			</script>
-					</c:forEach>
-				</c:if>
+			<div class="col-7">
+				<div class="map container">
+					<div id="map" style="height: 600px"></div>
+					<script type="text/javascript"
+						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=846de1180d8d9b6e255d19db1db819b3&libraries=services,clusterer,drawing">					
+					</script>
+				</div>
 			</div>
-			<!-- kakaoMap API  end -->
-
 		</div>
 	</div>
 </div>
 </div>
 <!--중앙 content End-->
-<!-- 하단 Footer -->
+
+<script>
+let areaUrl = "/navigator/searchSido";
+window.onload = init();
+
+//창이 뜨면 시도 목록 가져온다
+function init() {
+    fetchAllAreas(areaUrl);
+}
+//시도 목록 가져와서 옵션값으로 추가한
+function fetchAllAreas(areaUrl) {
+    fetch(areaUrl, { method: "GET" })
+  .then((response) => response.json())
+  .then((data) => makeOption(data));
+}
+
+//바뀐 시도 값을 가지고 구군 목록을 가져온다.
+const searchSidoSelect = document.querySelector('#search-sido');
+
+searchSidoSelect.addEventListener('change', function() {
+  fetchGugunList(this.value); // 선택된 함수로 구군을 가져온다
+});
+
+function fetchGugunList(selectedSido) {
+  // 선택된 값으로 실행될 함수 내용을 작성합니다.
+  console.log(`선택된 값은 ${selectedValue} 입니다.`);
+  const gugunUrl = "/navigator/"
+  fetch(areaUrl, { method: "GET" })
+  .then((response) => response.json())
+  .then((data) => makeOption(data));
+}
+
+
+
+/* let areaUrl =
+  "https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=" +
+  serviceKey +
+  "&numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json"; */
+
+// fetch(areaUrl, { method: "GET" }).then(function (response) { return response.json() }).then(function (data) { makeOption(data); });
+
+function makeOption(data) {
+  let areas = data;
+  console.log(areas);
+  let sel = document.getElementById("search-sido");
+  areas.forEach((area) => {
+    let opt = document.createElement("option");
+    opt.setAttribute("value", area.sidoCode);
+    opt.appendChild(document.createTextNode(area.sidoName));
+    sel.appendChild(opt);  
+  });
+}
+// 검색 버튼을 누르면..
+// 지역, 유형, 검색어 얻기.
+// 위 데이터를 가지고 공공데이터에 요청.
+// 받은 데이터를 이용하여 화면 구성.
+document.getElementById("search-btn").addEventListener("click", () => {
+  let searchUrl = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=${serviceKey}&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A`;
+
+  let areaCode = document.getElementById("search-area").value;
+  let contentTypeId = document.getElementById("search-content-id").value;
+  let keyword = document.getElementById("search-keyword").value;
+
+  if (parseInt(areaCode)) searchUrl += `&areaCode=${areaCode}`;
+  if (parseInt(contentTypeId)) searchUrl += `&contentTypeId=${contentTypeId}`;
+  if (!keyword) {
+    alert("검색어 입력 필수!!!");
+    return;
+  } else searchUrl += `&keyword=${keyword}`;
+
+  fetch(searchUrl)
+    .then((response) => response.json())
+    .then((data) => makeList(data));
+});
+
+var positions; // marker 배열.
+function makeList(data) {
+  document.querySelector("table").setAttribute("style", "display: ;");
+  let trips = data.response.body.items.item;
+  let tripList = ``;
+  //배열에 지역명 저장
+  positions = [];
+  trips.forEach((area) => {
+    tripList += `
+    <tr onclick="moveCenter(${area.mapy}, ${area.mapx});">
+      <td><img src="${area.firstimage}" width="100px" height="60px"></td>
+      <td>${area.title}</td>
+      <td>${area.addr1} ${area.addr2}</td>
+    </tr>
+  `;
+
+    let markerInfo = {
+      content: `<div class="container-fluid bg-light">
+                  <p>${area.title}</p>
+                </div>
+                <div class="container-fluid row">
+                  <div class="col-3 attraction-first-card" style="background-image: url(${area.firstimage}); height: 3rem">
+                  </div>
+                  <div class="col">
+                    <p>${area.addr1}</p>
+                  </div>
+                </div>
+                `,
+      latlng: new kakao.maps.LatLng(area.mapy, area.mapx),
+    };
+    positions.push(markerInfo);
+    console.log(positions);
+  });
+  document.getElementById("trip-list").innerHTML = tripList;
+  displayMarker();
+}
+
+// 카카오지도
+var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+  mapOption = {
+    center: new kakao.maps.LatLng(37.500613, 127.036431), // 지도의 중심좌표
+    level: 5, // 지도의 확대 레벨
+  };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+function displayMarker() {
+  // 마커 이미지의 이미지 주소입니다
+  var imageSrc =
+    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+  for (var i = 0; i < positions.length; i++) {
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35);
+
+    // 마커 이미지를 생성합니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+      map: map, // 마커를 표시할 지도
+      position: positions[i].latlng, // 마커를 표시할 위치
+      title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+      image: markerImage, // 마커 이미지
+    });
+
+    // 마커에 표시할 인포윈도우를 생성합니다
+    var infoWindow = new kakao.maps.InfoWindow({
+      content: positions[i].content,
+    });
+
+    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+    // 이벤트 리스너로는 클로저를 만들어 등록합니다
+    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    kakao.maps.event.addListener(
+      marker,
+      "mouseover",
+      makeOverListener(map, marker, infoWindow)
+    );
+    kakao.maps.event.addListener(
+      marker,
+      "mouseout",
+      makeOutListener(infoWindow)
+    );
+  }
+
+  // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+  function makeOverListener(map, marker, infoWindow) {
+    return function () {
+      infoWindow.open(map, marker);
+    };
+  }
+
+  // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+  function makeOutListener(infoWindow) {
+    return function () {
+      infoWindow.close();
+    };
+  }
+
+  // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
+  map.setCenter(positions[0].latlng);
+}
+
+function moveCenter(lat, lng) {
+  map.setCenter(new kakao.maps.LatLng(lat, lng));
+}
+
+
+
+</script>
+
+<!-- 하단 Footer Start  -->
 <%@ include file="../common/footer.jsp"%>
-
-
-
 <!-- 하단 Footer End  -->
 <!-- 로그인 모달창 -->
 <%@ include file="../common/login-modal.jsp"%>
 <!--회원가입 모달-->
 <%@ include file="../common/join-modal.jsp"%>
 
+
+</body>
+
+</html>
