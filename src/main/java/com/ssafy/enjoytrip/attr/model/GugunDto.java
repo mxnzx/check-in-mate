@@ -7,7 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SidoDto {
+public class GugunDto {
+	private int gugunCode;
+	private String gugunName;
 	private int sidoCode;
-	private String sidoName;
 }
