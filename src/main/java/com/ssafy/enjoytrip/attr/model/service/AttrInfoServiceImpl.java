@@ -20,14 +20,5 @@ public class AttrInfoServiceImpl implements AttrInfoService {
 		this.attrInfoDao = attrInfoDao;
 	}
 
-	@Override
-	public List<SidoDto> getCities() throws Exception {
-		return attrInfoDao.getCities();
-	}
-
-	@Override
-	public List<AttrInfoDto> getAttrInfo(int sido, int gugun, int type) throws Exception {
-		return null;
-	}
 
 }

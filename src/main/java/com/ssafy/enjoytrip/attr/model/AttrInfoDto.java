@@ -12,10 +12,12 @@ public class AttrInfoDto {
 	private int contentId;
 	private int contentTypeId;
 	private String title;
-	private String address;
+	private String address1;
+	private String address2;
 	private String zipCode;
 	private String tel;
-	private String imgUrl;
+	private String imgUrl1;
+	private String imgUrl2;
 	private int readCount;
 	private int sidoCode;	
 	private int gugunCode;

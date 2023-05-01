@@ -71,10 +71,10 @@
 			<div class="map container">
 				<div id="map" style="height: 600px"></div>
 				<!-- 	KakaoAPI 활용을 위한 appKey Setting.
-		        			★ root 서버 주소 세팅 필요. (127.0.0.1:8088, 8081, 8080 설정? 한 상태로 마지막 확인
+		        			★ root 서버 주소 세팅 필요. (127.0.0.1:8088, 8081, 8080, 9018)
 		        	 -->
 				<script type="text/javascript"
-					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8820d3277f771b41fa361424002a1649">
+					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=846de1180d8d9b6e255d19db1db819b3">
 							</script>
 
 				<!-- 카카오맵 API 초기 화면 보여주기  -->
