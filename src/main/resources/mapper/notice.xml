@@ -19,7 +19,15 @@
 	<resultMap type="noticeDto" id="viewArticle" extends="noticeArticle">
 <!-- 	<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/> -->
 	</resultMap>
-	
+
+	<insert id="writeArticle" parameterType="noticeDto">
+		insert into notice (notice_user_id, subject, content, hit, register_time)
+		values (#{userId}, #{subject}, #{content}, 0, now())
+		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+		
 	<sql id="search">
 		<if test="word != null and word != ''">
 			<if test="key == 'subject'">

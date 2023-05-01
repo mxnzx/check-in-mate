@@ -30,8 +30,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public void writeArticle(NoticeDto noticeDto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		noticeMapper.writeArticle(noticeDto);
 	}
 
 	@Override

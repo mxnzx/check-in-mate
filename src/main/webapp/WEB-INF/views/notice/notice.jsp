@@ -73,6 +73,12 @@
 		type="hidden" id="p-key" name="key" value=""> <input
 		type="hidden" id="p-word" name="word" value="">
 </form>
+<form id="form-no-param" method="get" action="${root}/notice/view">
+	<input type="hidden" name="pgno" value="${pgno}"> 
+	<input type="hidden" name="key" value="${key}"> 
+	<input type="hidden" name="word" value="${word}"> 
+	<input type="hidden" id="articleno" name="articleno" value="">
+</form>
 </div>
 <script>
 	let titles = document.querySelectorAll(".article-title");
@@ -86,7 +92,9 @@
 
 	document.querySelector("#btn-mv-register").addEventListener("click",
 			function() {
-				location.href = "${root}/article?action=mvwrite";
+				let form = document.querySelector("#form-param");
+				form.setAttribute("action", "${root}/notice/write");
+				form.submit();
 			});
 
 	document.querySelector("#btn-search").addEventListener("click", function() {

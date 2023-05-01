@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,5 +61,23 @@ public class NoticeController extends HttpServlet {
 		mav.addObject("word", map.get("word"));
 		mav.setViewName("notice/notice");
 		return mav;
+	}
+	
+	// 공지 글쓰기 페이지로 이동  , 임시로 로그인 했을때만 출력하게 해놓음 (미완성)
+	@GetMapping("/write")
+	public String write(@RequestParam Map<String, String> map, Model model ,HttpServletRequest request, HttpServletResponse response) {
+		//logger.debug("write call parameter {}", map);
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		if(memberDto != null) {			
+			model.addAttribute("pgno", map.get("pgno"));
+			model.addAttribute("key", map.get("key"));
+			model.addAttribute("word", map.get("word"));
+			return "notice/write";
+		}
+		else {
+			request.setAttribute("msg", "로그인 후 이용이 가능합니다. ");
+			return "user/login";
+		}
 	}
 }
