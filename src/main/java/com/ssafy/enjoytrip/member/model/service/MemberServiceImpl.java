@@ -2,66 +2,64 @@ package com.ssafy.enjoytrip.member.model.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.member.model.MemberDto;
 import com.ssafy.enjoytrip.member.model.dao.MemberDao;
 import com.ssafy.enjoytrip.member.model.dao.MemberDaoImpl;
+import com.ssafy.enjoytrip.member.model.mapper.MemberMapper;
 
-
-
+@Service
 public class MemberServiceImpl implements MemberService {
 	
-	private static MemberService memberService = new MemberServiceImpl();
-	private MemberDao memberDao;
 	
-	private MemberServiceImpl() {
-		memberDao = MemberDaoImpl.getMemberDao();
+	private MemberMapper memberMapper;
+
+	public MemberServiceImpl(MemberMapper memberMapper) {
+		super();
+		this.memberMapper = memberMapper;
+	}
+
+	@Override
+	public int idCheck(String userId) throws Exception {
+//		return sqlSession.getMapper(MemberMapper.class).idCheck(userId);
+		return memberMapper.idCheck(userId);
+	}
+
+	@Override
+	public void joinMember(MemberDto memberDto) throws Exception {
+//		sqlSession.getMapper(MemberMapper.class).joinMember(memberDto);
+		memberMapper.joinMember(memberDto);
+	}
+
+	@Override
+	public MemberDto loginMember(Map<String, String> map) throws Exception {
+//		return sqlSession.getMapper(MemberMapper.class).loginMember(map);
+		return memberMapper.loginMember(map);
 	}
 	
-	public static MemberService getMemberService() {
-		return memberService;
+	/* ADMIN */
+	@Override
+	public List<MemberDto> listMember(Map<String, Object> map) throws Exception {
+		return memberMapper.listMember(map);
 	}
 
 	@Override
-	public boolean joinMember(MemberDto memberDto) throws Exception {
-		memberDto.setUserPwd(encryptPassword(memberDto.getUserPwd()));
-		System.out.println(memberDto.getUserPwd());
-		System.out.println("MemberServiceImpl joinmember 실행");
-		return memberDao.joinMember(memberDto);
+	public MemberDto getMember(String userId) throws Exception {
+		return memberMapper.getMember(userId);
 	}
 
 	@Override
-	public MemberDto loginMember(String userId, String userPwd) throws Exception {
-		System.out.println(userPwd);
-		MemberDto user = memberDao.loginMember(userId, userPwd);
-		return user;
+	public void updateMember(MemberDto memberDto) throws Exception {
+		memberMapper.updateMember(memberDto);
 	}
 
 	@Override
-	public List<String> listMember() throws Exception {
-		return memberDao.listMember();
-	}
-
-	@Override
-	public boolean idCheck(String userid) throws Exception {
-		List<String> selectedUserId = listMember();
-		for (String s : selectedUserId) {
-			if (userid.equals(s)) return false;
-		}
-		return true;
-	}
-
-	@Override
-	public boolean updateMember(MemberDto memberDto) throws Exception {
-		memberDto.setUserPwd(encryptPassword(memberDto.getUserPwd()));
-		return memberDao.updateMember(memberDto);
-	}
-
-	@Override
-	public boolean deleteMember(String id) throws Exception {
-		return memberDao.deleteMember(id);
+	public void deleteMember(String userId) throws Exception {
+		memberMapper.deleteMember(userId);		
 	}
 
 	@Override
