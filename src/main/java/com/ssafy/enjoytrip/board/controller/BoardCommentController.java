@@ -23,17 +23,20 @@ public class BoardCommentController {
 		super();
 		this.boardService = boardService;
 	}
-	
+	// 댓글 목록 출력 ( articleNo의 댓글을 출력 )
 	@GetMapping("{articleNo}")
 	public List<CommentDto> listComment(@PathVariable int articleNo) {
 		return boardService.listComment(articleNo);
 	}
 	
+	// 댓글 삭제하기 ( commentNo 비교 )
 	@DeleteMapping("{articleNo}/{commentNo}")
 	public List<CommentDto> deleteComment(@PathVariable int articleNo, @PathVariable int commentNo) {
 		boardService.deleteComment(commentNo);
 		return boardService.listComment(articleNo);
 	}
+	
+	// 댓글쓰기
 	@PostMapping
 	public List<CommentDto> writeComment(@RequestBody CommentDto commentDto) {
 		boardService.writeComment(commentDto);
