@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
+import com.ssafy.enjoytrip.attr.model.GugunDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
 import com.ssafy.enjoytrip.attr.model.dao.AttrInfoDao;
 
@@ -21,13 +22,17 @@ public class AttrInfoServiceImpl implements AttrInfoService {
 	}
 
 	@Override
-	public List<SidoDto> getCities() throws Exception {
-		return attrInfoDao.getCities();
+	public List<SidoDto> sidoList() throws Exception {
+		return attrInfoDao.sidoList();
 	}
 
 	@Override
-	public List<AttrInfoDto> getAttrInfo(int sido, int gugun, int type) throws Exception {
-		return null;
+	public List<GugunDto> gugunList(String sidoCode) throws Exception {
+		return attrInfoDao.gugunList(sidoCode);
 	}
 
+	@Override
+	public List<AttrInfoDto> attrList() throws Exception {
+		return null;
+	}
 }
