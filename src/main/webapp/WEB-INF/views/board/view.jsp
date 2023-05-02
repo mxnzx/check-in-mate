@@ -61,20 +61,6 @@
 							class="btn btn-outline-danger mb-3 ms-1">글삭제</button>
 					</c:if>
 					</div> 
-<%--       <div class="row">
-      	<div>${userInfo.userId}</div>
-      	<div>
-      		<textarea id="content" rows="5" cols="80"></textarea>
-      	</div>
-      	<div>
-      		<button id="commentRegBtn">등록 </button>
-      	</div>
-      </div>
-      
-      <div>
-      	<ul id="commentUL"></ul>
-      </div> --%>
-   			
 
 				</div>
 				<form id="form-no-param" method="get" action="${root}/board">
@@ -101,6 +87,8 @@
     	  	form.setAttribute("action", "${root}/board/list");
           	form.submit();
       	});
+    	
+    	// 자신의 아이디와 같을 때만 수정 , 삭제 가능 
     	if(`${userinfo.userId}`===`${board.userId}`){
 		document.querySelector("#btn-mv-modify").addEventListener("click", function () {
 	    	let form = document.querySelector("#form-no-param");
@@ -116,11 +104,9 @@
 		});
     	}
 		
-	    /*
-	    ================
-	    	댓글 스크립트
-	    ================
-	    */
+	    /*-------------------------------------------------------------------------	   
+	    	댓글 스크립트	    
+	    */-------------------------------------------------------------------------
 		let commentRegBtn = document.getElementById("commentRegBtn");
 	    commentRegBtn.addEventListener('click', function () {
 	    	let body = {
