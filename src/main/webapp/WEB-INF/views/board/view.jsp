@@ -39,17 +39,17 @@
 				<div class="d-flex justify-flex-end" style="    flex-direction: column;">
 					<div class="row">
 
-						<div>${userInfo.userId}</div>
-						<div>
-							<textarea id="content" rows="5" style="width: 100%;"></textarea>
-						</div>
-						<div  style="text-align: right;">
-							<button id="commentRegBtn">등록</button>
-						</div>
-
 						<div>
 							<ul id="commentUL"></ul>
 						</div>
+						<div>${userInfo.userId}</div>
+						<div>
+							<textarea id="content" rows="5" style="width: 100%;" placeholder="댓글 입력"></textarea>
+						</div>
+						<div  style="text-align: right;">
+							<button id="commentRegBtn" class = "btn btn-outline-primary mb-3" >댓글 등록</button>
+						</div>
+
 					</div>
 					<div style="text-align: right;">
 						<button type="button" id="btn-list"
@@ -136,10 +136,11 @@
 	    		let comment = list[i];
 	    		html += `
 	    			<li>
-	    				<span>\${comment.comment}</span>
-	    				<span>\${comment.userId}</span>
-	    				<span>\${comment.registerTime}</span>
-	    				<span><a href="#1" onclick="commentDel(\${comment.commentNo})">삭제</a></span>
+	    				<ul>작성자 : \${comment.userId}</ul>
+	    				<ul>내용 : \${comment.comment}</ul>
+	    				<ul>등록시간 : \${comment.registerTime}</ul>
+	    				<ul><a href="#1" onclick="commentDel(\${comment.commentNo})">삭제</a></ul>
+	    				<br>
 	    			</li>
 	    		`;
 	    	}
