@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
+import com.ssafy.enjoytrip.board.model.CommentDto;
 
 @Mapper
 public interface BoardMapper {
@@ -30,5 +31,11 @@ public interface BoardMapper {
 	void deleteArticle(int articleNo) throws SQLException;
 
 	//List<FileInfoDto> fileInfoList(int articleNo) throws Exception;
+	
+	void insertComment(CommentDto commentdto);
+	
+	List<CommentDto> listComment(int article_no);
+	
+	void deleteComment(int commentNo);
 
 }

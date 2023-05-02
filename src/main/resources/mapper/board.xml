@@ -103,6 +103,35 @@
 		delete from board
 		where article_no = #{articleNo}
 	</delete> 
+	
+	<resultMap type = "commentDto" id= "commentMap">
+		<result column="comment_no" property="commentNo"/>
+		<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="parent_id" property="parentId"/>
+		<result column="comment" property="comment"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>	
 
+	<insert id="insertComment" parameterType="commentDto">
+		insert into board_comment (
+			article_no,
+			user_id,
+			comment,
+			register_time
+		) values (#{articleNo}, #{userId}, #{comment}, now())
+	</insert>
+	
+	<select id="listComment" parameterType="int" resultMap="commentMap">
+		select comment_no, article_no, user_id, comment, register_time
+		from board_comment
+		where article_no = #{articleNo}
+		order by register_time
+	</select>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from board_comment where comment_no = #{commentNo}
+	</delete>
+	
 </mapper>	
 	

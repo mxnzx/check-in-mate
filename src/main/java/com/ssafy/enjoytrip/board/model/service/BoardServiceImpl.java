@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
+import com.ssafy.enjoytrip.board.model.CommentDto;
 import com.ssafy.enjoytrip.board.model.dao.BoardDao;
 import com.ssafy.enjoytrip.board.model.dao.BoardDaoImpl;
 import com.ssafy.enjoytrip.board.model.mapper.BoardMapper;
@@ -128,6 +129,21 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteArticleAll(String id) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void writeComment(CommentDto commentDto) {
+		boardMapper.insertComment(commentDto);
+	}
+
+	@Override
+	public List<CommentDto> listComment(int article_no) {
+		return boardMapper.listComment(article_no);
+	}
+
+	@Override
+	public void deleteComment(int commentNo) {
+		boardMapper.deleteComment(commentNo);
 	}
 	
 //	private BoardDao boardDao;
