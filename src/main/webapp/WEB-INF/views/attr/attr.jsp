@@ -70,15 +70,12 @@
 <script type="text/javascript" src="${root}/assets/js/map.js" />
 
 
-<!-- 하단 Footer Start  -->
-<%@ include file="../common/footer.jsp"%>
-<!-- 하단 Footer End  -->
+
+
 <!-- 로그인 모달창 -->
 <%@ include file="../user/login-modal.jsp"%>
 <!--회원가입 모달-->
 <%@ include file="../user/join-modal.jsp"%>
+<!-- 하단 Footer -->
+<%@ include file="../common/footer.jsp"%>
 
-
-</body>
-
-</html>
