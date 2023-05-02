@@ -55,23 +55,7 @@
 		</div>
 		</form>
 		<script type="text/javascript">
-/* 				document.querySelector("#myPageUpdate").addEventListener("click", function() {
-					if (!document.querySelector("#pw").value) {
-						alert("비밀번호를 입력해주세요.");
-						return;
-					}
-					if (!document.querySelector("#pwCheck").value) {
-						alert("비밀번호를 한번 더 입력해주세요.");
-						return;
-					}
-					
-					if (document.querySelector("#pw").value != document.querySelector("#pwCheck").value) {
-						alert("비밀번호를 정확하게 입력해주세요.");
-						return;
-					}
-					alert("비밀번호가 변경되었습니다.");
-					document.querySelector("#myPage-form").submit();
-				}); */
+
 				document.querySelector("#myPageUpdate").addEventListener("click", function() {
 					if (!document.querySelector("#pw").value) {
 						alert("비밀번호를 입력해주세요.");
@@ -91,10 +75,7 @@
 			          form.setAttribute("action", "${root}/user/updateMember");
 			          form.submit();
 				});				
-/*  				document.querySelector("#delete-btn").addEventListener("click", function() {
-						document.querySelector("#input-hidden").setAttribute("value", "/deleteMember");
-						document.querySelector("#myPage-form").submit();
-				});  */
+
  				document.querySelector("#delete-btn").addEventListener("click", function() {
 			          let form = document.querySelector("#myPage-form");
 			          form.setAttribute("action", "${root}/user/deleteMember");

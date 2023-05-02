@@ -67,12 +67,6 @@
 	</div>
 	<div class="row">${navigation.navigator}</div>
 </div>
-<!-- <form id="form-param" method="get" action="">
-	<input type="hidden" id="p-action" name="action" value=""> <input
-		type="hidden" id="p-pgno" name="pgno" value=""> <input
-		type="hidden" id="p-key" name="key" value=""> <input
-		type="hidden" id="p-word" name="word" value="">
-</form> -->
 
 <form id="form-param" method="get" action="">
 	<input type="hidden" name="pgno" id="pgno" value="${pgno}"> <input
@@ -87,14 +81,7 @@
 </form>
 </div>
 <script>
-/* 	let titles = document.querySelectorAll(".board-title");
-	titles.forEach(function(title) {
-		title.addEventListener("click", function() {
-			console.log(this.getAttribute("data-no"));
-			location.href = "${root}/board?action=view&articleno="
-					+ this.getAttribute("data-no");
-		});
-	}); */
+
     let titles = document.querySelectorAll(".board-title");
     titles.forEach(function (title) {
       title.addEventListener("click", function () {
@@ -123,22 +110,6 @@
 		location.href = "${root}/board?action=" + option;
 	});
 
-/* 	let pages = document.querySelectorAll(".page-link");
-	pages.forEach(function(page) {
-		page.addEventListener("click", function() {
-			console.log(this.parentNode.getAttribute("data-pg"));
-			document.querySelector("#p-action").value = "notice";
-			document.querySelector("#p-pgno").value = this.parentNode
-					.getAttribute("data-pg");
-			document.querySelector("#p-key").value = "${param.key}";
-			document.querySelector("#p-word").value = "${param.word}";
-			document.querySelector("#form-param").submit();
-		});
-	});
-	let msg = '${msg}';
-	if (msg != "") {
-		alert(msg);
-	}; */
     let pages = document.querySelectorAll(".page-link");
     pages.forEach(function (page) {
       page.addEventListener("click", function () {

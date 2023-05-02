@@ -20,7 +20,7 @@
 						<div class="row mb-1 text-center">
 							<div class="col-3">아이디</div>
 							<div class="col">
-								<input type="text" placeholder="id" class="form-label"
+								<input type="text" placeholder="id" class="form-control"
 									id="userid" name="userid" value="${saveid}" />
 							</div>
 
@@ -28,7 +28,7 @@
 						<div class="row mb-1 text-center">
 							<div class="col-3">비밀번호</div>
 							<div class="col">
-								<input type="password" placeholder="pw" class="form-label"
+								<input type="password" placeholder="pw" class="form-control"
 									id="userpwd" name="userpwd">
 							</div>
 						</div>
