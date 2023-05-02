@@ -17,6 +17,6 @@ public interface AttrInfoDao {
 
 	List<SidoDto> sidoList() throws SQLException;
 	List<GugunDto> gugunList(String sidoCode) throws SQLException;
-	List<AttrInfoDto> attrList() throws SQLException;
+	List<AttrInfoDto> attrList(String sidoCode, String gugunCode, String contentTypeId) throws SQLException;
 
 }

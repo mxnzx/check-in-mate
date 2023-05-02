@@ -40,7 +40,7 @@
 			<header>
 				<nav class="navbar navbar-expand-lg my-2">
 					<div class="container-fluid">
-						<a class="navbar-brand fs-3" href="${root}index.jsp"
+						<a class="navbar-brand fs-3" href="/"
 							id="enjoyTrip"> Enjoy Trip</a>
 						<button class="navbar-toggler" type="button"
 							data-bs-toggle="collapse"

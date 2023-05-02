@@ -10,7 +10,7 @@ public interface AttrInfoService {
 
 	List<SidoDto> sidoList() throws Exception;
 	List<GugunDto> gugunList(String sidoCode) throws Exception;
-	List<AttrInfoDto> attrList() throws Exception;
+	List<AttrInfoDto> attrList(String sidoCode, String gugunCode, String contentTypeId) throws Exception;
 	
 
 }
