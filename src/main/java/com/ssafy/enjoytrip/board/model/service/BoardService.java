@@ -18,7 +18,7 @@ public interface BoardService {
 	void updateHit(int articleNo) throws Exception;
 	
 	void modifyArticle(BoardDto boardDto) throws Exception;
-	void deleteArticle(int articleNo) throws Exception;
+	void deleteArticle(int articleNo, String path) throws Exception;
 	void deleteArticleAll(String id) throws Exception;
 	
 }

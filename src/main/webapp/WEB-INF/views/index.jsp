@@ -368,10 +368,10 @@
 </div>
 
 <!-- 로그인 모달창 -->
-<%@ include file="common/login-modal.jsp"%>
+<%@ include file="user/login-modal.jsp"%>
 
 <!--회원가입 모달-->
-<%@ include file="common/join-modal.jsp"%>
+<%@ include file="user/join-modal.jsp"%>
 <!-- 하단 Footer Start  -->
 <%@ include file="common/footer.jsp"%>
 

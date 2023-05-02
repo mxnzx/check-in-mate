@@ -3,8 +3,81 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	
-<mapper namespace="com.ssafy.enjoytrip.notice.model.dao.NoticeDao">
+<mapper namespace="com.ssafy.enjoytrip.notice.model.mapper.NoticeMapper">
+
+	<resultMap type="noticeDto" id="noticeArticle">
+		<result column="article_no" property="articleNo"/>
+		<result column="notice_user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
 
 
+	<resultMap type="noticeDto" id="viewArticle" extends="noticeArticle">
+<!-- 	<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/> -->
+	</resultMap>
 
+	<insert id="writeArticle" parameterType="noticeDto">
+		insert into notice (notice_user_id, subject, content, hit, register_time)
+		values (#{userId}, #{subject}, #{content}, 0, now())
+		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+		
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+	<select id="listArticle" parameterType="map" resultMap="noticeArticle">
+
+ 		select n.article_no, n.notice_user_id, n.subject, n.content, n.hit, n.register_time, m.user_name
+		from notice n, member m 
+		where n.notice_user_id = m.user_id
+ 		<include refid="search"></include>
+		order by n.article_no desc
+		limit #{start}, #{listsize} 
+	</select>
+	
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(article_no)
+		from notice
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>	
+	
+	<select id="getArticle" parameterType="int" resultMap="viewArticle">
+		select n.article_no, n.notice_user_id, n.subject, n.content, n.hit, n.register_time, m.user_name 
+		from notice n, member m
+		where n.notice_user_id = m.user_id
+		and n.article_no = #{articleNo}
+	</select>
+
+	<update id="updateHit" parameterType="int">
+		update notice
+		set hit = hit + 1
+		where article_no = #{articleNo}
+	</update>
+		
+	<update id="modifyArticle" parameterType="noticeDto">
+		update notice
+		set subject = #{subject}, content = #{content}
+		where article_no = #{articleNo}
+	</update>	
+
+	<delete id="deleteArticle" parameterType="int">
+		delete from notice
+		where article_no = #{articleNo}
+	</delete> 	
 </mapper>	

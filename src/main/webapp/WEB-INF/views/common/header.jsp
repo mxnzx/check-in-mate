@@ -40,7 +40,7 @@
 			<header>
 				<nav class="navbar navbar-expand-lg my-2">
 					<div class="container-fluid">
-						<a class="navbar-brand fs-3" href="${root}/index.jsp"
+						<a class="navbar-brand fs-3" href="${root}index.jsp"
 							id="enjoyTrip"> Enjoy Trip</a>
 						<button class="navbar-toggler" type="button"
 							data-bs-toggle="collapse"
@@ -60,7 +60,7 @@
 							</ul>
 							<ul class="navbar-nav mb-2 mb-lg-0 m-2">
 								<%@ include file="confirm.jsp"%>
-								<li class="nav-item"><a class="nav-link" href="${root}/article?action=notice&pgno=1&key=&word=">공지사항</a></li>
+								<li class="nav-item"><a class="nav-link" href="${root}/notice/list?&pgno=1&key=&word=">공지사항</a></li>
 								<li class="nav-item dropdown"><a
 									class="nav-link dropdown-toggle" href="#" role="button"
 									data-bs-toggle="dropdown" aria-expanded="false"> 회원관리 </a>
@@ -73,11 +73,11 @@
 										</c:if>
 										<c:if test="${not empty userinfo}">
 											<li><a class="dropdown-item" id="logout=dropdown"
-												href="${root}/user?action=logout">로그아웃</a></li>
+												href="${root}/user/logout">로그아웃</a></li>
 										</c:if>
 										<c:if test="${not empty userinfo}">
 											<li><a class="dropdown-item"
-												href="${root}/user/mypage.jsp">마이페이지</a></li>
+												href="${root}/user/mypage">마이페이지</a></li>
 										</c:if>
 									</ul></li>
 							</ul>

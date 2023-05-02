@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="../common/header.jsp"%>
 
 <!-- 게시판 보드 자리 -->
 <div class="row justify-content-center">
@@ -51,15 +51,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="article" items="${articles}">
+				<c:forEach var="notice" items="${notices}">
 					<tr class="text-center">
-						<th scope="row">${article.articleNo}</th>
+						<th scope="row">${notice.articleNo}</th>
 						<td class="text-start"><a href="#"
-							class="article-title link-dark" data-no="${article.articleNo}"
-							style="text-decoration: none"> ${article.subject} </a></td>
-						<td>${article.userId}</td>
-						<td>${article.hit}</td>
-						<td>${article.registerTime}</td>
+							class="notice-title link-dark" data-no="${notice.articleNo}"
+							style="text-decoration: none"> ${notice.subject} </a></td>
+						<td>${notice.userId}</td>
+						<td>${notice.hit}</td>
+						<td>${notice.registerTime}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -73,25 +73,32 @@
 		type="hidden" id="p-key" name="key" value=""> <input
 		type="hidden" id="p-word" name="word" value="">
 </form>
+<form id="form-no-param" method="get" action="${root}/notice/view">
+	<input type="hidden" name="pgno" value="${pgno}"> 
+	<input type="hidden" name="key" value="${key}"> 
+	<input type="hidden" name="word" value="${word}"> 
+	<input type="hidden" id="articleno" name="articleno" value="">
+</form>
 </div>
 <script>
-	let titles = document.querySelectorAll(".article-title");
-	titles.forEach(function(title) {
-		title.addEventListener("click", function() {
-			console.log(this.getAttribute("data-no"));
-			location.href = "${root}/article?action=view&articleno="
-					+ this.getAttribute("data-no");
-		});
-	});
+let titles = document.querySelectorAll(".notice-title");
+titles.forEach(function (title) {
+  title.addEventListener("click", function () {
+    document.querySelector("#articleno").value = this.getAttribute("data-no");
+    document.querySelector("#form-no-param").submit();
+  });
+});	
 
 	document.querySelector("#btn-mv-register").addEventListener("click",
 			function() {
-				location.href = "${root}/article?action=mvwrite";
+				let form = document.querySelector("#form-param");
+				form.setAttribute("action", "${root}/notice/write");
+				form.submit();
 			});
 
 	document.querySelector("#btn-search").addEventListener("click", function() {
 		let form = document.querySelector("#form-search");
-		form.setAttribute("action", "${root}/article");
+		form.setAttribute("action", "${root}/notice/list");
 		form.submit();
 	});
 	document.querySelector("#sort_list").addEventListener("change", function() {
@@ -102,28 +109,21 @@
 		location.href = "${root}/article?action=" +option;
 	});
 
-	let pages = document.querySelectorAll(".page-link");
-	pages.forEach(function(page) {
-		page.addEventListener("click", function() {
-			console.log(this.parentNode.getAttribute("data-pg"));
-			document.querySelector("#p-action").value = "notice";
-			document.querySelector("#p-pgno").value = this.parentNode
-					.getAttribute("data-pg");
-			document.querySelector("#p-key").value = "${param.key}";
-			document.querySelector("#p-word").value = "${param.word}";
-			document.querySelector("#form-param").submit();
-		});
-	});
-	let msg = '${msg}';
-	if (msg != "") {
-		alert(msg);
-	};
+    let pages = document.querySelectorAll(".page-link");
+    pages.forEach(function (page) {
+      page.addEventListener("click", function () {
+     	  document.querySelector("#pgno").value = this.parentNode.getAttribute("data-pg");
+        let form = document.querySelector("#form-param");
+        form.setAttribute("action", "${root}/notice/list");
+        form.submit();
+      });
+    });	
 </script>
 </div>
 <!-- 하단 Footer -->
-<%@ include file="/common/footer.jsp"%>
+<%@ include file="../common/footer.jsp"%>
 <!-- 로그인 모달창 -->
-<%@ include file="/common/login-modal.jsp"%>
+<%@ include file="../user/login-modal.jsp"%>
 <!--회원가입 모달-->
-<%@ include file="/common/join-modal.jsp"%>
+<%@ include file="../user/join-modal.jsp"%>
 

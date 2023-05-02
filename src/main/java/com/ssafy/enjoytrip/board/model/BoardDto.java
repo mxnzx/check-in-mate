@@ -5,6 +5,7 @@ public class BoardDto {
 
 	private int articleNo;
 	private String userId;
+	private String userName;
 	private String subject;
 	private String content;
 	private int hit;
@@ -25,6 +26,14 @@ public class BoardDto {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}	
 
 	public String getSubject() {
 		return subject;
@@ -60,8 +69,10 @@ public class BoardDto {
 
 	@Override
 	public String toString() {
-		return "BoardDto [articleNo=" + articleNo + ", userId=" + userId + ", subject=" + subject + ", content="
-				+ content + ", hit=" + hit + ", registerTime=" + registerTime + "]";
+		return "BoardDto [articleNo=" + articleNo + ", userId=" + userId + ", userName=" + userName + ", subject="
+				+ subject + ", content=" + content + ", hit=" + hit + ", registerTime=" + registerTime + "]";
 	}
+
+
 
 }

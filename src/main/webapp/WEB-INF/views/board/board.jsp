@@ -57,7 +57,7 @@
 						<td class="text-start"><a href="#"
 							class="board-title link-dark" data-no="${board.articleNo}"
 							style="text-decoration: none"> ${board.subject} </a></td>
-						<td>${board.userId}</td>
+						<td>${board.userName}</td>
 						<td>${board.hit}</td>
 						<td>${board.registerTime}</td>
 					</tr>
@@ -80,21 +80,28 @@
 		name="word" value="${word}">
 </form>
 <form id="form-no-param" method="get" action="${root}/board/view">
-	<input type="hidden" name="pgno" value="${pgno}"> <input
-		type="hidden" name="key" value="${key}"> <input type="hidden"
-		name="word" value="${word}"> <input type="hidden"
-		id="articleno" name="articleno" value="">
+	<input type="hidden" name="pgno" value="${pgno}"> 
+	<input type="hidden" name="key" value="${key}"> 
+	<input type="hidden" name="word" value="${word}"> 
+	<input type="hidden" id="articleno" name="articleno" value="">
 </form>
 </div>
 <script>
-	let titles = document.querySelectorAll(".board-title");
+/* 	let titles = document.querySelectorAll(".board-title");
 	titles.forEach(function(title) {
 		title.addEventListener("click", function() {
 			console.log(this.getAttribute("data-no"));
 			location.href = "${root}/board?action=view&articleno="
 					+ this.getAttribute("data-no");
 		});
-	});
+	}); */
+    let titles = document.querySelectorAll(".board-title");
+    titles.forEach(function (title) {
+      title.addEventListener("click", function () {
+        document.querySelector("#articleno").value = this.getAttribute("data-no");
+        document.querySelector("#form-no-param").submit();
+      });
+    });	
 
 	document.querySelector("#btn-mv-register").addEventListener("click",
 			function() {
@@ -105,7 +112,7 @@
 
 	document.querySelector("#btn-search").addEventListener("click", function() {
 		let form = document.querySelector("#form-search");
-		form.setAttribute("action", "${root}/board");
+		form.setAttribute("action", "${root}/board/list");
 		form.submit();
 	});
 	document.querySelector("#sort_list").addEventListener("change", function() {
@@ -116,7 +123,7 @@
 		location.href = "${root}/board?action=" + option;
 	});
 
-	let pages = document.querySelectorAll(".page-link");
+/* 	let pages = document.querySelectorAll(".page-link");
 	pages.forEach(function(page) {
 		page.addEventListener("click", function() {
 			console.log(this.parentNode.getAttribute("data-pg"));
@@ -131,13 +138,22 @@
 	let msg = '${msg}';
 	if (msg != "") {
 		alert(msg);
-	};
+	}; */
+    let pages = document.querySelectorAll(".page-link");
+    pages.forEach(function (page) {
+      page.addEventListener("click", function () {
+     	  document.querySelector("#pgno").value = this.parentNode.getAttribute("data-pg");
+        let form = document.querySelector("#form-param");
+        form.setAttribute("action", "${root}/board/list");
+        form.submit();
+      });
+    });	
 </script>
 </div>
 <!-- 하단 Footer -->
 <%@ include file="../common/footer.jsp"%>
 <!-- 로그인 모달창 -->
-<%@ include file="../common/login-modal.jsp"%>
+<%@ include file="../user/login-modal.jsp"%>
 <!--회원가입 모달-->
-<%@ include file="../common/join-modal.jsp"%>
+<%@ include file="../user/join-modal.jsp"%>
 

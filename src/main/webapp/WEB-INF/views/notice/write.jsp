@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp"%>
+<%@ include file="../common/header.jsp"%>
 
 <div class="container">
 	<div class="row justify-content-center">
@@ -42,7 +42,7 @@
 					return;
 				} else {
 					let form = document.querySelector("#form-register");
-					form.setAttribute("action", "${root}/article");
+					form.setAttribute("action", "${root}/notice/write");
 					form.submit();
 				}
 			});
