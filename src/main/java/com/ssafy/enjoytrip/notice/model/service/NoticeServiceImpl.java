@@ -33,6 +33,7 @@ public class NoticeServiceImpl implements NoticeService{
 		noticeMapper.writeArticle(noticeDto);
 	}
 
+	// 공지 글 목록 가져오기
 	@Override
 	public List<NoticeDto> listArticle(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -50,12 +51,14 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeMapper.listArticle(param);
 	}
 
+	// 미구현
 	@Override
 	public List<NoticeDto> sortListArticle(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	// 페이지 네이게이션
 	@Override
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
 		PageNavigation pageNavigation = new PageNavigation();
@@ -85,26 +88,31 @@ public class NoticeServiceImpl implements NoticeService{
 		return pageNavigation;
 	}
 
+	// 공지 글 내용 가져오기
 	@Override
 	public NoticeDto getArticle(int articleNo) throws Exception {
 		return noticeMapper.getArticle(articleNo);
 	}
 
+	// 조회수
 	@Override
 	public void updateHit(int articleNo) throws Exception {
 		noticeMapper.updateHit(articleNo);
 	}
 
+	// 공지 수정
 	@Override
 	public void modifyArticle(NoticeDto noticeDto) throws Exception {
 		noticeMapper.modifyArticle(noticeDto);
 	}
 
+	// 공지 삭제
 	@Override
 	public void deleteArticle(int articleNo) throws Exception {
 		noticeMapper.deleteArticle(articleNo);
 	}
 
+	// 미구현
 	@Override
 	public void deleteArticleAll(String id) throws Exception {
 		// TODO Auto-generated method stub

@@ -89,15 +89,12 @@ public class NoticeController extends HttpServlet {
 			RedirectAttributes redirectAttributes) throws Exception {
 		//logger.debug("write boardDto : {}", boardDto);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		System.out.println(">>>>>>>" + memberDto);
 		noticeDto.setUserId(memberDto.getUserId());
-		//System.out.println("boardDto >>>  "+boardDto);
-		//System.out.println("MemberDto >>>  "+memberDto);
 
+// 파일 업로드 다운로드 부분 주석처리
 //		FileUpload 관련 설정.
 		//logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
 		
-// 파일 업로드 다운로드 부분 주석처리
 //		if (!files[0].isEmpty()) {
 ////			String realPath = servletContext.getRealPath(UPLOAD_PATH);
 ////			String realPath = servletContext.getRealPath("/resources/img");
@@ -132,7 +129,7 @@ public class NoticeController extends HttpServlet {
 		return "redirect:/notice/list";
 	}
 	
-	// 글보기 
+	// 공지 글보기 
 	@GetMapping("/view")
 	public String view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
 			throws Exception {
@@ -146,6 +143,7 @@ public class NoticeController extends HttpServlet {
 		return "notice/view";
 	}
 	
+	// 공지 수정으로 이동
 	@GetMapping("/modify")
 	public String modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
 			throws Exception {
@@ -158,7 +156,7 @@ public class NoticeController extends HttpServlet {
 		return "notice/modify";
 	}
 	
-	// 글 수정하기
+	// 공지 수정하기
 	@PostMapping("/modify")
 	public String modify(NoticeDto noticeDto, @RequestParam Map<String, String> map,
 			RedirectAttributes redirectAttributes) throws Exception {
@@ -171,6 +169,7 @@ public class NoticeController extends HttpServlet {
 		return "redirect:/notice/list";
 	}	
 
+	// 공지 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
 			RedirectAttributes redirectAttributes) throws Exception {
