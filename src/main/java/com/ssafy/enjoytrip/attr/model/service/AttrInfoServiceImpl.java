@@ -32,7 +32,8 @@ public class AttrInfoServiceImpl implements AttrInfoService {
 	}
 
 	@Override
-	public List<AttrInfoDto> attrList() throws Exception {
-		return null;
+	public List<AttrInfoDto> attrList(String sidoCode, String gugunCode, String contentTypeId) throws Exception {
+		System.out.println(sidoCode + " "+ gugunCode + " "+ contentTypeId);
+		return attrInfoDao.attrList(sidoCode, gugunCode, contentTypeId);
 	}
 }

@@ -45,6 +45,13 @@
 		
 	</select>
 	
+	<select id="attrList" resultMap="attrList">
+		select *
+		from attraction_info
+		where sido_code = #{sidoCode}
+		and gugun_code = #{gugunCode}
+		and content_type_id = #{contentTypeId}
+	</select>
 
 
 </mapper>
