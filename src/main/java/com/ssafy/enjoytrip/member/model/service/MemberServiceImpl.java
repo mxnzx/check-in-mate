@@ -8,8 +8,6 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.member.model.MemberDto;
-import com.ssafy.enjoytrip.member.model.dao.MemberDao;
-import com.ssafy.enjoytrip.member.model.dao.MemberDaoImpl;
 import com.ssafy.enjoytrip.member.model.mapper.MemberMapper;
 
 @Service
