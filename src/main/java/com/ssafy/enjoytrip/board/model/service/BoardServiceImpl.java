@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.CommentDto;
-import com.ssafy.enjoytrip.board.model.dao.BoardDao;
-import com.ssafy.enjoytrip.board.model.dao.BoardDaoImpl;
 import com.ssafy.enjoytrip.board.model.mapper.BoardMapper;
 import com.ssafy.enjoytrip.util.PageNavigation;
 import com.ssafy.enjoytrip.util.SizeConstant;

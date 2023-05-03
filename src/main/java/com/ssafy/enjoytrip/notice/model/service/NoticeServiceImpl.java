@@ -10,8 +10,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.notice.model.NoticeDto;
-import com.ssafy.enjoytrip.notice.model.dao.NoticeDao;
-import com.ssafy.enjoytrip.notice.model.dao.NoticeDaoImpl;
 import com.ssafy.enjoytrip.notice.model.mapper.NoticeMapper;
 import com.ssafy.enjoytrip.util.PageNavigation;
 import com.ssafy.enjoytrip.util.SizeConstant;
