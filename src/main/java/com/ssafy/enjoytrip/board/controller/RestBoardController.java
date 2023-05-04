@@ -74,7 +74,6 @@ public class RestBoardController {
 //	// 글쓰기 페이지로 이동 
 //	@RequestMapping(value = "/write", method = RequestMethod.GET)
 //	public ResponseEntity<String> write(@RequestParam Map<String, String> map, Model model ,HttpServletRequest request, HttpServletResponse response) {
-//		//logger.debug("write call parameter {}", map);
 //		HttpSession session = request.getSession();
 //		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //		if(memberDto != null) {			
@@ -89,32 +88,21 @@ public class RestBoardController {
 //		}
 //	}
 	
-//	
-//	// 여행정보 공유 글쓰기 
-//	@RequestMapping(value = "/write", method = RequestMethod.POST)
-//	public ResponseEntity<BoardDto> write(BoardDto boardDto, HttpSession session,
-//			RedirectAttributes redirectAttributes) throws Exception {
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		boardDto.setUserId(memberDto.getUserId());
-//
-//		boardService.writeArticle(boardDto);
-//		redirectAttributes.addAttribute("pgno", "1");
-//		redirectAttributes.addAttribute("key", "");
-//		redirectAttributes.addAttribute("word", "");
-//		return ResponseEntity.ok(boardDto);
-//	}	
-//	@RequestMapping(value = "/write", method = RequestMethod.POST)
-//	public ResponseEntity<BoardDto> write(BoardDto boardDto,String subject, String content, HttpSession session) throws Exception{
-//			MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//			boardDto.setUserId(memberDto.getUserId());
+	// 여행정보 공유 글쓰기
+	// REST로 구현완료 
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public ResponseEntity<BoardDto> write(BoardDto boardDto) throws Exception{
+			
+//			BoardDto boardDto = new BoardDto();
+//			boardDto.setUserId(userId);
 //	    	boardDto.setSubject(subject);
 //	    	boardDto.setContent(content);
-//	    	boardService.writeArticle(boardDto);
-//	    	System.out.println(boardDto);
-//	    	return ResponseEntity.ok(boardDto);
-//		
-//	}
-//	
+	    	boardService.writeArticle(boardDto);
+	    	System.out.println(boardDto);
+	    	return ResponseEntity.ok(boardDto);
+		
+	}
+	
 	
 	// 여행정보 공유 글보기 ( articleNo로 비교 ) 
 	// REST로 구현완료
