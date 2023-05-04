@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.attr.model.dao;
+package com.ssafy.enjoytrip.attr.model.mapper;
 
 
 import java.sql.SQLException;
@@ -11,9 +11,9 @@ import com.ssafy.enjoytrip.attr.model.GugunDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
 
 
-//지역별 여행지 DAO
+//지역별 여행지Mapper
 @Mapper
-public interface AttrInfoDao {
+public interface AttrInfoMapper {
 
 	List<SidoDto> sidoList() throws SQLException;
 	List<GugunDto> gugunList(String sidoCode) throws SQLException;

@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
 import com.ssafy.enjoytrip.attr.model.GugunDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
-import com.ssafy.enjoytrip.attr.model.dao.AttrInfoDao;
+import com.ssafy.enjoytrip.attr.model.mapper.AttrInfoMapper;
 
 @Service("AttrInfoServiceImpl")
 public class AttrInfoServiceImpl implements AttrInfoService {
 	
 	@Autowired
-	private AttrInfoDao attrInfoDao;
+	private AttrInfoMapper attrInfoDao;
 	
-	public AttrInfoServiceImpl(AttrInfoDao attrInfoDao) {
+	public AttrInfoServiceImpl(AttrInfoMapper attrInfoDao) {
 		super();
 		this.attrInfoDao = attrInfoDao;
 	}
