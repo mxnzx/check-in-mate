@@ -72,13 +72,13 @@
 					}
 					alert("비밀번호가 변경되었습니다.");
 			          let form = document.querySelector("#myPage-form");
-			          form.setAttribute("action", "${root}/user/updateMember");
+			          form.setAttribute("action", "${root}/user/api/updateMember");
 			          form.submit();
 				});				
 
  				document.querySelector("#delete-btn").addEventListener("click", function() {
 			          let form = document.querySelector("#myPage-form");
-			          form.setAttribute("action", "${root}/user/deleteMember");
+			          form.setAttribute("action", "${root}/user/api/deleteMember");
 			          form.submit();
 				});		 	
 			</script>

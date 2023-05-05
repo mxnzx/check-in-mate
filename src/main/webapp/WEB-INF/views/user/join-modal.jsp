@@ -115,7 +115,7 @@
         	 return;
          } else {
            let form = document.querySelector("#form-join");
-           form.setAttribute("action", "${root}/user/join");
+           form.setAttribute("action", "${root}/user/api/join");
            form.submit();
            
          }
