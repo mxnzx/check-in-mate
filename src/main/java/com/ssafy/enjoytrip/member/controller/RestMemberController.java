@@ -1,5 +1,9 @@
 package com.ssafy.enjoytrip.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,54 +30,63 @@ public class RestMemberController {
 
 	// 회원가입
 	@PostMapping(value = "/join", headers = "content-type=application/json")
-	public ResponseEntity<MemberDto> join(@RequestBody MemberDto memberDto) {
-		// logger.debug("memberDto info : {}", memberDto);
+	public ResponseEntity<Map<String, Object>> join(@RequestBody MemberDto memberDto) {
+		//logger.debug("memberDto info : {}", memberDto);
+		Map<String, Object> responseData = new HashMap<>();
 		try {
 			memberService.joinMember(memberDto);
 			// return "redirect:/user/login";
-			return ResponseEntity.ok(memberDto);
+			responseData.put("result", memberDto);
+			responseData.put("message", "회원가입 성공!!");
 		} catch (Exception e) {
 			e.printStackTrace();
-			// model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
-			// return "error/error";
-			// return ResponseEntity.
-			// 일단 둘다 이렇게 보낸다
-			return ResponseEntity.ok(memberDto);
+	        responseData.put("result", "error");
+	        responseData.put("message", "회원 가입 중 문제 발생!!!");
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
 		}
+		return ResponseEntity.ok(responseData);
 	}
 
 	// 회원탈퇴
 	@DeleteMapping("/deleteMember")
-	public ResponseEntity<MemberDto> deleteMember(@RequestBody MemberDto memberDto) {
+	public ResponseEntity<Map<String, Object>> deleteMember(@RequestBody MemberDto memberDto) {
+		Map<String, Object> responseData = new HashMap<>();
 		String userId = memberDto.getUserId();
 		System.out.println(userId);
 		// logger.debug("memberDto info : {}", memberDto);
 		try {
 			memberService.deleteMember(userId);
 			// return "redirect:/user/login";
-			return ResponseEntity.ok(memberDto);
+			responseData.put("message", "회원탈퇴 성공!!");
 		} catch (Exception e) {
 			e.printStackTrace();
-			// return "error/error";
-			return ResponseEntity.ok(memberDto);
+			responseData.put("result", "error");
+			responseData.put("message", "회원탈퇴 실패!!");
+			
 		}
+		return ResponseEntity.ok(responseData);
 	}
 
 	// 회원정보 수정 ( 비밀번호 변경 )
 	@PutMapping("/updateMember")
-	public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto memberDto) {
+	public ResponseEntity<Map<String, Object>> updateMember(@RequestBody MemberDto memberDto) {
+		Map<String, Object> responseData = new HashMap<>();
 		String userId = memberDto.getUserId();
 		String userPwd = memberDto.getUserPwd();
 		System.out.println(memberDto + " 업데이트");
 		try {
 			memberService.updateMember(memberDto);
 			// return "redirect:/user/login";
-			return ResponseEntity.ok(memberDto);
+			responseData.put("result", memberDto);
+			responseData.put("message", "회원정보 수정 성공!!!");
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 			// return "error/error";
-			return ResponseEntity.ok(memberDto);
+			responseData.put("result", "error");
+			responseData.put("message", "회원정보 수정 실패!!");
 		}
+		return ResponseEntity.ok(responseData);
 
 	}
 
