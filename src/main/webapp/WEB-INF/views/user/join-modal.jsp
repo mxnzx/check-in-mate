@@ -74,14 +74,14 @@
   	let isUseId = false;
     	document.querySelector("#userid_join").addEventListener("keyup", function () {
 	 		let user = this.value;
-	 		console.log(user);
 	   	 	let resultDiv = document.querySelector("#idcheck-result");
 	   	 	if(user.length < 6 || user.length > 16) {
 	   		 	resultDiv.setAttribute("class", "mb-3 text-dark");
 	   		 	resultDiv.textContent = "아이디는 6자 이상 16자 이하 입니다.";
 	   		 	isUseId1 = false;
 	   	 	} else {
-	   		 	fetch("${root}/user/" + user)
+	   	 		//아이디 중복 체크
+	   		 	fetch("${root}/user/api/" + user)
 	 	   		.then(response => response.text())
 	 	   		.then(data => {
 	 		 		if(data == 0) {

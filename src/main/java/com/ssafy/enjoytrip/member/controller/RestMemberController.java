@@ -1,10 +1,9 @@
 package com.ssafy.enjoytrip.member.controller;
 
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,18 +30,18 @@ public class RestMemberController {
 		// logger.debug("memberDto info : {}", memberDto);
 		try {
 			memberService.joinMember(memberDto);
-			//return "redirect:/user/login";
+			// return "redirect:/user/login";
 			return ResponseEntity.ok(memberDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			//model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
-			//return "error/error";
-			//return ResponseEntity.
-			//일단 둘다 이렇게 보낸다
+			// model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
+			// return "error/error";
+			// return ResponseEntity.
+			// 일단 둘다 이렇게 보낸다
 			return ResponseEntity.ok(memberDto);
 		}
 	}
-	
+
 	// 회원탈퇴
 	@DeleteMapping("/deleteMember")
 	public ResponseEntity<MemberDto> deleteMember(@RequestBody MemberDto memberDto) {
@@ -51,31 +50,39 @@ public class RestMemberController {
 		// logger.debug("memberDto info : {}", memberDto);
 		try {
 			memberService.deleteMember(userId);
-			//return "redirect:/user/login";
+			// return "redirect:/user/login";
 			return ResponseEntity.ok(memberDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			//return "error/error";
+			// return "error/error";
 			return ResponseEntity.ok(memberDto);
 		}
 	}
-	
-	// 회원정보 수정 ( 비밀번호 변경 ) 
+
+	// 회원정보 수정 ( 비밀번호 변경 )
 	@PutMapping("/updateMember")
 	public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto memberDto) {
 		String userId = memberDto.getUserId();
 		String userPwd = memberDto.getUserPwd();
-		System.out.println(memberDto + " 업데이트"  );
+		System.out.println(memberDto + " 업데이트");
 		try {
 			memberService.updateMember(memberDto);
-			//return "redirect:/user/login";
+			// return "redirect:/user/login";
 			return ResponseEntity.ok(memberDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			//return "error/error";
+			// return "error/error";
 			return ResponseEntity.ok(memberDto);
 		}
-		
+
 	}
-	
+
+	// 아이디 값 가져와서 기존 아이디와 비교해서 겹치는게 있는지 체크
+	@GetMapping("/{userid}")
+	public String idCheck(@PathVariable("userid") String userId) throws Exception {
+		// logger.debug("idCheck userid : {}", userId);
+		int cnt = memberService.idCheck(userId);
+		return cnt + "";
+	}
+
 }

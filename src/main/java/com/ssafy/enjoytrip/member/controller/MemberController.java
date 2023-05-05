@@ -36,14 +36,6 @@ public class MemberController {
 		return "user/join-modal";
 	}
 
-	// 아이디 값 가져와서 기존 아이디와 비교해서 겹치는게 있는지 체크 
-	@GetMapping("/{userid}")
-	@ResponseBody
-	public String idCheck(@PathVariable("userid") String userId) throws Exception {
-		// logger.debug("idCheck userid : {}", userId);
-		int cnt = memberService.idCheck(userId);
-		return cnt + "";
-	}
 
 	// 로그인 창으로 이동 
 	@GetMapping("/login")
