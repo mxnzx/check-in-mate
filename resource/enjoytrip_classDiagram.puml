@@ -1,0 +1,351 @@
+@startuml
+class com.ssafy.enjoytrip.board.model.service.BoardServiceImpl {
+- BoardMapper boardMapper
++ void writeArticle(BoardDto)
++ List<BoardDto> listArticle(Map<String,String>)
++ List<BoardDto> sortListArticle(Map<String,String>)
++ PageNavigation makePageNavigation(Map<String,String>)
++ BoardDto getArticle(int)
++ void updateHit(int)
++ void modifyArticle(BoardDto)
++ void deleteArticle(int,String)
++ void deleteArticleAll(String)
++ void writeComment(CommentDto)
++ List<CommentDto> listComment(int)
++ void deleteComment(int)
+}
+class com.ssafy.enjoytrip.plan.model.PlanArticleDto {
+~ int planAritcleNo
+}
+interface com.ssafy.enjoytrip.member.model.mapper.MemberMapper {
+~ int idCheck(String)
+~ void joinMember(MemberDto)
+~ MemberDto loginMember(Map<String,String>)
+~ List<MemberDto> listMember(Map<String,Object>)
+~ MemberDto getMember(String)
+~ void updateMember(MemberDto)
+~ void deleteMember(String)
+}
+class com.ssafy.enjoytrip.notice.controller.RestNoticeController {
+- NoticeService noticeService
++ List<NoticeDto> list(Map<String,String>)
++ ResponseEntity<NoticeDto> write(NoticeDto)
++ ResponseEntity<String> view(int,Map<String,String>,Model)
++ ResponseEntity<String> modify(NoticeDto,Map<String,String>,RedirectAttributes)
++ ResponseEntity<String> delete(int,Map<String,String>,RedirectAttributes)
+}
+interface com.ssafy.enjoytrip.board.model.mapper.BoardMapper {
+~ void writeArticle(BoardDto)
+~ void registerFile(BoardDto)
+~ List<BoardDto> listArticle(Map<String,Object>)
+~ int getTotalArticleCount(Map<String,Object>)
+~ BoardDto getArticle(int)
+~ void updateHit(int)
+~ void modifyArticle(BoardDto)
+~ void deleteFile(int)
+~ void deleteArticle(int)
+~ void insertComment(CommentDto)
+~ List<CommentDto> listComment(int)
+~ void deleteComment(int)
+}
+class com.ssafy.enjoytrip.board.model.CommentDto {
+- int commentNo
+- int articleNo
+- String userId
+- String parentId
+- String comment
+- String registerTime
+}
+class com.ssafy.enjoytrip.attr.model.GugunDto {
+- int gugunCode
+- String gugunName
+- int sidoCode
+}
+class com.ssafy.enjoytrip.attr.model.service.AttrInfoServiceImpl {
+- AttrInfoMapper attrInfoDao
++ List<SidoDto> sidoList()
++ List<GugunDto> gugunList(String)
++ List<AttrInfoDto> attrList(String,String,String)
+}
+class com.ssafy.enjoytrip.photospot.model.PhotospotDto {
+- int photospotNo
+- String userId
+- String title
+- String content
+- String imgSrc
+- String Addr
+- int hit
+- String registerTime
+- int sidoCode
+- int gugunCode
+- int contentTypeId
+}
+class com.ssafy.enjoytrip.member.controller.RestMemberController {
+- MemberService memberService
++ ResponseEntity<Map<String,Object>> join(MemberDto)
++ ResponseEntity<Map<String,Object>> deleteMember(MemberDto)
++ ResponseEntity<Map<String,Object>> updateMember(MemberDto)
++ String idCheck(String)
+}
+interface com.ssafy.enjoytrip.photospot.model.dao.PhotospotDao {
+~ void write(PhotospotDto)
+~ List<PhotospotDto> list()
+~ void modify(PhotospotDto)
+~ void delete(int)
+~ void updateHit(int)
+~ void openMap(int)
+}
+class com.ssafy.enjoytrip.attr.controller.AttrInfoController {
+- AttrInfoService attrInfoService
++ List<SidoDto> searchSido()
++ List<GugunDto> searchGugun(String)
++ List<AttrInfoDto> attrList(String,String,String)
+}
+class com.ssafy.enjoytrip.member.model.MemberDto {
+- String userId
+- String userName
+- String userPwd
+- String emailId
+- String emailDomain
+- String joinDate
+}
+class com.ssafy.enjoytrip.board.model.BoardDto {
+- int articleNo
+- String userId
+- String userName
+- String subject
+- String content
+- int hit
+- String registerTime
+}
+interface com.ssafy.enjoytrip.notice.model.service.NoticeService {
+~ void writeArticle(NoticeDto)
+~ List<NoticeDto> listArticle(Map<String,String>)
+~ List<NoticeDto> sortListArticle(Map<String,String>)
+~ PageNavigation makePageNavigation(Map<String,String>)
+~ NoticeDto getArticle(int)
+~ void updateHit(int)
+~ void modifyArticle(NoticeDto)
+~ void deleteArticle(int)
+~ void deleteArticleAll(String)
+}
+interface com.ssafy.enjoytrip.member.model.service.MemberService {
+~ int idCheck(String)
+~ void joinMember(MemberDto)
+~ MemberDto loginMember(Map<String,String>)
+~ List<MemberDto> listMember(Map<String,Object>)
+~ MemberDto getMember(String)
+~ void updateMember(MemberDto)
+~ void deleteMember(String)
+~ String encryptPassword(String)
+}
+interface com.ssafy.enjoytrip.attr.model.mapper.AttrInfoMapper {
+~ List<SidoDto> sidoList()
+~ List<GugunDto> gugunList(String)
+~ List<AttrInfoDto> attrList(String,String,String)
+}
+class com.ssafy.enjoytrip.board.controller.BoardController {
+- {static} long serialVersionUID
+- String uploadPath
+- BoardService boardService
++ ModelAndView list(Map<String,String>)
++ String write(Map<String,String>,Model,HttpServletRequest,HttpServletResponse)
++ String write(BoardDto,HttpSession,RedirectAttributes)
++ String view(int,Map<String,String>,Model)
++ String modify(int,Map<String,String>,Model)
++ String modify(BoardDto,Map<String,String>,RedirectAttributes)
++ String delete(int,Map<String,String>,RedirectAttributes)
+}
+interface com.ssafy.enjoytrip.plan.model.dao.PlanArticleDao {
+~ void write(PlanArticleDto)
+~ List<PlanArticleDto> list()
+~ void modify(PlanArticleDto)
+~ void delete(int)
+~ void updateHit(int)
+~ List<AttrInfoDto> getAttraction(String)
+~ void writeAttr(AttrInfoDto)
+~ void deleteAttr(int)
+~ void deleteAttrAll()
+}
+class com.ssafy.enjoytrip.notice.model.NoticeDto {
+- int articleNo
+- String userId
+- String userName
+- String subject
+- String content
+- int hit
+- String registerTime
+}
+interface com.ssafy.enjoytrip.attr.model.service.AttrInfoService {
+~ List<SidoDto> sidoList()
+~ List<GugunDto> gugunList(String)
+~ List<AttrInfoDto> attrList(String,String,String)
+}
+class com.ssafy.enjoytrip.main.MainController {
++ ModelAndView searchTrip(ModelAndView)
+}
+interface com.ssafy.enjoytrip.board.model.service.BoardService {
+~ void writeArticle(BoardDto)
+~ List<BoardDto> listArticle(Map<String,String>)
+~ List<BoardDto> sortListArticle(Map<String,String>)
+~ PageNavigation makePageNavigation(Map<String,String>)
+~ BoardDto getArticle(int)
+~ void updateHit(int)
+~ void modifyArticle(BoardDto)
+~ void deleteArticle(int,String)
+~ void deleteArticleAll(String)
+~ void writeComment(CommentDto)
+~ List<CommentDto> listComment(int)
+~ void deleteComment(int)
+}
+class com.ssafy.enjoytrip.util.PageNavigation {
+- boolean startRange
+- boolean endRange
+- int totalCount
+- int newCount
+- int totalPageCount
+- int currentPage
+- int naviSize
+- int countPerPage
+- String navigator
++ boolean isStartRange()
++ void setStartRange(boolean)
++ boolean isEndRange()
++ void setEndRange(boolean)
++ int getTotalCount()
++ void setTotalCount(int)
++ int getNewCount()
++ void setNewCount(int)
++ int getTotalPageCount()
++ void setTotalPageCount(int)
++ int getCurrentPage()
++ void setCurrentPage(int)
++ int getNaviSize()
++ void setNaviSize(int)
++ String getNavigator()
++ int getCountPerPage()
++ void setCountPerPage(int)
++ void makeNavigator()
+}
+class com.ssafy.enjoytrip.board.controller.RestBoardController {
+- {static} long serialVersionUID
+- String uploadPath
+- BoardService boardService
++ List<BoardDto> list(Map<String,String>)
++ ResponseEntity<BoardDto> write(BoardDto)
++ ResponseEntity<String> view(int,Map<String,String>,Model)
++ ResponseEntity<String> modify(int,Map<String,String>,Model)
++ ResponseEntity<String> modify(BoardDto,Map<String,String>,RedirectAttributes)
++ ResponseEntity<String> delete(int,Map<String,String>,RedirectAttributes)
+}
+class com.ssafy.enjoytrip.member.controller.MemberController {
+- MemberService memberService
++ String join()
++ String login()
++ String login(Map<String,String>,String,Model,HttpSession,HttpServletResponse)
++ String logout(HttpSession)
++ String mypage()
+}
+interface com.ssafy.enjoytrip.notice.model.mapper.NoticeMapper {
+~ void writeArticle(NoticeDto)
+~ void registerFile(NoticeDto)
+~ List<NoticeDto> listArticle(Map<String,Object>)
+~ int getTotalArticleCount(Map<String,Object>)
+~ NoticeDto getArticle(int)
+~ void updateHit(int)
+~ void modifyArticle(NoticeDto)
+~ void deleteFile(int)
+~ void deleteArticle(int)
+}
+class com.ssafy.enjoytrip.EnjoyTripApplication {
++ {static} void main(String[])
+}
+class com.ssafy.enjoytrip.notice.controller.NoticeController {
+- NoticeService noticeService
++ ModelAndView list(Map<String,String>)
++ String write(Map<String,String>,Model,HttpServletRequest,HttpServletResponse)
++ String write(NoticeDto,HttpSession,RedirectAttributes)
++ String view(int,Map<String,String>,Model)
++ String modify(int,Map<String,String>,Model)
++ String modify(NoticeDto,Map<String,String>,RedirectAttributes)
++ String delete(int,Map<String,String>,RedirectAttributes)
+}
+class com.ssafy.enjoytrip.util.SizeConstant {
++ {static} int LIST_SIZE
++ {static} int NAVIGATION_SIZE
+}
+class com.ssafy.enjoytrip.util.DBUtil {
+- {static} String DRIVER
+- {static} String URL
+- {static} String DB_ID
+- {static} String DB_PWD
+- {static} DBUtil instance
++ {static} DBUtil getInstance()
++ Connection getConnection()
++ void close(AutoCloseable)
+}
+class com.ssafy.enjoytrip.board.controller.BoardCommentController {
+- BoardService boardService
++ List<CommentDto> listComment(int)
++ List<CommentDto> deleteComment(int,int)
++ List<CommentDto> writeComment(CommentDto)
+}
+class com.ssafy.enjoytrip.attr.model.SidoDto {
+- int sidoCode
+- String sidoName
+}
+class com.ssafy.enjoytrip.member.model.service.MemberServiceImpl {
+- MemberMapper memberMapper
++ int idCheck(String)
++ void joinMember(MemberDto)
++ MemberDto loginMember(Map<String,String>)
++ List<MemberDto> listMember(Map<String,Object>)
++ MemberDto getMember(String)
++ void updateMember(MemberDto)
++ void deleteMember(String)
++ String encryptPassword(String)
+}
+class com.ssafy.enjoytrip.notice.model.service.NoticeServiceImpl {
+- NoticeMapper noticeMapper
++ void writeArticle(NoticeDto)
++ List<NoticeDto> listArticle(Map<String,String>)
++ List<NoticeDto> sortListArticle(Map<String,String>)
++ PageNavigation makePageNavigation(Map<String,String>)
++ NoticeDto getArticle(int)
++ void updateHit(int)
++ void modifyArticle(NoticeDto)
++ void deleteArticle(int)
++ void deleteArticleAll(String)
+}
+class com.ssafy.enjoytrip.attr.model.AttrInfoDto {
+- int contentId
+- int contentTypeId
+- String title
+- String address1
+- String address2
+- String zipCode
+- String tel
+- String imgUrl1
+- String imgUrl2
+- int readCount
+- int sidoCode
+- int gugunCode
+- double latitude
+- double longitude
+- String mLevel
+}
+class com.ssafy.enjoytrip.util.ParameterCheck {
++ {static} String nullToBlank(String)
++ {static} int notNumberToZero(String)
++ {static} int notNumberToOne(String)
+- {static} boolean isNumber(String)
+}
+
+
+com.ssafy.enjoytrip.board.model.service.BoardService <|.. com.ssafy.enjoytrip.board.model.service.BoardServiceImpl
+com.ssafy.enjoytrip.attr.model.service.AttrInfoService <|.. com.ssafy.enjoytrip.attr.model.service.AttrInfoServiceImpl
+javax.servlet.http.HttpServlet <|-- com.ssafy.enjoytrip.board.controller.BoardController
+javax.servlet.http.HttpServlet <|-- com.ssafy.enjoytrip.notice.controller.NoticeController
+com.ssafy.enjoytrip.member.model.service.MemberService <|.. com.ssafy.enjoytrip.member.model.service.MemberServiceImpl
+com.ssafy.enjoytrip.notice.model.service.NoticeService <|.. com.ssafy.enjoytrip.notice.model.service.NoticeServiceImpl
+@enduml
