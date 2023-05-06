@@ -10,25 +10,13 @@ package com.ssafy.enjoytrip.attr.controller;
  *      2 attrInfo:  SelectBox에서 선택된 값에 대한 Query 결과 (선택된 지역의 관광지 정보)를 담는다.
  * 
  */
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
 import com.ssafy.enjoytrip.attr.model.GugunDto;
