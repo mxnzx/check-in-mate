@@ -44,7 +44,7 @@ public class RestNoticeController {
 		return ResponseEntity.ok(noticeDto);
 	}
 	
-	// 여행정보 공유 글보기 ( articleNo로 비교 ) 
+	// 공지사항 글보기 ( articleNo로 비교 ) 
 	// REST로 구현완료
 	@RequestMapping(value = "/view/{articleNo}", method = RequestMethod.GET)
 	public ResponseEntity<String> view(@PathVariable("articleNo") int articleNo, @RequestParam Map<String, String> map, Model model)
@@ -54,7 +54,7 @@ public class RestNoticeController {
 		return ResponseEntity.ok(articleNo + "번 글 보기 ");
 	}	
 	
-	// 여행정보 공유 글 수정하기
+	// 공지사항 글 수정하기
 	// REST로 구현완료
 	@RequestMapping(value = "/modify", method = RequestMethod.PUT)
 	public ResponseEntity<String> modify(NoticeDto noticeDto, @RequestParam Map<String, String> map,
@@ -65,7 +65,7 @@ public class RestNoticeController {
 		redirectAttributes.addAttribute("word", map.get("word"));
 		return ResponseEntity.ok("수정완료");
 	}
-	// 여행정보 공유 글 삭제하기
+	// 공지사항 글 삭제하기
 	// REST로 구현완료
 	@RequestMapping(value = "/delete/{articleNo}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable("articleNo") int articleNo, @RequestParam Map<String, String> map,
