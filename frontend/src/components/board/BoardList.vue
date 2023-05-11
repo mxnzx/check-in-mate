@@ -12,6 +12,7 @@
             type="button"
             id="btn-mv-register"
             class="btn btn-outline-primary btn-sm"
+            @click="moveWrite"
           >
             글쓰기
           </button>
@@ -99,7 +100,13 @@ export default {
         console.log("respone >>" + this.response);
         console.log("data>> " + data);
         this.articles = data;
+        console.log("list data" + data);
       });
+  },
+  methods: {
+    moveWrite() {
+      this.$router.push("write");
+    },
   },
 };
 </script>
