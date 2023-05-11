@@ -2,47 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="com.ssafy.enjoytrip.plan.model.mapper.PlanArticleMapper">
-	
-	<resultMap type="PlanBoardDto" id="">
-		<result column="trip_plan_id" property="tripPlanId"/>
-		<result column="register_time" property="registerTime"/>
-		<result column="trip_plan_title" property="tripPlanTitle"/>
-		<result column="trip_plan_start_date" property="tripPlanStartDate"/>
-		<result column="trip_plan_end_date" property="tripPlanEndDate"/>
-		<result column="trip_plan_detail" property="tripPlanDetail"/>
-		<result column="user_id" property="userId"/>
-	</resultMap>
-	
-	<resultMap type="PlanDetailDto" id="">
-		<result column="trip_plan_id" property="tripPlanId"/>
-		<result column="content_id" property="contentId"/>
-		<result column="comment" property="comment"/>
-		<result column="seq" property="seq"/>
-		<result column="trip_plan_start_date" property="tripPlanStartDate"/>
-		<result column="trip_plan_end_date" property="tripPlanEndDate"/>
-	</resultMap>
-	
-	<resultMap type="AttrInfoDto" id="attrList">
-		<result column="content_id" property="contentId" />
-		<result column="content_type_id" property="contentTypeId" />
-		<result column="title" property="title" />
-		<result column="addr1" property="address1" />
-		<result column="addr2" property="address2" />
-		<result column="zipcode" property="zipCode" />
-		<result column="tel" property="tel" />
-		<result column="first_image" property="imgUrl1" />
-		<result column="first_image2" property="imgUrl2" />
-		<result column="readcount" property="readCount" />
-		<result column="sido_code" property="sidoCode" />
-		<result column="gugun_code" property="gugunCode" />
-		<result column="latitude" property="latitude" />
-		<result column="longitude" property="longitude" />
-		<result column="mlevel" property="mLevel" />
-	</resultMap>
-	
-	
-	
+<mapper namespace="com.ssafy.enjoytrip.plan.model.dao.PlanDao">
+
 
 
 </mapper>
