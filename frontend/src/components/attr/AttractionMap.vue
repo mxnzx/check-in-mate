@@ -1,4 +1,3 @@
-
 <template>
   <div class="container">
     <div class="row">
@@ -15,7 +14,7 @@
             onsubmit="return false;"
             role="search"
           >
-            <select id="search-sido" class="form-select me-2">
+            <select id="search-sido" class="form-select me-2" @change="readytoGugunList">
               <option value="0" selected>지역 선택</option>
             </select>
 
@@ -73,11 +72,13 @@
 </template>
 
 <script>
+//import axios from "axios";
+
 export default {
   data() {
     return {
       map: null,
-      areaUrl: "/navigator/searchSido",
+      areaUrl: "http://127.0.0.1:9018/navigator/searchSido",
     };
   },
   methods: {
@@ -85,11 +86,15 @@ export default {
     init() {
       this.fetchAllAreas(this.areaUrl);
     },
+
+    //시도 목록 가져와서 옵션값으로 추가한다
     fetchAllAreas(areaUrl) {
       fetch(areaUrl, { method: "GET" })
         .then((response) => response.json())
         .then((data) => this.makeOptionforSido(data));
     },
+
+    //시도 옵션태그를 추가한다
     makeOptionforSido(data) {
       let areas = data;
       console.log(areas);
@@ -102,6 +107,48 @@ export default {
       });
     },
 
+    //바뀐 시도 값을 가지고 구군 목록을 가져온다.
+    readytoGugunList() {
+      console.log("시도 변경됨 구군 재실행");
+    const gugunSelect = document.getElementById("search-gugun");
+    gugunSelect.innerHTML = ""; // 옵션태그 모두 삭제
+    const selectedSido = this.options[this.selectedIndex].value;    //sido-code
+      console.log(selectedSido);
+        // 새로운 option 추가
+    const defaultOpt = document.createElement("option");
+    defaultOpt.value = "0";
+    defaultOpt.text = "구군 선택";
+    gugunSelect.add(defaultOpt);
+    this.fetchGugunList(selectedSido); // 함수 실행하기
+    },
+
+    //구군 목록 가져와서 옵션값으로 추가한다
+    fetchGugunList(selectedSido) {
+      console.log(selectedSido);
+      const gugunUrl = "http://127.0.0.1:9018/navigator/searchGugun?sidoCode=" + selectedSido;
+      console.log("gugunUrl");
+      fetch(gugunUrl, { method: "GET" })
+        .then((response) => response.json())
+        .then((data) => this.makeOptionforGugun(data));
+    },
+
+    //구군 옵션태그를 추가한다
+    makeOptionforGugun(data) {
+      let areas = data;
+      console.log(areas);
+      let sel = document.getElementById("search-gugun");
+      areas.forEach((gugun) => {
+        let opt = document.createElement("option");
+        opt.setAttribute("value", gugun.gugunCode);
+        opt.appendChild(document.createTextNode(gugun.gugunName));
+        sel.appendChild(opt);
+      });
+    },
+
+
+
+
+
     initMap() {
       const mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
@@ -112,10 +159,12 @@ export default {
     },
   },
 
+
   mounted() {
-    //시도 불러오기
+    //화면이 뜨면 시도 불러오기
     this.init();
 
+    //카카오 지도 api 불러오기
     if (!window.kakao || !window.kakao.maps) {
       const kakaoMap = document.createElement("script");
       kakaoMap.src =
