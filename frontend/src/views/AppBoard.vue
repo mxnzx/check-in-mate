@@ -1,7 +1,18 @@
-<template></template>
+<template>
+  <div>
+    <!-- <router-view></router-view> -->
+    <board-list></board-list>
+  </div>
+</template>
 
 <script>
-export default {};
+import BoardList from "@/components/board/BoardList.vue";
+
+export default {
+  components: {
+    BoardList,
+  },
+};
 </script>
 
 <style></style>
