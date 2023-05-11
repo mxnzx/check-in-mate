@@ -1,7 +1,11 @@
 <template>
   <tr>
     <td>{{ article.articleNo }}</td>
-    <td>{{ article.subject }}</td>
+    <td>
+      <router-link :to="`view/${article.articleNo}`">{{
+        article.subject
+      }}</router-link>
+    </td>
     <td>{{ article.userName }}</td>
     <td>{{ article.hit }}</td>
     <td>{{ article.registerTime }}</td>

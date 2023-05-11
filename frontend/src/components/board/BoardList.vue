@@ -12,6 +12,7 @@
             type="button"
             id="btn-mv-register"
             class="btn btn-outline-primary btn-sm"
+            @click="moveWrite"
           >
             글쓰기
           </button>
@@ -56,7 +57,7 @@
           </form>
         </div>
       </div>
-      <table class="table table-hover">
+      <table class="table table-hover" id="article-list">
         <thead>
           <tr class="text-center">
             <th scope="col">글번호</th>
@@ -93,11 +94,19 @@ export default {
   created() {
     // 비동기
     // TODO : 글목록 얻기.
-    fetch("http://localhost:8083/board/api")
+    fetch("http://localhost:9018/board/api/list")
       .then((response) => response.json())
       .then((data) => {
+        console.log("respone >>" + this.response);
+        console.log("data>> " + data);
         this.articles = data;
+        console.log("list data" + data);
       });
+  },
+  methods: {
+    moveWrite() {
+      this.$router.push("write");
+    },
   },
 };
 </script>
