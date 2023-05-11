@@ -1,4 +1,4 @@
-```
+
 <template>
   <div class="container">
     <div class="row">
@@ -132,4 +132,3 @@ export default {
 </script>
 
 <style></style>
-```
