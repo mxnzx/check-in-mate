@@ -56,7 +56,7 @@
           </form>
         </div>
       </div>
-      <table class="table table-hover">
+      <table class="table table-hover" id="article-list">
         <thead>
           <tr class="text-center">
             <th scope="col">글번호</th>
@@ -93,9 +93,11 @@ export default {
   created() {
     // 비동기
     // TODO : 글목록 얻기.
-    fetch("http://localhost:8083/board/api")
+    fetch("http://localhost:9018/board/api/list")
       .then((response) => response.json())
       .then((data) => {
+        console.log("respone >>" + this.response);
+        console.log("data>> " + data);
         this.articles = data;
       });
   },
