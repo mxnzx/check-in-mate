@@ -5,12 +5,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a
-              class="nav-link"
-              aria-current="page"
-              href="${root}/navigator/searchTripView"
-              >지역별여행지</a
-            >
+            <router-link to="/attraction">지역별여행지</router-link>
             <!-- KakaoMap API Page -->
           </li>
           <li class="nav-item"><a class="nav-link" href="">나의여행계획</a></li>
