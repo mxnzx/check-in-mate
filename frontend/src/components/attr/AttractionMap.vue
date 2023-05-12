@@ -177,7 +177,7 @@ export default {
     trips.forEach((area) => {
       console.log(area);  //찍힘
       tripList += `
-      <tr onclick="moveCenter(${area.latitude}, ${area.longitude});">
+      <tr @click="moveCenter(${area.latitude}, ${area.longitude})">
         <td><img src=${area.imgUrl1} width="100px" height="60px"></td>
         <td>${area.title}</td>
         <td>${area.address1} ${area.address2}</td>
