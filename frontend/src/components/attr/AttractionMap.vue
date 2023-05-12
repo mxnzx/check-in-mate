@@ -176,11 +176,12 @@ export default {
     //리스트를 나열할 표에 출력할 여행지리스트를 붙인다
     trips.forEach((area) => {
       console.log(area);  //찍힘
+      //area의 위도, 경도를 td의 data로 넣어준다(동적 템플릿에서 이벤트처리가 불가하기 때문임)
       tripList += `
-      <tr @click="moveCenter(${area.latitude}, ${area.longitude})">
-        <td><img src=${area.imgUrl1} width="100px" height="60px"></td>
-        <td>${area.title}</td>
-        <td>${area.address1} ${area.address2}</td>
+      <tr>
+        <td data-latitude="${area.latitude}" data-longitude="${area.longitude}"><img src=${area.imgUrl1} width="100px" height="60px"></td>
+        <td data-latitude="${area.latitude}" data-longitude="${area.longitude}">${area.title}</td>
+        <td data-latitude="${area.latitude}" data-longitude="${area.longitude}">${area.address1} ${area.address2}</td>
       </tr>
     `;
 
@@ -259,12 +260,22 @@ export default {
     }
 
     // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
-    console.log(this.positions[0].latlng); //latlng 정보 가져옴
     this.map.setCenter(this.positions[0].latlng);
-  },
+    },
 
-  moveCenter(lat,lng) {
-    this.map.setCenter(new this.kakao.maps.LatLng(lat, lng));
+    handleClick(event) {
+      // 클릭한 요소의 데이터 가져오기
+      console.log(event);
+      const latitude = event.target.dataset.latitude;
+      const longitude = event.target.dataset.longitude;
+      console.log(latitude + " " + longitude);
+      // 처리할 로직 수행
+      this.moveCenter(latitude, longitude);
+    },
+    
+    //리스트 항목을 클릭하면 위도와 경도에 맞춰 가운데로 위치를 불러온다
+    moveCenter(lat, lng) {
+      this.map.setCenter(new window.kakao.maps.LatLng(lat, lng));
   },
 
   //처음 초기화되어있는 지도를 표시한다
@@ -295,6 +306,9 @@ export default {
     } else {
       this.initMap();
     }
+
+    // 이벤트 위임 설정(여행지 리스트가 뜬 후에 리스트 항목을 눌렀을 때 moveCenter를 실행)
+    document.getElementById("trip-list").addEventListener("click", this.handleClick);
   },
 };
 </script>
