@@ -120,7 +120,7 @@ public class BoardServiceImpl implements BoardService {
 
 	// 글 삭제
 	@Override
-	public void deleteArticle(int articleNo, String path) throws Exception {
+	public void deleteArticle(int articleNo) throws Exception {
 		//List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
 		//boardMapper.deleteFile(articleNo);
 		boardMapper.deleteArticle(articleNo);

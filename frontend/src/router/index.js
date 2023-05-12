@@ -4,6 +4,8 @@ import AppBoard from "@/views/AppBoard";
 import BoardList from "@/components/board/BoardList";
 import BoardWrite from "@/components/board/BoardWrite";
 import BoardView from "@/components/board/BoardView";
+import BoardModify from "@/components/board/BoardModify";
+// import BoardDelete from "@/components/board/BoardDelete";
 import AppAttraction from "@/views/AppAttraction";
 // import { component } from "vue/types/umd";
 
@@ -31,6 +33,16 @@ const routes = [
         name: "boardView",
         component: BoardView,
       },
+      {
+        path: "modify/:articleNo",
+        name: "boardModify",
+        component: BoardModify,
+      },
+      // {
+      //   path: "delete/:articleNo",
+      //   name: "boardDelete",
+      //   component: BoardDelete,
+      // },
     ],
   },
 
