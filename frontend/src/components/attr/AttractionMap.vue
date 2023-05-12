@@ -6,7 +6,6 @@
           <div class="alert alert-primary text-center fw-bold" role="alert">
             전국 관광지 정보
           </div>
-          <!-- 관광지 검색 start -->
           <form
             id="form-search"
             method="GET"
@@ -34,11 +33,12 @@
               <option value="39">음식점</option>
             </select>
 
-            <!-- <input type="submit" value="button" class="btn btn-outline-success" id = "search-btn" /> -->
+            
             <button
               id="search-btn"
               class="btn btn-outline-success"
               type="button"
+              @click="getAttractionList"
             >
               검색
             </button>
@@ -109,17 +109,15 @@ export default {
 
     //바뀐 시도 값을 가지고 구군 목록을 가져온다.
     readytoGugunList() {
-      console.log("시도 변경됨 구군 재실행");
-    const gugunSelect = document.getElementById("search-gugun");
-    gugunSelect.innerHTML = ""; // 옵션태그 모두 삭제
-    const selectedSido = this.options[this.selectedIndex].value;    //sido-code
-      console.log(selectedSido);
+      const gugunSelect = document.getElementById("search-gugun");
+      gugunSelect.innerHTML = ""; // 옵션태그 모두 삭제
+      const selectedSido = document.getElementById("search-sido").value;    //선택한 sido-code 가져오기
         // 새로운 option 추가
-    const defaultOpt = document.createElement("option");
-    defaultOpt.value = "0";
-    defaultOpt.text = "구군 선택";
-    gugunSelect.add(defaultOpt);
-    this.fetchGugunList(selectedSido); // 함수 실행하기
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "0";
+      defaultOpt.text = "구군 선택";
+      gugunSelect.add(defaultOpt);
+      this.fetchGugunList(selectedSido); // 함수 실행하기
     },
 
     //구군 목록 가져와서 옵션값으로 추가한다
@@ -145,9 +143,68 @@ export default {
       });
     },
 
+    //세 항목을 가지고 여행지 리스트를 가져온다 
+  getAttractionList() {
+  let searchUrl = "http://127.0.0.1:9018/navigator/attrList";
+  let sidoCode = document.getElementById("search-sido").value;
+  let gugunCode = document.getElementById("search-gugun").value;
+  let contentTypeId = document.getElementById("search-content-id").value;
 
+  if (parseInt(sidoCode)) searchUrl += "?sidoCode=" + sidoCode;
+  if (parseInt(gugunCode)) searchUrl += "&gugunCode=" + gugunCode;
+  if (parseInt(contentTypeId)) searchUrl += "&contentTypeId=" + contentTypeId;
+  
+  console.log(searchUrl);
+  fetch(searchUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      this.makeAttrList(data)
+      });
+    
+  },
 
+  //여행지리스트를 출력한다
+  makeAttrList(data) {
+    document.querySelector("table").setAttribute("style", "display: ;");
+    let trips = data;
+    let tripList = ``;
+    //지역명 저장할 배열
+    //positions = [];
+  
+    trips.forEach((area) => {
+      console.log(area);
+      tripList += `
+      <tr onclick="moveCenter(${area.latitude}, ${area.longitude});">
+        <td><img src=${area.imgUrl1} width="100px" height="60px"></td>
+        <td>${area.title}</td>
+        <td>${area.address1} ${area.address2}</td>
+      </tr>
+    `;
+    document.getElementById("trip-list").innerHTML = tripList;
+    })
 
+  //   let markerInfo = {
+  //     content: `<div class="container-fluid bg-light">
+  //                 <p>${area.title}</p>
+  //               </div>
+  //               <div class="container-fluid row">
+  //                 <div class="col-3 attraction-first-card" style="background-image: url(${area.imgUrl1}); height: 3rem">
+  //                 </div>
+  //                 <div class="col">
+  //                   <p>${area.address1}</p>
+  //                 </div>
+  //               </div>
+  //               `,
+  //     latlng: new kakao.maps.LatLng(area.latitude, area.longitude),
+  //   };
+  //   positions.push(markerInfo);
+  //   console.log(positions);
+  // });
+  // document.getElementById("trip-list").innerHTML = tripList;
+  // displayMarker();
+
+  },
 
     initMap() {
       const mapContainer = document.getElementById("map"), // 지도를 표시할 div
