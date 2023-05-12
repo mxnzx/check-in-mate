@@ -26,7 +26,7 @@ public interface BoardService {
 	// 여행정보 공유 글 수정하기
 	void modifyArticle(BoardDto boardDto) throws Exception;
 	// 여행정보 공유 글 삭제하기
-	void deleteArticle(int articleNo, String path) throws Exception;
+	void deleteArticle(int articleNo) throws Exception;
 	// 미구현
 	void deleteArticleAll(String id) throws Exception;
 	
