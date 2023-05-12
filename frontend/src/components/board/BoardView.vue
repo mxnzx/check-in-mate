@@ -1,32 +1,129 @@
 <template>
-  <div class="regist">
-    <h1 class="underline">SSAFY 글 상세보기</h1>
-    <div class="regist_form">
-      <label> 글번호</label>
-      <div class="view">{{ article.articleNo }}</div>
-      <label> 글제목</label>
-      <div class="view">{{ article.subject }}</div>
-      <label> 작성자</label>
-      <div class="view">{{ article.userId }}</div>
-      <label> 조회수</label>
-      <div class="view">{{ article.hit }}</div>
-      <label> 작성시간</label>
-      <div class="view">{{ article.registerTime }}</div>
-      <label> 내용</label>
-      <div class="view">{{ article.content }}</div>
-
-      <div style="padding-top: 15px">
-        <router-link :to="'/modify/' + article.articleNo" class="btn"
-          >수정</router-link
-        >
-        <router-link :to="`/delete/${article.articleNo}`" class="btn"
-          >삭제</router-link
-        >
-        <!-- <router-link :to="`/view/${article.articleno}`"> -->
-        <router-link to="/list" class="btn">목록</router-link>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+          <mark class="basic">글보기</mark>
+        </h2>
+      </div>
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="row my-2">
+          <h2 class="text-secondary px-5">
+            <!-- ${article.articleNo}. ${board.subject} -->
+            {{ article.articleNo }} {{ article.subject }}
+          </h2>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="clearfix align-content-center">
+              <img
+                class="avatar me-2 float-md-start bg-light p-2"
+                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+              />
+              <p>
+                <span class="fw-bold">{{ article.userId }}</span> <br />
+                <span class="text-secondary fw-light">
+                  {{ article.registerTime }} 조회 : {{ article.hit }}
+                </span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
+          <div class="divider mb-3"></div>
+          <div class="text-secondary">{{ article.content }}</div>
+          <div class="divider mt-3 mb-3"></div>
+          <div class="d-flex justify-flex-end" style="flex-direction: column">
+            <div class="row">
+              <!-- <div>
+                <ul id="commentUL"></ul>
+              </div>
+              <div>${userInfo.userId}</div>
+              <div>
+                <textarea
+                  id="content"
+                  rows="5"
+                  style="width: 100%"
+                  placeholder="댓글 입력"
+                ></textarea>
+              </div>
+              <div style="text-align: right">
+                <button id="commentRegBtn" class="btn btn-outline-primary mb-3">
+                  댓글 등록
+                </button>
+              </div> -->
+            </div>
+            <div style="text-align: right">
+              <button
+                type="button"
+                id="btn-list"
+                class="btn btn-outline-primary mb-3"
+                @click="moveList"
+              >
+                글목록
+              </button>
+              <c:if test="${userinfo.userId eq board.userId}">
+                <button
+                  type="button"
+                  id="btn-mv-modify"
+                  class="btn btn-outline-success mb-3 ms-1"
+                  @click="moveModifyArticle"
+                >
+                  글수정
+                </button>
+                <button
+                  type="button"
+                  id="btn-delete"
+                  class="btn btn-outline-danger mb-3 ms-1"
+                  @click="deleteArticle"
+                >
+                  글삭제
+                </button>
+              </c:if>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <!-- <b-container class="bv-example-row mt-3">
+    <b-row>
+      <b-col>
+        <b-alert show><h3>글보기</h3></b-alert>
+      </b-col>
+    </b-row>
+    <b-row class="mb-1">
+      <b-col class="text-left">
+        <b-button variant="outline-primary" @click="moveList">목록</b-button>
+      </b-col>
+      <b-col class="text-right">
+        <b-button
+          variant="outline-info"
+          size="sm"
+          @click="moveModifyArticle"
+          class="mr-2"
+          >글수정</b-button
+        >
+        <b-button variant="outline-danger" size="sm" @click="deleteArticle"
+          >글삭제</b-button
+        >
+      </b-col>
+    </b-row>
+    <b-row class="mb-1">
+      <b-col>
+        <b-card
+          :header-html="`<h3>${article.articleNo}.
+          ${article.subject} [${article.hit}]</h3><div><h6>${article.userId}</div><div>${article.registerTime}</h6></div>`"
+          class="mb-2"
+          border-variant="dark"
+          no-body
+        >
+          <b-card-body class="text-left">
+            <div class="view">{{ article.content }}</div>
+          </b-card-body>
+        </b-card>
+      </b-col>
+    </b-row>
+  </b-container> -->
 </template>
 
 <script>
@@ -36,7 +133,7 @@ export default {
   data() {
     return {
       articleNo: "",
-      article: {},
+      article: [],
     };
   },
   created() {
@@ -60,13 +157,45 @@ export default {
           }
         })
         .then((data) => {
-          this.article = data;
-          console.log(data.article);
+          this.article = data.article;
+          console.log(this.article);
           console.log(this.$route.params.articleNo);
           alert("글 가져오기 성공");
         })
         .catch((error) => {
           console.error(error);
+        });
+    },
+    moveList() {
+      this.$router.push("/board/api/list");
+    },
+    moveModifyArticle() {
+      this.$router.replace({
+        name: "boardModify",
+        params: { articleNo: this.article.articleNo },
+      });
+      //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
+    },
+    deleteArticle() {
+      fetch(
+        `http://localhost:9018/board/api/delete/${this.$route.params.articleNo}`,
+        {
+          method: "DELETE",
+          body: JSON.stringify({
+            articleNo: this.articleNo,
+          }),
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            alert("글 삭제 성공");
+            this.moveList();
+          } else {
+            throw new Error("글 삭제 실패");
+          }
+        })
+        .catch((error) => {
+          this.message = error.message;
         });
     },
   },

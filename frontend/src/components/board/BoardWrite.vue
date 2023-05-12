@@ -82,6 +82,7 @@ export default {
         subject: this.subject,
         content: this.content,
       };
+      console.log("write userid >> " + this.userId);
       fetch("http://localhost:9018/board/api/write", {
         method: "POST",
         headers: {
@@ -89,7 +90,6 @@ export default {
         },
         body: JSON.stringify(obj),
       })
-      
         .then((response) => {
           if (response.ok) {
             console.log("작성성공");
