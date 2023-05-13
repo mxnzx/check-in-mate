@@ -41,10 +41,11 @@
 
               <div>
                 <li v-for="comment in comments" :key="comment.commentNo">
+                  <ul>댓글번호 : {{comment.commentNo}} </ul>
                   <ul>작성자 : {{comment.userId}}</ul>
                   <ul>내용 : {{comment.comment}}</ul>
                   <ul>등록시간 : {{comment.registerTime}}</ul>
-                  <ul><a href="#1" onclick="commentDel(\${comment.commentNo})">삭제</a></ul>
+                  <ul><a href="#1" @click="deleteComment(comment.commentNo)">삭제</a></ul>
                   <br>
                 </li>
               </div>
@@ -157,6 +158,8 @@ export default {
       articleNo: "",
       article: [],
       comments: [],
+      comment: "",
+      userId: "",
     };
   },
   created() {
@@ -219,11 +222,9 @@ export default {
     // 댓글 쓰기
     wrtieComment(){
       let obj = {
-        articleNo: this.articleNo,
-        userId: this.userId,
-        //comment: this.comment,
-
-
+        articleNo: this.article.articleNo,
+        userId: this.article.userId,
+        comment: this.comment,
       }
       fetch(
         `http://localhost:9018/comment`,{
@@ -236,7 +237,7 @@ export default {
       )
       .then((response) =>{
         if(response.ok){
-          return response.json();
+          this.$router.go();
         }
         else{
           throw new Error("댓글 작성 실패");
@@ -247,6 +248,31 @@ export default {
       })
     },
 
+    // 댓글 삭제
+  deleteComment(commentNo){
+    fetch(
+      `http://localhost:9018/comment/${this.article.articleNo}/${commentNo}`,
+      {
+      method: "DELETE",
+      body: JSON.stringify({
+        articleNo: this.articleNo,
+        commentNo: this.commentNo,
+      }),
+      }
+    )
+    .then((response) =>{
+      if(response.ok){
+        this.$router.go();
+        console.log("댓글 삭제 성공");
+      }
+      else{
+        throw new Error("댓글 삭제 실패");
+      }
+    })
+    .catch((error) =>{
+      this.message = error.message;
+    })
+  },
     //목록으로 이동
     moveList() {
       this.$router.push("/board/api/list");

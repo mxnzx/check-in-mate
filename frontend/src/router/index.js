@@ -50,6 +50,12 @@ const routes = [
     ],
   },
 
+  {
+    path: "/comment",
+    name: "AppBoardComment",
+    component: AppBoard,
+  },
+
   // 지역별 여행지
   {
     path: "/attraction",
