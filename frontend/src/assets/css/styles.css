@@ -2,6 +2,15 @@ html, body {
     height: 100%;
 }
 
+nav {
+  padding: 30px;
+  text-decoration: none;
+}
+
+nav a {
+  text-decoration: none;
+
+}
 
 @font-face {
   font-family: "nsr";
@@ -15,6 +24,7 @@ html, body {
 .navbar-brand {
   font-family: 'nsr', 'serif';
 }
+
 #enjoyTrip {
   color:#198754;
 }
@@ -27,17 +37,6 @@ html, body {
   font-size: larger;  
 }
 
-footer {
-  height: 20px;
-  position : relative;
-  transform : translateY(-100%);
-
-  
-}
-
-footer>ul>li {
-  display: inline-block;
-}
 
 .divider {
   width: 15%;
