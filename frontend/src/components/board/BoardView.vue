@@ -34,24 +34,48 @@
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-flex-end" style="flex-direction: column">
             <div class="row">
-              <!-- <div>
-                <ul id="commentUL"></ul>
+              <!-- 댓글시작 -->
+              <div>
+                <!-- <ul id="commentUL"></ul> -->
               </div>
-              <div>${userInfo.userId}</div>
+
+              <div>
+                <li v-for="comment in comments" :key="comment.commentNo">
+                  <ul>댓글번호 : {{comment.commentNo}} </ul>
+                  <ul>작성자 : {{comment.userId}}</ul>
+                  <ul>내용 : {{comment.comment}}</ul>
+                  <ul>등록시간 : {{comment.registerTime}}</ul>
+                  <ul><a href="#1" @click="deleteComment(comment.commentNo)">삭제</a></ul>
+                  <br>
+                </li>
+              </div>
+              <div class="mb-3">
+                <label for="userId" class="form-label">댓글 작성자 입력 </label>
+                <input
+                type="text"
+                class="form-control"
+                id="userId"
+                name="userId"
+                placeholder="아이디입력"
+                v-model="userId"
+                />
+              </div>              
               <div>
                 <textarea
                   id="content"
                   rows="5"
                   style="width: 100%"
                   placeholder="댓글 입력"
+                  v-model="comment"
                 ></textarea>
               </div>
               <div style="text-align: right">
-                <button id="commentRegBtn" class="btn btn-outline-primary mb-3">
+                <button id="commentRegBtn" class="btn btn-outline-primary mb-3" @click="wrtieComment">
                   댓글 등록
                 </button>
-              </div> -->
+              </div>
             </div>
+            <!-- 댓글 끝  -->
             <div style="text-align: right">
               <button
                 type="button"
@@ -61,7 +85,6 @@
               >
                 글목록
               </button>
-              <c:if test="${userinfo.userId eq board.userId}">
                 <button
                   type="button"
                   id="btn-mv-modify"
@@ -78,7 +101,7 @@
                 >
                   글삭제
                 </button>
-              </c:if>
+              
             </div>
           </div>
         </div>
@@ -134,10 +157,14 @@ export default {
     return {
       articleNo: "",
       article: [],
+      comments: [],
+      comment: "",
+      userId: "",
     };
   },
   created() {
     this.getArticle();
+    this.getComment();
   },
   methods: {
     getArticle() {
@@ -160,12 +187,93 @@ export default {
           this.article = data.article;
           console.log(this.article);
           console.log(this.$route.params.articleNo);
-          alert("글 가져오기 성공");
+          //alert("글 가져오기 성공");
         })
         .catch((error) => {
           console.error(error);
         });
     },
+    // 댓글 목록 가져오기 
+    getComment(){
+      fetch(
+        `http://localhost:9018/comment/${this.$route.params.articleNo}`,{
+          method: "GET",
+        }
+      )
+      .then((response) =>{
+        if(response.ok){
+          return response.json();
+        }
+        else{
+          throw new Error("댓글 가져오기 실패");
+        }
+      })
+      .then((data) =>{
+        this.comments = data;
+        console.log(data);
+        console.log(this.comments);
+        console.log("댓글 가져오기 "  + data);
+        console.log("댓글 가져오기 성공");
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+    },
+    // 댓글 쓰기
+    wrtieComment(){
+      let obj = {
+        articleNo: this.article.articleNo,
+        userId: this.article.userId,
+        comment: this.comment,
+      }
+      fetch(
+        `http://localhost:9018/comment`,{
+          method: "POST",
+          headers:{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(obj),
+        }
+      )
+      .then((response) =>{
+        if(response.ok){
+          this.$router.go();
+        }
+        else{
+          throw new Error("댓글 작성 실패");
+        }
+      })
+      .catch((error) =>{
+        alert(error.message);
+      })
+    },
+
+    // 댓글 삭제
+  deleteComment(commentNo){
+    fetch(
+      `http://localhost:9018/comment/${this.article.articleNo}/${commentNo}`,
+      {
+      method: "DELETE",
+      body: JSON.stringify({
+        articleNo: this.articleNo,
+        commentNo: this.commentNo,
+      }),
+      }
+    )
+    .then((response) =>{
+      if(response.ok){
+        this.$router.go();
+        console.log("댓글 삭제 성공");
+      }
+      else{
+        throw new Error("댓글 삭제 실패");
+      }
+    })
+    .catch((error) =>{
+      this.message = error.message;
+    })
+  },
+    //목록으로 이동
     moveList() {
       this.$router.push("/board/api/list");
     },
