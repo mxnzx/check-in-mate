@@ -19,9 +19,9 @@
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0 m-2">
           <li class="nav-item">
-            <a class="nav-link" href="${root}/notice/list?&pgno=1&key=&word="
-              >공지사항</a
-            >
+            <a class="nav-link">
+              <router-link to="/notice/api">공지사항</router-link>
+            </a>
           </li>
           <li class="nav-item dropdown">
             <a
