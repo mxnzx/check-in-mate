@@ -27,33 +27,11 @@
               <span>회원관리</span>
             </template>
             <b-dropdown-item @click="openJoinModal">회원가입</b-dropdown-item>
-            <!-- <b-dropdown-item @click="openLoginModal">로그인</b-dropdown-item> -->
+            <b-dropdown-item @click="openLoginModal">로그인</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <join-modal ref="JoinModal"></join-modal>
-          
-
-          <!-- <ul class="dropdown-menu">
-              <li>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signUpModal"
-                  >회원가입</a
-                >
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  id="login-dropdown"
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#loginModal"
-                  >로그인</a
-                >
-              </li>
-            </ul> -->
+          <login-modal ref="LoginModal"></login-modal>
 
         </b-navbar-nav>
       </b-collapse>
@@ -63,11 +41,13 @@
 
 <script>
 import JoinModal from "@/components/user/JoinModal.vue";
+import LoginModal from "@/components/user/LoginModal.vue";
 
 export default {
 
   components: {
     JoinModal,
+    LoginModal,
   },
 
   data() {
@@ -77,8 +57,10 @@ export default {
   },
   methods: {
     openJoinModal() {
-      this.$refs.JoinModal.show();
-      
+      this.$refs.JoinModal.show(); 
+    },
+    openLoginModal() {
+      this.$refs.LoginModal.show(); 
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <b-modal v-model="showJoinModal" id="signUpModal" title="Join">
+  <b-modal ref="join-modal" v-model="showJoinModal" id="signUpModal" title="Join" hide-footer>
     <div class="modal-body">
       <div class="row mb-1 text-center">
         <div class="col-3">이름</div>
@@ -47,6 +47,10 @@
         </div>
       </div>
     </div>
+    <div class="modal-footer">
+      <b-button id="btn-join" type="button"  variant="primary" @click="checkValue">회원가입</b-button>
+      <b-button type="button" variant="danger" @click="hideModal">취소</b-button>
+    </div>
   </b-modal>
 </template>
 
@@ -70,7 +74,9 @@ export default {
   methods: {
     show() {
       this.showJoinModal = true;
-
+    },
+    hideModal() {
+      this.$refs['join-modal'].hide()
     },
     //비어있는 값이 없다면 회원가입 ㄱㄱ
     checkValue() {
@@ -102,7 +108,7 @@ export default {
       console.log("회원가입 시도");
       axios
         .post("http://127.0.0.1:9018/user/api/join", this.data)
-        //.then(() => this.$router.push("@"));
+      //.then(() => this.$router.push("@"));
     }
   }
 };
