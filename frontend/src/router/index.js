@@ -29,6 +29,14 @@ const routes = [
     path: "/index",
     component: () => import("@/components/TheIndex.vue"),
   },
+  {
+    path: "/mypage",
+    component: () => import("@/components/user/MyPage.vue"),
+  },
+  {
+    path: "/login",
+    component: () => import("@/components/user/LoginPage.vue"),
+  },
   // 여행정보 공유
   {
     path: "/board/api",
