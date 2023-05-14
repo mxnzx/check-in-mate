@@ -1,18 +1,26 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
+      <!-- 글보기 제목 시작 -->
       <div class="col-lg-8 col-md-10 col-sm-12">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="basic">글보기</mark>
+          <span class="bg-light">글보기</span>
         </h2>
       </div>
+      <!-- 글보기 제목 끝 -->
+      <!-- 글번호, 제목 시작 -->
       <div class="col-lg-8 col-md-10 col-sm-12">
         <div class="row my-2">
-          <h2 class="text-secondary px-5">
-            {{ article.articleNo }} {{ article.subject }}
-          </h2>
+          <div class="col-1">
+            <h2 class="text-secondary">{{ article.articleNo }}.</h2>
+          </div>
+          <div class="col-11">
+            <h2 class="text-secondary">{{ article.subject }}</h2>
+          </div>
         </div>
+        <!-- 글번호, 제목 끝 -->
         <div class="row">
+          <!-- 아이디, 등록시간, 조회수 시작 -->
           <div class="col-md-8">
             <div class="clearfix align-content-center">
               <img
@@ -27,41 +35,41 @@
               </p>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
-          <div class="divider mb-3"></div>
-          <div class="text-secondary">{{ article.content }}</div>
-          <div class="divider mt-3 mb-3"></div>
-          <div class="d-flex justify-flex-end" style="flex-direction: column">
-            <div class="row">
-            </div>
-            <div style="text-align: right">
-              <button
-                type="button"
-                id="btn-list"
-                class="btn btn-outline-primary mb-3"
-                @click="moveList"
-              >
-                글목록
-              </button>             
-                <button
-                  type="button"
-                  id="btn-mv-modify"
-                  class="btn btn-outline-success mb-3 ms-1"
-                  @click="moveModifyArticle"
-                >
-                  글수정
-                </button>
-                <button
-                  type="button"
-                  id="btn-delete"
-                  class="btn btn-outline-danger mb-3 ms-1"
-                  @click="deleteArticle"
-                >
-                  글삭제
-                </button>
-              
-            </div>
-          </div>
+          <div class="col-md-4 align-self-center text-right">댓글 : 17</div>
+          <!-- 아이디, 등록시간, 댓글, 조회수 끝 -->
+          <!-- 내용 시작 -->
+        </div>
+        <hr class="my-3" />
+        <div class="text-secondary">{{ article.content }}</div>
+        <hr class="my-3" />
+        <!-- 내용 끝 -->
+        <!-- 버튼 3개 시작 -->
+        <div style="text-align: right">
+          <button
+            type="button"
+            id="btn-list"
+            class="btn btn-outline-primary mb-3"
+            @click="moveList"
+          >
+            글목록
+          </button>
+          <button
+            type="button"
+            id="btn-mv-modify"
+            class="btn btn-outline-success mb-3 ms-1"
+            @click="moveModifyArticle"
+          >
+            글수정
+          </button>
+          <button
+            type="button"
+            id="btn-delete"
+            class="btn btn-outline-danger mb-3 ms-1"
+            @click="deleteArticle"
+          >
+            글삭제
+          </button>
+          <!-- 버튼 3개 끝 -->
         </div>
       </div>
     </div>
@@ -79,18 +87,15 @@ export default {
     };
   },
   created() {
+    // 글 가져오기 실행
     this.getArticle();
   },
   methods: {
+    // 글 가져오기
     getArticle() {
-      // 비동기
-      // TODO : 글번호에 해당하는 글정보 얻기.
-      fetch(
-        `http://localhost:9018/notice/api/view/${this.$route.params.articleNo}`,
-        {
-          method: "GET",
-        }
-      )
+      fetch(`http://localhost:9018/notice/api/view/${this.$route.params.articleNo}`, {
+        method: "GET",
+      })
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -101,31 +106,31 @@ export default {
         .then((data) => {
           this.article = data.noticeArticle;
           console.log(this.article);
-          alert("글 가져오기 성공");
+          //alert("글 가져오기 성공");
         })
         .catch((error) => {
           console.error(error);
         });
     },
+    // 목록으로 이동
     moveList() {
       this.$router.push("/notice/api/list");
     },
+    // 수정으로 이동
     moveModifyArticle() {
       this.$router.replace({
         name: "noticeModify",
         params: { articleNo: this.article.articleNo },
       });
     },
+    // 삭제하기
     deleteArticle() {
-      fetch(
-        `http://localhost:9018/notice/api/delete/${this.$route.params.articleNo}`,
-        {
-          method: "DELETE",
-          body: JSON.stringify({
-            articleNo: this.articleNo,
-          }),
-        }
-      )
+      fetch(`http://localhost:9018/notice/api/delete/${this.$route.params.articleNo}`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          articleNo: this.articleNo,
+        }),
+      })
         .then((response) => {
           if (response.ok) {
             alert("글 삭제 성공");

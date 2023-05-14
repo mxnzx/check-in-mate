@@ -1,12 +1,15 @@
 <template>
- <div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <!-- 공지사항 제목 시작 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
       <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-        <mark class="basic">공지사항</mark>
+        <span class="bg-light">공지사항</span>
       </h2>
     </div>
+    <!-- 공지사항 제목 끝 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
       <div class="row align-self-center mb-2">
+        <!-- 글쓰기 버튼 시작 -->
         <div class="col-md-2 text-start">
           <button
             type="button"
@@ -17,7 +20,9 @@
             글쓰기
           </button>
         </div>
-        <div class="col-md-7 offset-3">
+        <!-- 글쓰기 버튼 끝 -->
+        <!-- 검색하기 시작 -->
+        <!-- <div class="col-md-7 offset-3">
           <select
             name="sort_list"
             id="sort_list"
@@ -50,13 +55,13 @@
                 class="form-control"
                 placeholder="검색어..."
               />
-              <button id="btn-search" class="btn btn-dark" type="button">
-                검색
-              </button>
+              <button id="btn-search" class="btn btn-dark" type="button">검색</button>
             </div>
           </form>
-        </div>
+        </div> -->
+        <!-- 검색하기 끝 -->
       </div>
+      <!-- 리스트 테이블 시작-->
       <table class="table table-hover" id="article-list">
         <thead>
           <tr class="text-center">
@@ -75,6 +80,7 @@
           ></notice-list-item>
         </tbody>
       </table>
+      <!-- 리스트 테이블 끝-->
     </div>
   </div>
 </template>
@@ -91,9 +97,8 @@ export default {
       articles: [],
     };
   },
+  // 글목록 얻어오기
   created() {
-    // 비동기
-    // TODO : 글목록 얻기.
     fetch("http://localhost:9018/notice/api/list")
       .then((response) => response.json())
       .then((data) => {
@@ -104,6 +109,7 @@ export default {
       });
   },
   methods: {
+    // 글쓰기로 이동
     moveWrite() {
       this.$router.push("write");
     },
