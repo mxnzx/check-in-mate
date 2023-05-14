@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="text-center">
     <td>{{ article.articleNo }}</td>
     <td>
       <router-link :to="`view/${article.articleNo}`" class="board-subject">{{
