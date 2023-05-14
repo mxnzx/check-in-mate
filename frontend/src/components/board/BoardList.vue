@@ -1,12 +1,15 @@
 <template>
   <div class="row justify-content-center">
+    <!-- 여행정보 공유 게시판 제목 시작 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
       <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-        <mark class="basic">여행정보공유 게시판</mark>
+        <span class="bg-light">여행정보공유 게시판</span>
       </h2>
     </div>
+    <!-- 여행정보 공유 게시판 제목 끝 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
       <div class="row align-self-center mb-2">
+        <!-- 글쓰기 버튼 시작 -->
         <div class="col-md-2 text-start">
           <button
             type="button"
@@ -17,7 +20,9 @@
             글쓰기
           </button>
         </div>
-        <div class="col-md-7 offset-3">
+        <!-- 글쓰기 버튼 끝 -->
+        <!-- 검색하기 시작 -->
+        <!-- <div class="col-md-7 offset-3">
           <select
             name="sort_list"
             id="sort_list"
@@ -55,8 +60,10 @@
               </button>
             </div>
           </form>
-        </div>
+        </div> -->
+        <!-- 검색하기 끝 -->
       </div>
+      <!-- 리스트 테이블 시작-->
       <table class="table table-hover" id="article-list">
         <thead>
           <tr class="text-center">
@@ -75,6 +82,7 @@
           ></board-list-item>
         </tbody>
       </table>
+      <!-- 리스트 테이블 끝-->
     </div>
   </div>
 </template>
@@ -91,9 +99,8 @@ export default {
       articles: [],
     };
   },
+  // 리스트 가져오기
   created() {
-    // 비동기
-    // TODO : 글목록 얻기.
     fetch("http://localhost:9018/board/api/list")
       .then((response) => response.json())
       .then((data) => {
@@ -103,6 +110,7 @@ export default {
         console.log("list data" + data);
       });
   },
+  // 글쓰기로 이동
   methods: {
     moveWrite() {
       this.$router.push("write");
