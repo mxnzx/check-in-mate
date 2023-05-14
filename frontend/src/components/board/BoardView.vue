@@ -1,123 +1,140 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
+      <!-- 글보기 제목 시작 -->
       <div class="col-lg-8 col-md-10 col-sm-12">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="basic">글보기</mark>
+          <span class="bg-light">글보기</span>
         </h2>
       </div>
+      <!-- 글보기 제목 끝 -->
+      <!-- 글번호, 제목 시작 -->
       <div class="col-lg-8 col-md-10 col-sm-12">
-        <div class="row my-12" style="display: inline">
-          <h2 class="text-secondary px-3" style="display: inline" text-align="center">
-            {{ article.articleNo }}.
-          </h2>
-          <h2 class="text-secondary px-1" style="display: inline">
-            {{ article.subject }}
-          </h2>
+        <div class="row my-2">
+          <div class="col-1">
+            <h2 class="text-secondary">{{ article.articleNo }}.</h2>
+          </div>
+          <div class="col-11">
+            <h2 class="text-secondary">{{ article.subject }}</h2>
+          </div>
         </div>
+        <!-- 글번호, 제목 끝 -->
         <div class="row">
+          <!-- 아이디, 등록시간, 댓글, 조회수 시작 -->
           <div class="col-md-8">
-            <div class="clearfix align-content-center">
+            <div class="clearfix align-items-center">
               <img
                 class="avatar me-2 float-md-start bg-light p-2"
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
-              <p>
-                <span class="fw-bold">{{ article.userId }}</span> <br />
-                <span class="text-secondary fw-light">
-                  {{ article.registerTime }} 조회 : {{ article.hit }}
-                </span>
-              </p>
+              <span class="fw-bold">{{ article.userId }}</span>
+              <br />
+              <span class="text-secondary fw-light"
+                >{{ article.registerTime }} 조회 : {{ article.hit }}</span
+              >
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
-          <div class="divider mb-3"></div>
-          <div class="text-secondary">{{ article.content }}</div>
-          <div class="divider mt-3 mb-3"></div>
-          <div class="d-flex justify-flex-end" style="flex-direction: column">
-            <!-- 댓글시작 -->
-            <section class="mb-5">
-              <div class="card bg-light">
-                <div class="card-body">
-                  <!-- 댓글 목록 -->
-                  <ul class="ul_comment" v-for="comment in comments" :key="comment.commentNo">
-                    <div class="d-flex mb-4">
-                      <div class="flex-shrink-0">
-                        <img
-                          class="rounded-circle"
-                          src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
-                          alt="..."
-                        />
-                      </div>
-                      <div class="ms-3">
-                        <div class="fw-bold">{{ comment.userId }}</div>
-                        {{ comment.comment }}
-                        <div>
-                          {{ comment.registerTime }}
-                          <a
-                            class="deleteComment"
-                            href="#1"
-                            @click="deleteComment(comment.commentNo)"
-                            style="color: red"
-                            >삭제</a
-                          >
-                        </div>
+          <div class="col-md-4 align-self-center text-right">댓글 : 17</div>
+          <!-- 아이디, 등록시간, 댓글, 조회수 끝 -->
+        </div>
+        <!-- 내용 시작 -->
+        <hr class="my-3" />
+        <div class="text-secondary">{{ article.content }}</div>
+        <hr class="my-3" />
+        <!-- 내용 끝 -->
+        <!-- 댓글 시작 -->
+        <section class="mt-5">
+          <div class="card bg-light">
+            <div class="card-body">
+              <!-- 댓글 목록 -->
+              <ul class="ul_comment">
+                <li v-for="comment in comments" :key="comment.commentNo">
+                  <div class="d-flex mb-4">
+                    <div class="flex-shrink-0">
+                      <img
+                        class="rounded-circle"
+                        src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                        alt="..."
+                      />
+                    </div>
+                    <div class="ms-3">
+                      <div class="fw-bold">{{ comment.userId }}</div>
+                      {{ comment.comment }}
+                      <div>
+                        {{ comment.registerTime }}
+                        <a
+                          class="deleteComment"
+                          href="#1"
+                          @click="deleteComment(comment.commentNo)"
+                          style="color: red"
+                        >
+                          삭제
+                        </a>
                       </div>
                     </div>
-                  </ul>
-                  <!-- 댓글 등록 -->
-                  <form class="mb-4">
-                    <br />
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="userId"
-                      name="userId"
-                      placeholder="아이디입력"
-                      v-model="userId"
-                    /><br />
-                    <textarea class="form-control" rows="3" placeholder="댓글입력"></textarea>
-                  </form>
-                  <div class="commentBtn text-end">
-                    <button
-                      id="commentRegBtn"
-                      class="btn btn-outline-primary mb-1"
-                      @click="wrtieComment"
-                    >
-                      댓글 등록
-                    </button>
                   </div>
-                </div>
+                </li>
+              </ul>
+              <!-- 댓글 등록 -->
+              <form class="mb-4">
+                <br />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="userId"
+                  name="userId"
+                  placeholder="아이디입력"
+                  v-model="userId"
+                /><br />
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  placeholder="댓글입력"
+                  v-model="comment"
+                ></textarea>
+              </form>
+              <div class="commentBtn text-end">
+                <button
+                  id="commentRegBtn"
+                  class="btn btn-outline-primary mb-1"
+                  style="float: right"
+                  @click="wrtieComment"
+                >
+                  댓글 등록
+                </button>
               </div>
-            </section>
-            <!-- 댓글 끝  -->
-            <div style="text-align: right">
-              <button
-                type="button"
-                id="btn-list"
-                class="btn btn-outline-primary mb-3"
-                @click="moveList"
-              >
-                글목록
-              </button>
-              <button
-                type="button"
-                id="btn-mv-modify"
-                class="btn btn-outline-success mb-3 ms-1"
-                @click="moveModifyArticle"
-              >
-                글수정
-              </button>
-              <button
-                type="button"
-                id="btn-delete"
-                class="btn btn-outline-danger mb-3 ms-1"
-                @click="deleteArticle"
-              >
-                글삭제
-              </button>
             </div>
           </div>
+        </section>
+        <br />
+        <!-- 댓글 끝  -->
+        <!-- 버튼 3개 시작 -->
+        <div style="text-align: right">
+          <button
+            type="button"
+            id="btn-list"
+            class="btn btn-outline-primary mb-3"
+            @click="moveList"
+          >
+            글목록
+          </button>
+          <button
+            type="button"
+            id="btn-mv-modify"
+            class="btn btn-outline-success mb-3 ms-1"
+            @click="moveModifyArticle"
+          >
+            글수정
+          </button>
+          <button
+            type="button"
+            id="btn-delete"
+            class="btn btn-outline-danger mb-3 ms-1"
+            @click="deleteArticle"
+          >
+            글삭제
+          </button>
+          <!-- 버튼 3개 끝 -->
         </div>
       </div>
     </div>

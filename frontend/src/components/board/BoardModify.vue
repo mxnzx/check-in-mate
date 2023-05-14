@@ -1,11 +1,14 @@
 <template>
   <div class="row justify-content-center">
+    <!-- 여행정보 공유 게시판 수정 제목 시작 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
       <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-        <mark class="basic">글수정</mark>
+        <span class="bg-light">글수정</span>
       </h2>
     </div>
+    <!-- 여행정보 공유 게시판 수정 제목 끝 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
+      <!-- 제목 입력 시작 -->
       <div class="mb-3">
         <label for="subject" class="form-label">제목 : </label>
         <input
@@ -16,6 +19,8 @@
           v-model="article.subject"
         />
       </div>
+      <!-- 제목 입력 끝 -->
+      <!-- 내용 입력 시작 -->
       <div class="mb-3">
         <label for="content" class="form-label">내용 : </label>
         <textarea
@@ -26,6 +31,8 @@
           v-model="article.content"
         ></textarea>
       </div>
+      <!-- 내용 입력 끝 -->
+      <!-- 수정, 목록 버튼 시작 -->
       <div class="col-auto text-center">
         <button
           type="button"
@@ -35,14 +42,10 @@
         >
           글수정
         </button>
-        <button
-          type="button"
-          id="btn-list"
-          class="btn btn-outline-danger mb-3"
-          @click="moveList"
-        >
-          목록으로이동...
+        <button type="button" id="btn-list" class="btn btn-outline-danger mb-3" @click="moveList">
+          목록
         </button>
+        <!-- 수정, 목록 버튼 끝 -->
       </div>
     </div>
   </div>
@@ -57,13 +60,11 @@ export default {
       article: [],
     };
   },
+  // 글 제목, 내용  가져오기
   created() {
-    fetch(
-      `http://localhost:9018/board/api/view/${this.$route.params.articleNo}`,
-      {
-        method: "GET",
-      }
-    )
+    fetch(`http://localhost:9018/board/api/view/${this.$route.params.articleNo}`, {
+      method: "GET",
+    })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -73,10 +74,11 @@ export default {
       })
       .then((data) => {
         this.article = data.article;
-        alert("글 가져오기 성공");
+        //alert("글 가져오기 성공");
       });
   },
   methods: {
+    // 수정하기
     modifyArticle() {
       const modifiedData = {
         // 수정할 데이터 필드와 값 설정
@@ -107,6 +109,7 @@ export default {
           this.message = error.message;
         });
     },
+    // 목록으로 이동
     moveList() {
       this.$router.push("/board/api/list");
     },
