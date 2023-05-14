@@ -20,7 +20,16 @@ import NoticeModify from "@/components/notice/NoticeModify";
 Vue.use(VueRouter);
 
 const routes = [
-  // 여행정보 공유 
+  {
+    path: "/",
+    name: "TheIndex",
+    redirect: "/index",
+  },
+  {
+    path: "/index",
+    component: () => import("@/components/TheIndex.vue"),
+  },
+  // 여행정보 공유
   {
     path: "/board/api",
     name: "AppBoard",
@@ -90,7 +99,6 @@ const routes = [
         name: "noticeModify",
         component: NoticeModify,
       },
-
     ],
   },
 ];
