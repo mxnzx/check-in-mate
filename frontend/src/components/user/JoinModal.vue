@@ -2,13 +2,13 @@
   <b-modal ref="join-modal" v-model="showJoinModal" id="signUpModal" title="Join" hide-footer>
     <div class="modal-body">
       <div class="row mb-1 text-center">
-        <div class="col-3">이름</div>
+        <div class="col-4">이름</div>
         <div class="col">
           <input id="username_join" name="userName" class="form-control" type="text" placeholder="이름" v-model="userId" />
         </div>
       </div>
       <div class="row mb-1 text-center">
-        <div class="col-3">아이디</div>
+        <div class="col-4">아이디</div>
         <div class="col">
           <input id="userid_join" name="userId" class="form-control" type="text" placeholder="아이디" v-model="userName" />
         </div>
@@ -16,34 +16,34 @@
       <div id="idcheck-result"></div>
       <div class="row"></div>
       <div class="row mb-1 text-center">
-        <div class="col-3">비밀번호</div>
+        <div class="col-4">비밀번호</div>
         <div class="col">
           <input id="userpwd_join" name="userPwd" class="form-control" type="password" placeholder="비밀번호"
             v-model="userPwd" />
         </div>
       </div>
       <div class="row mb-1 text-center">
-        <div class="col-3">비밀번호확인</div>
+        <div class="col-4">비밀번호확인</div>
         <div class="col">
           <input id="pwdcheck_join" name="pwdcheck" class="form-control" type="text" placeholder="비밀번호확인"
             v-model="userPwd" />
         </div>
       </div>
       <div class="row mb-1 text-center">
-        <div class="col-3">이메일</div>
+        <div class="col-4">이메일</div>
         <div class="col-3">
           <input id="emailid_join" name="emailId" class="form-control" type="text" placeholder="이메일" v-model="emailId" />
         </div>
         <div class="col-1">
-          <span class="input-group-text" style="background-color:white; border:none; padding-left:2px">@</span>
+          <span class="input-group-text" style="background-color:white; border:none; padding-left:2.5px">@</span>
         </div>
         <div class="col">
-          <select class="form-select" id="emaildomain_join" name="emailDomain" v-model="emailDomain">
+          <b-select class="form-select" id="emaildomain_join" name="emailDomain" v-model="emailDomain">
             <option value="ssafy.com">SSAFY</option>
             <option value="google.com">GOOGLE</option>
             <option value="kakao.com">KAKAO</option>
             <option value="naver.com">NAVER</option>
-          </select>
+          </b-select>
         </div>
       </div>
     </div>
