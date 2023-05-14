@@ -26,9 +26,12 @@
             <template #button-content>
               <span>회원관리</span>
             </template>
-            <b-dropdown-item href="#" @click.native="register = true">회원가입</b-dropdown-item>
-            <b-dropdown-item href="#">로그인</b-dropdown-item>
+            <b-dropdown-item @click="openJoinModal">회원가입</b-dropdown-item>
+            <!-- <b-dropdown-item @click="openLoginModal">로그인</b-dropdown-item> -->
           </b-nav-item-dropdown>
+
+          <join-modal ref="JoinModal"></join-modal>
+          
 
           <!-- <ul class="dropdown-menu">
               <li>
@@ -59,7 +62,26 @@
 </template>
 
 <script>
+import JoinModal from "@/components/user/JoinModal.vue";
 
+export default {
+
+  components: {
+    JoinModal,
+  },
+
+  data() {
+    return {
+      
+    };
+  },
+  methods: {
+    openJoinModal() {
+      this.$refs.JoinModal.show();
+      
+    }
+  }
+}
 </script>
 
 <style></style>
