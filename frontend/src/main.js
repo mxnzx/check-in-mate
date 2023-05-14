@@ -5,11 +5,6 @@ import store from "./store";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-import * as mdbvue from 'mdbvue'
-
-for (const component in mdbvue) {
-  Vue.component(component, mdbvue[component])
-}
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
