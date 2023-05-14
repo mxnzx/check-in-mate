@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid px-3 mt-5 mb-3">
+  <div class="container-fluid px-3 mt-5 mb-3" id="footer">
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-8 pt-4" style="border-top: 1px solid rgba(128, 128, 128, 0.5);">
