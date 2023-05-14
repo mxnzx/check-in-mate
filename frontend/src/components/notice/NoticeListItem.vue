@@ -2,7 +2,7 @@
   <tr>
     <td>{{ article.articleNo }}</td>
     <td>
-      <router-link :to="`view/${article.articleNo}`">{{
+      <router-link :to="`view/${article.articleNo}`" class="board-subject">{{
         article.subject
       }}</router-link>
     </td>

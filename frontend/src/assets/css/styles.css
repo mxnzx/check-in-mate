@@ -286,3 +286,8 @@ mark.basic {
   height: 50px;
   border-radius: 50%;
 }
+
+.board-subject {
+  text-decoration: none;
+  color: #2b2d36;
+}
