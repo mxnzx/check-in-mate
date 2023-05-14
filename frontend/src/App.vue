@@ -20,13 +20,4 @@ export default {
 
 <style>
 @import "@/assets/css/styles.css";
-
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  color: #2c3e50;
-}
 </style>

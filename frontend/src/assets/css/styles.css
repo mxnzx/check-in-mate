@@ -2,13 +2,16 @@ html, body {
     height: 100%;
 }
 
-nav {
-  padding: 30px;
-  text-decoration: none;
+.header {
+  padding-top: 15px;
+  padding-bottom: 10px;
+  padding-left: 17px;
+  padding-right: 17px;
 }
 
 nav a {
   text-decoration: none;
+  color: #7b7a82;
 
 }
 

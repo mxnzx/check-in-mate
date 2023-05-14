@@ -1,39 +1,32 @@
 <template>
-  <nav class="navbar navbar-expand-lg my-2">
-    <div class="container-fluid">
-      <a class="navbar-brand fs-3" href="/" id="enjoyTrip"> Enjoy Trip</a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link">
-              <router-link to="/attraction">지역별여행지</router-link>
-            </a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="">나의여행계획</a></li>
-          <li class="nav-item"><a class="nav-link" href="">핫플자랑하기</a></li>
-          <li class="nav-item">
-            <a class="nav-link">
-              <router-link to="/board/api">여행정보공유</router-link>
-            </a>
-          </li>
-        </ul>
-        <ul class="navbar-nav mb-2 mb-lg-0 m-2">
-          <li class="nav-item">
-            <a class="nav-link">
-              <router-link to="/notice/api">공지사항</router-link>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              회원관리
-            </a>
-            <ul class="dropdown-menu">
+  <div class="header">
+  <b-navbar toggleable="lg" type="light">
+    <b-navbar-brand href="/" class="" id="enjoyTrip">Enjoy Trip</b-navbar-brand>
+
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <b-nav-item><router-link to="/attraction" class="">지역별여행지</router-link></b-nav-item>
+        <b-nav-item href="#"><a class="" href="">나의여행계획</a></b-nav-item>
+        <b-nav-item href="#"><a class="" href="">핫플자랑하기</a></b-nav-item>
+        <b-nav-item href="#"><router-link to="/board/api" class="">여행정보공유</router-link></b-nav-item>
+        
+      </b-navbar-nav>
+
+
+      <b-navbar-nav class="ml-auto">
+        
+        <b-navbar-nav>
+          <b-nav-item href="#"><router-link to="/notice/api" class="">공지사항</router-link></b-nav-item>
+        </b-navbar-nav>
+        
+        <b-nav-item-dropdown text="회원관리" class="" right>
+          <b-dropdown-item href="#">회원가입</b-dropdown-item>
+          <b-dropdown-item href="#">로그인</b-dropdown-item>
+        </b-nav-item-dropdown>
+
+          <!-- <ul class="dropdown-menu">
               <li>
                 <a
                   class="dropdown-item"
@@ -53,12 +46,15 @@
                   >로그인</a
                 >
               </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+            </ul> -->
+        
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
+</div>
+
+
+  
 </template>
 
 <script>
