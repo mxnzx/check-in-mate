@@ -229,6 +229,11 @@ export default {
           "mouseout",
           makeOutListener(infoWindow)
         );
+        window.kakao.maps.event.addListener(
+          marker,
+          "click",
+          openAttrModal(this.map, marker)
+        );
       }
       // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
       function makeOverListener(map, marker, infoWindow) {
@@ -242,6 +247,15 @@ export default {
         return function () {
           infoWindow.close();
         };
+      }
+
+      // 마커를 클릭했을 때 해당 지역의 상세페이지 모달을 띄우는 함수
+      function openAttrModal(map, marker) {
+        return function() {
+          console.log("모달 띄우자");
+          console.log(map, marker);
+          
+        }
       }
 
       // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
