@@ -110,47 +110,51 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`board`
+-- Table `enjoytrip`.`join_mate`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`board` (
-  `article_no` INT NOT NULL AUTO_INCREMENT,
-  `board_user_id` VARCHAR(16) NULL DEFAULT NULL,
-  `subject` VARCHAR(100) NULL DEFAULT NULL,
-  `content` VARCHAR(2000) NULL DEFAULT NULL,
-  `hit` INT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`join_mate` (
+  `join_mate_article_no` INT NOT NULL AUTO_INCREMENT,
+  `join_mate_user_id` VARCHAR(16) NULL DEFAULT NULL,
+  `join_mate_title` VARCHAR(100) NULL DEFAULT NULL,
+  `join_mate_content` VARCHAR(2000) NULL DEFAULT NULL,
+  `join_mate_hit` INT NULL DEFAULT '0',
   `register_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`article_no`),
-  INDEX `board_to_members_user_id_fk` (`board_user_id` ASC) VISIBLE,
+  `join_mate_category` VARCHAR(45) NULL,
+  `join_mate_place` VARCHAR(45) NULL,
+  `join_mate_date` VARCHAR(100) NULL,
+  `join_mate_people_num` INT NULL,
+  PRIMARY KEY (`join_mate_article_no`),
+  INDEX `board_to_members_user_id_fk` (`join_mate_user_id` ASC) VISIBLE,
   CONSTRAINT `board_to_members_user_id_fk`
-    FOREIGN KEY (`board_user_id`)
+    FOREIGN KEY (`join_mate_user_id`)
     REFERENCES `enjoytrip`.`member` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`board_comment`
+-- Table `enjoytrip`.`join_mate_comment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_comment` (
-  `user_id` VARCHAR(16) NOT NULL,
-  `article_no` INT NULL DEFAULT NULL,
-  `comment` VARCHAR(100) NULL DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`join_mate_comment` (
+  `comment_user_id` VARCHAR(16) NOT NULL,
+  `comment_article_no` INT NULL DEFAULT NULL,
+  `comment_content` VARCHAR(100) NULL DEFAULT NULL,
   `parent_id` VARCHAR(16) NULL DEFAULT NULL,
   `comment_no` INT NOT NULL AUTO_INCREMENT,
   `register_time` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`comment_no`),
-  INDEX `comments_to_board_article_no_fk_idx` (`article_no` ASC) INVISIBLE,
-  INDEX `comments_to_members_user_id_fk` (`user_id` ASC) VISIBLE,
+  INDEX `comments_to_board_article_no_fk_idx` (`comment_article_no` ASC) INVISIBLE,
+  INDEX `comments_to_members_user_id_fk` (`comment_user_id` ASC) VISIBLE,
   CONSTRAINT `comments_to_board_article_no_fk`
-    FOREIGN KEY (`article_no`)
-    REFERENCES `enjoytrip`.`board` (`article_no`),
+    FOREIGN KEY (`comment_article_no`)
+    REFERENCES `enjoytrip`.`join_mate` (`join_mate_article_no`),
   CONSTRAINT `comments_to_members_user_id_fk`
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`comment_user_id`)
     REFERENCES `enjoytrip`.`member` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -171,43 +175,28 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`notice` (
     FOREIGN KEY (`notice_user_id`)
     REFERENCES `enjoytrip`.`member` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`photo_spot`
+-- Table `enjoytrip`.`hotplace`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`photo_spot` (
-  `photo_spot_id` INT NOT NULL AUTO_INCREMENT,
-  `photo_spot_title` VARCHAR(30) NOT NULL,
-  `photo_spot_hit` INT NULL DEFAULT NULL,
-  `photo_spot_addr` VARCHAR(100) NOT NULL,
-  `photo_spot_detail` VARCHAR(100) NULL DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`hotplace` (
+  `hotplace_article_no` INT NOT NULL AUTO_INCREMENT,
+  `hotplace_title` VARCHAR(30) NOT NULL,
+  `hotplace_hit` INT NULL DEFAULT NULL,
+  `hotplace_content` VARCHAR(100) NULL DEFAULT NULL,
   `register_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` VARCHAR(16) NULL DEFAULT NULL,
-  `sido_code` INT NULL DEFAULT NULL,
-  `gugun_code` INT NULL DEFAULT NULL,
-  `latitude` DECIMAL(20,17) NULL DEFAULT NULL,
-  `longtitude` DECIMAL(20,17) NULL DEFAULT NULL,
-  `photo_spotcol` VARCHAR(45) NULL DEFAULT NULL,
-  `image_big` VARCHAR(200) NULL DEFAULT NULL,
-  `image_small` VARCHAR(200) NULL DEFAULT NULL,
-  `mlevel` VARCHAR(2) NULL DEFAULT NULL,
-  PRIMARY KEY (`photo_spot_id`),
-  INDEX `photo_spot_to_gugun_gugun_code_fk_idx` (`gugun_code` ASC) VISIBLE,
-  INDEX `photo_spot_to_sido_sido_code_fk_idx` (`sido_code` ASC) VISIBLE,
-  INDEX `photo_spot_to_members_user_id_fk_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `photo_spot_to_gugun_gugun_code_fk`
-    FOREIGN KEY (`gugun_code`)
-    REFERENCES `enjoytrip`.`gugun` (`gugun_code`),
+  `hotplace_user_id` VARCHAR(16) NULL DEFAULT NULL,
+  `hotplace_img_big` VARCHAR(200) NULL DEFAULT NULL,
+  `hotplace_img_small` VARCHAR(200) NULL,
+  PRIMARY KEY (`hotplace_article_no`),
+  INDEX `photo_spot_to_members_user_id_fk_idx` (`hotplace_user_id` ASC) VISIBLE,
   CONSTRAINT `photo_spot_to_members_user_id_fk`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `enjoytrip`.`member` (`user_id`),
-  CONSTRAINT `photo_spot_to_sido_sido_code_fk`
-    FOREIGN KEY (`sido_code`)
-    REFERENCES `enjoytrip`.`sido` (`sido_code`))
+    FOREIGN KEY (`hotplace_user_id`)
+    REFERENCES `enjoytrip`.`member` (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -217,17 +206,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `enjoytrip`.`trip_plan_board`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`trip_plan_board` (
-  `trip_plan_id` INT NOT NULL AUTO_INCREMENT,
+  `trip_plan_article_no` INT NOT NULL AUTO_INCREMENT,
   `register_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `trip_plan_title` VARCHAR(30) NOT NULL,
-  `trip_plan_start_date` DATETIME NOT NULL,
-  `trip_plan_end_date` DATETIME NOT NULL,
-  `trip_plan_detail` VARCHAR(100) NOT NULL,
-  `user_id` VARCHAR(16) NULL DEFAULT NULL,
-  PRIMARY KEY (`trip_plan_id`),
-  INDEX `trip_plan_to_members_user_id_fk_idx` (`user_id` ASC) VISIBLE,
+  `trip_plan_user_id` VARCHAR(16) NULL DEFAULT NULL,
+  `trip_plan_hit` INT NULL,
+  `trip_plan_img` VARCHAR(200) NULL,
+  PRIMARY KEY (`trip_plan_article_no`),
+  INDEX `trip_plan_to_members_user_id_fk_idx` (`trip_plan_user_id` ASC) VISIBLE,
   CONSTRAINT `trip_plan_to_members_user_id_fk`
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`trip_plan_user_id`)
     REFERENCES `enjoytrip`.`member` (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -238,41 +226,54 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `enjoytrip`.`trip_plan_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`trip_plan_detail` (
-  `trip_plan_id` INT NOT NULL,
-  `trip_no` VARCHAR(45) NOT NULL,
-  `content_id` INT NOT NULL,
-  `comment` VARCHAR(45) NULL DEFAULT NULL,
+  `trip_plan_article_no` INT NOT NULL,
+  `trip_plan_day` INT NOT NULL,
+  `trip_plan_content_id` INT NOT NULL,
   `seq` INT NULL DEFAULT NULL,
-  `trip_plan_start_date` DATETIME NULL DEFAULT NULL,
-  `trip_plan_end_date` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`trip_plan_id`, `trip_no`, `content_id`),
+  PRIMARY KEY (`trip_plan_article_no`, `trip_plan_day`, `trip_plan_content_id`),
   CONSTRAINT `trip_plan_detail_to_attraction_info_content_id_fk`
-    FOREIGN KEY (`trip_plan_id`)
+    FOREIGN KEY (`trip_plan_article_no`)
     REFERENCES `enjoytrip`.`attraction_info` (`content_id`),
   CONSTRAINT `trip_plan_detail_to_trip_plan_board_trip_plan_id_fk`
-    FOREIGN KEY (`trip_plan_id`)
-    REFERENCES `enjoytrip`.`trip_plan_board` (`trip_plan_id`))
+    FOREIGN KEY (`trip_plan_article_no`)
+    REFERENCES `enjoytrip`.`trip_plan_board` (`trip_plan_article_no`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`scrap_photo_spot`
+-- Table `enjoytrip`.`scrap_trip_plan`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`scrap_photo_spot` (
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`scrap_trip_plan` (
   `user_id` VARCHAR(16) NOT NULL,
-  `photo_spot_id` INT NOT NULL,
-  PRIMARY KEY (`user_id`, `photo_spot_id`),
-  INDEX `22_idx` (`photo_spot_id` ASC) VISIBLE,
+  `trip_plan_article_no` INT NOT NULL,
+  PRIMARY KEY (`user_id`, `trip_plan_article_no`),
+  INDEX `photo_spot_to_scrap_photo_spot_photo_spot_id_fk_idx` (`trip_plan_article_no` ASC) VISIBLE,
   CONSTRAINT `member_to_scrap_photo_spot_user_id_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `enjoytrip`.`member` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `photo_spot_to_scrap_photo_spot_photo_spot_id_fk`
-    FOREIGN KEY (`photo_spot_id`)
-    REFERENCES `enjoytrip`.`photo_spot` (`photo_spot_id`)
+    FOREIGN KEY (`trip_plan_article_no`)
+    REFERENCES `enjoytrip`.`trip_plan_board` (`trip_plan_article_no`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `enjoytrip`.`trip_plan_by_day`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`trip_plan_by_day` (
+  `trip_plan_article_no` INT NOT NULL,
+  `trip_plan_day` INT NOT NULL,
+  `trip_plan_content` VARCHAR(300) NULL,
+  PRIMARY KEY (`trip_plan_article_no`, `trip_plan_day`),
+  CONSTRAINT `trip_plan_detail_to_trip_plan_by_day_fk`
+    FOREIGN KEY (`trip_plan_article_no` , `trip_plan_day`)
+    REFERENCES `enjoytrip`.`trip_plan_detail` (`trip_plan_article_no` , `trip_plan_day`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -281,17 +282,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- member 테이블에 admin, ssafy12 계정 추가해놓기
-INSERT INTO member (user_id, user_name, user_password, email_id, email_domain, join_date)
-VALUES 
-('admin', '관리자', '1234', 'admin','ssafy.com',now()),
-('ssafy12', '김싸피', '1234', 'ssafy','ssafy.com', now());
-
-select * from member;
-select * from board;
-
-INSERT INTO enjoytrip.board (board_user_id, subject, content, hit, register_time)
-VALUES ('ssafy12', '제목입니다', '내용입니다', 10, NOW());
-
-select * from board_comment;
