@@ -2,15 +2,47 @@
   <div class="row justify-content-center">
     <!-- 공지사항 제목 시작 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+      <h2 class="my-3 py-2 text-center">
         <span class="bg-light">공지사항</span>
       </h2>
+      <!-- 검색하기 시작 -->
+      <div class="col-md-5 offset-4">
+        <!-- <select
+            name="sort_list"
+            id="sort_list"
+            class="form-select form-select-sm ms-5 me-1 w-50"
+            aria-label="검색조건"
+          >
+            <option selected>게시글 정렬</option>
+            <option value="notice">최신 순</option>
+            <option value="sort_hit">조회수 순</option>
+          </select> -->
+        <form class="d-flex" id="form-search" action="">
+          <input type="hidden" name="action" value="notice" />
+          <input type="hidden" name="pgno" value="1" />
+
+          <div class="input-group input-group-sm">
+            <input
+              type="text"
+              name="word"
+              id="word"
+              class="form-control"
+              placeholder="검색어..."
+            />
+            <button id="btn-search" class="btn btn-dark" type="button">
+              검색
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- 검색하기 끝 -->
     </div>
     <!-- 공지사항 제목 끝 -->
+
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <div class="row align-self-center mb-2">
-        <!-- 글쓰기 버튼 시작 -->
-        <div class="col-md-2 text-start">
+      <!-- <div class="row align-self-center mb-2"> -->
+      <!-- 글쓰기 버튼 시작 -->
+      <!-- <div class="col-md-2 text-start">
           <button
             type="button"
             id="btn-mv-register"
@@ -19,10 +51,23 @@
           >
             글쓰기
           </button>
+        </div> -->
+      <!-- 글쓰기 버튼 끝 -->
+      <!-- 글쓰기 앵커 시작 -->
+      <div
+        class="row"
+        style="width: 100%; padding: 1vw; justify-content: space-between"
+      >
+        <div class="col-md-8" style="display: flex; flex-direction: row">
+          <img src="@/assets/images/etc/notice_icon.png" style="width: 30px" />
+          <span>공지사항</span>
         </div>
-        <!-- 글쓰기 버튼 끝 -->
-        <!-- 검색하기 시작 -->
-        <!-- <div class="col-md-7 offset-3">
+        <a @click="moveWrite" style="cursor: pointer"> 글쓰기 </a>
+      </div>
+
+      <!-- 글쓰기 앵커 끝 -->
+      <!-- 검색하기 시작 -->
+      <!-- <div class="col-md-7 offset-3">
           <select
             name="sort_list"
             id="sort_list"
@@ -59,8 +104,8 @@
             </div>
           </form>
         </div> -->
-        <!-- 검색하기 끝 -->
-      </div>
+      <!-- 검색하기 끝 -->
+
       <!-- 리스트 테이블 시작-->
       <table class="table table-hover" id="article-list">
         <thead>
