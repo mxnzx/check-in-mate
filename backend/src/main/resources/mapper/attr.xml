@@ -4,7 +4,6 @@
  
 <mapper namespace="com.ssafy.enjoytrip.attr.model.mapper.AttrInfoMapper">
 
-
 	<resultMap type="SidoDto" id="sidoList">
 		<result column="sido_code" property="sidoCode" />
 		<result column="sido_name" property="sidoName" />
@@ -33,6 +32,11 @@
 		<result column="longitude" property="longitude" />
 		<result column="mlevel" property="mLevel" />
 	</resultMap>
+
+	<resultMap id="attrDescription" type="AttrDescriptionDto">
+		<result column="content_id" property="contentId" />
+		<result column="overview" property="overview" />
+	</resultMap>
 	
 	<select id="sidoList" resultMap="sidoList">
 		select * from sido
@@ -52,6 +56,13 @@
 		and gugun_code = #{gugunCode}
 		and content_type_id = #{contentTypeId}
 	</select>
+
+	<select id="attrDescription" resultMap="attrDescription">
+		select *
+		from attraction_description
+		where content_id = #{contentId}
+	</select>
+
 
 
 </mapper>

@@ -1,6 +1,5 @@
 package com.ssafy.enjoytrip.attr.controller;
 
-
 /*
  *   네비게이션 항목 중 "지역별여행지" 페이지에서 이벤트 처리를 위한 Controller
  *   tripDataController는 들어온 요청에 대한 Query 처리를 수행하며 그 결과를 반환합니다.
@@ -12,6 +11,7 @@ package com.ssafy.enjoytrip.attr.controller;
  */
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
 import com.ssafy.enjoytrip.attr.model.GugunDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
+import com.ssafy.enjoytrip.attr.model.AttrDescriptionDto;
 import com.ssafy.enjoytrip.attr.model.service.AttrInfoService;
 
 
@@ -85,6 +86,20 @@ public class AttrInfoController {
 		}
     	return null;
     }
+
+	//마커 클릭시 상세 페이지 가져온다
+	@GetMapping("attrDescription")
+	public AttrDescriptionDto attrDescription(@RequestParam("contentId") String contentId) {
+		AttrDescriptionDto attrDescription;
+		try {
+			attrDescription = attrInfoService.attrDescription(contentId);
+			return attrDescription;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
     
     
     

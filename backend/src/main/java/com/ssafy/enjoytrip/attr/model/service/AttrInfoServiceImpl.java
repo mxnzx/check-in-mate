@@ -2,6 +2,7 @@ package com.ssafy.enjoytrip.attr.model.service;
 
 import java.util.List;
 
+import com.ssafy.enjoytrip.attr.model.AttrDescriptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,11 @@ public class AttrInfoServiceImpl implements AttrInfoService {
 
 	@Override
 	public List<AttrInfoDto> attrList(String sidoCode, String gugunCode, String contentTypeId) throws Exception {
-		System.out.println(sidoCode + " "+ gugunCode + " "+ contentTypeId);
 		return attrInfoDao.attrList(sidoCode, gugunCode, contentTypeId);
+	}
+
+	@Override
+	public AttrDescriptionDto attrDescription(String contentId) throws Exception {
+		return attrInfoDao.attrDescription(contentId);
 	}
 }
