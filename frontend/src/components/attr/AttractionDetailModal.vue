@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="modal-footer" style="align:center">
-      <b-button id="btn-join" type="button" variant="primary" @click="checkValue">동행모으기</b-button>
-      <b-button type="button" variant="danger" @click="hideModal">동행찾기</b-button>
+      <b-button id="btn-join" type="button" variant="primary" @click="routeToBoardWrite">동행모으기</b-button>
+      <b-button type="button" variant="danger" @click="routeToBoardList">동행찾기</b-button>
     </div>
   </b-modal>
 </template>
@@ -50,6 +50,15 @@ export default {
           this.attractionData.imgUrl = response.data.first_image;
         })
     },
+    routeToBoardWrite() {
+      //title을 가지고 글쓰기모달로 가서 장소에 이름을 박는다.
+      this.router.push({path:'', params: { place: this.attractionData.title } })
+    },
+    routeToBoardList() {
+      //리스트에서 검색기능구현되면 검색조건으로 파라미터를 들고 나간다
+      this.router.push({path:'', params: { place: this.attractionData.title } })
+    }
+
   }
 }
 
