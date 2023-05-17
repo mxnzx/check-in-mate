@@ -1,5 +1,6 @@
-html, body {
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 .header {
@@ -12,7 +13,6 @@ html, body {
 nav a {
   text-decoration: none;
   color: #7b7a82;
-
 }
 
 nav a:hover {
@@ -26,31 +26,30 @@ nav a:hover {
 }
 
 * {
-  font-family: 'nsr', 'serif';
+  font-family: "nsr", "serif";
 }
 
 .navbar-brand {
-  font-family: 'nsr', 'serif';
+  font-family: "nsr", "serif";
 }
 
 #enjoyTrip {
-  color:#198754;
-  font-size:x-large;
+  color: #198754;
+  font-size: x-large;
 }
 
 .top-font {
   color: #ebce0c;
-  font-family:'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   letter-spacing: 3px;
-  font-size: larger;  
+  font-size: larger;
 }
-
 
 .divider {
   width: 15%;
   margin: 2rem auto;
-  border-top: .5rem solid #198754;
+  border-top: 0.5rem solid #198754;
 }
 
 .align-self-center {
@@ -81,11 +80,11 @@ nav a:hover {
 .attraction-first-card .overlay {
   left: 0;
   top: 0;
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .attraction-first-card .overlay:hover {
-  transition: hover .4s ease;
+  transition: hover 0.4s ease;
   background-color: transparent;
 }
 
@@ -95,9 +94,8 @@ nav a:hover {
   -moz-transform: scale(1);
   -ms-transform: scale(1);
   -o-transform: scale(1);
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
-
 
 .pr-4,
 .px-4 {
@@ -118,29 +116,29 @@ nav a:hover {
   background-repeat: no-repeat;
   background-size: cover;
   height: 12rem;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .card .overlay {
-  background-color: hsla(200, 7%, 73%, .35);
+  background-color: hsla(200, 7%, 73%, 0.35);
   opacity: 0;
   padding: 1.5rem;
   border-radius: 0.25rem;
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .card .overlay:hover {
-  background-color: hsla(200, 7%, 73%, .35);
+  background-color: hsla(200, 7%, 73%, 0.35);
   opacity: 100;
   padding: 1.5rem;
   border-radius: 0.25rem;
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .title-center {
   position: absolute;
   top: 45%;
-  font-family: 'nsl','serif';
+  font-family: "nsl", "serif";
   font-weight: lighter;
 }
 
@@ -148,7 +146,8 @@ nav a:hover {
   position: relative;
   width: 360px;
   height: 350px;
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png') no-repeat;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png")
+    no-repeat;
   padding: 15px 10px;
 }
 
@@ -167,7 +166,8 @@ ul {
   color: #fff;
   font-size: 16px;
   font-weight: bold;
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png') no-repeat right 120px center;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png")
+    no-repeat right 120px center;
   margin-bottom: 8px;
 }
 
@@ -175,7 +175,8 @@ ul {
   position: relative;
   width: 247px;
   height: 136px;
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumb.png') no-repeat;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumb.png")
+    no-repeat;
   margin-bottom: 8px;
 }
 
@@ -190,7 +191,8 @@ ul {
   height: 48px;
   top: 0;
   left: 0;
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/triangle.png') no-repeat;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/triangle.png")
+    no-repeat;
   padding: 6px;
   font-size: 18px;
 }
@@ -236,7 +238,8 @@ ul {
   right: 25px;
   width: 5px;
   height: 3px;
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/updown.png') no-repeat;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/updown.png")
+    no-repeat;
   background-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -270,7 +273,7 @@ ul {
 
 .mypage-list {
   width: 100%;
-} 
+}
 
 mark.basic {
   background: none;
@@ -290,4 +293,20 @@ mark.basic {
 .board-subject {
   text-decoration: none;
   color: #2b2d36;
+}
+
+/* 제혁 수정  */
+.form-select {
+  height: 4vh;
+}
+
+#word {
+  height: 4vh;
+}
+
+#btn-search {
+  height: 4vh;
+  text-align: center;
+  width: 8vh;
+  padding: 0px;
 }
