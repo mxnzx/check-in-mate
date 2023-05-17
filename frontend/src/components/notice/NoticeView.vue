@@ -2,49 +2,63 @@
   <div class="container">
     <div class="row justify-content-center">
       <!-- 글보기 제목 시작 -->
-      <div class="col-lg-8 col-md-10 col-sm-12">
+      <!-- <div class="col-lg-8 col-md-10 col-sm-12">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
           <span class="bg-light">글보기</span>
         </h2>
-      </div>
+      </div> -->
       <!-- 글보기 제목 끝 -->
       <!-- 글번호, 제목 시작 -->
       <div class="col-lg-8 col-md-10 col-sm-12">
         <div class="row my-2">
-          <div class="col-1">
+          <!-- <div class="col-1">
             <h2 class="text-secondary">{{ article.articleNo }}.</h2>
-          </div>
+          </div> -->
           <div class="col-11">
             <h2 class="text-secondary">{{ article.subject }}</h2>
           </div>
         </div>
         <!-- 글번호, 제목 끝 -->
+        <!-- 아이디, 등록시간, 조회수 시작 -->
         <div class="row">
-          <!-- 아이디, 등록시간, 조회수 시작 -->
           <div class="col-md-8">
             <div class="clearfix align-content-center">
               <img
-                class="avatar me-2 float-md-start bg-light p-2"
+                class="avatar me-md-2 float-md-start bg-light p-2"
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
-              <p>
-                <span class="fw-bold">{{ article.userId }}</span> <br />
-                <span class="text-secondary fw-light">
-                  {{ article.registerTime }} 조회 : {{ article.hit }}
-                </span>
-              </p>
+
+              <span class="fw-bold" style="padding-right: 20px">{{
+                article.userId
+              }}</span>
+              <span class="text-secondary fw-light">
+                {{ article.registerTime }} 조회 : {{ article.hit }}
+              </span>
             </div>
           </div>
           <div class="col-md-4 align-self-center text-right">댓글 : 17</div>
-          <!-- 아이디, 등록시간, 댓글, 조회수 끝 -->
-          <!-- 내용 시작 -->
         </div>
+        <!-- 아이디, 등록시간, 댓글, 조회수 끝 -->
+        <!-- 목록 , 수정 , 삭제 시작 -->
+        <div style="text-align: right">
+          <a style="padding-right: 10px; cursor: pointer" @click="moveList"
+            >목록</a
+          >
+          <a
+            style="padding-right: 10px; cursor: pointer"
+            @click="moveModifyArticle"
+            >수정</a
+          >
+          <a @click="deleteArticle" style="cursor: pointer">삭제</a>
+        </div>
+        <!-- 목록 , 수정 , 삭제 끝 -->
+        <!-- 내용 시작 -->
         <hr class="my-3" />
         <div class="text-secondary">{{ article.content }}</div>
         <hr class="my-3" />
         <!-- 내용 끝 -->
         <!-- 버튼 3개 시작 -->
-        <div style="text-align: right">
+        <!-- <div style="text-align: right">
           <button
             type="button"
             id="btn-list"
@@ -69,8 +83,8 @@
           >
             글삭제
           </button>
-          <!-- 버튼 3개 끝 -->
-        </div>
+        </div> -->
+        <!-- 버튼 3개 끝 -->
       </div>
     </div>
   </div>
@@ -93,9 +107,12 @@ export default {
   methods: {
     // 글 가져오기
     getArticle() {
-      fetch(`http://localhost:9018/notice/api/view/${this.$route.params.articleNo}`, {
-        method: "GET",
-      })
+      fetch(
+        `http://localhost:9018/notice/api/view/${this.$route.params.articleNo}`,
+        {
+          method: "GET",
+        }
+      )
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -125,12 +142,15 @@ export default {
     },
     // 삭제하기
     deleteArticle() {
-      fetch(`http://localhost:9018/notice/api/delete/${this.$route.params.articleNo}`, {
-        method: "DELETE",
-        body: JSON.stringify({
-          articleNo: this.articleNo,
-        }),
-      })
+      fetch(
+        `http://localhost:9018/notice/api/delete/${this.$route.params.articleNo}`,
+        {
+          method: "DELETE",
+          body: JSON.stringify({
+            articleNo: this.articleNo,
+          }),
+        }
+      )
         .then((response) => {
           if (response.ok) {
             alert("글 삭제 성공");
