@@ -1,70 +1,108 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <!-- 여행정보 공유 게시판 글쓰기 제목 시작 -->
-      <div class="col-lg-8 col-md-10 col-sm-12">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <span class="bg-light">글쓰기</span>
-        </h2>
+  <b-modal
+    ref="boardwrite-modal"
+    v-model="showBoardWriteModal"
+    id="signUpModal"
+    title="동행 글쓰기"
+    hide-footer
+  >
+    <div class="modal-body">
+      <div class="row mb-1 text-center">
+        <div class="col-4">제목</div>
+        <div class="col">
+          <input
+            id="pwdcheck_join"
+            name="pwdcheck"
+            class="form-control"
+            type="text"
+            placeholder="비밀번호확인"
+            v-model="userPwd"
+          />
+        </div>
       </div>
-      <!-- 여행정보 공유 게시판 글쓰기 제목 끝 -->
-      <div class="col-lg-8 col-md-10 col-sm-12">
-        <input type="hidden" name="action" value="write" />
-        <!-- 작성자입력 시작 -->
-        <div class="mb-3">
-          <label for="userId" class="form-label">작성자 </label>
-          <input
-            type="text"
-            class="form-control"
-            id="userId"
-            name="userId"
-            placeholder="아이디입력"
-            v-model="userId"
-          />
-        </div>
-        <!-- 작성자입력 끝 -->
-        <!-- 제목입력 시작 -->
-        <div class="mb-3">
-          <label for="subject" class="form-label">제목 : </label>
-          <input
-            type="text"
-            class="form-control"
-            id="subject"
-            name="subject"
-            placeholder="제목입력"
-            v-model="subject"
-          />
-        </div>
-        <!-- 제목입력 끝 -->
-        <!-- 내용입력 시작 -->
-        <div class="mb-3">
-          <label for="content" class="form-label">내용 : </label>
-          <textarea
-            class="form-control"
-            id="content"
-            name="content"
-            rows="7"
-            placeholder="내용입력"
-            v-model="content"
-          ></textarea>
-        </div>
-        <!-- 내용입력 끝 -->
-        <!-- 글작성, 목록 버튼 시작 -->
-        <div class="col-auto text-center">
-          <button
-            type="button"
-            id="btn-register"
-            class="btn btn-outline-primary mb-3"
-            @click="registArticle"
+      <div class="row mb-1 text-center">
+        <div class="col-4">만남유형</div>
+        <div class="col">
+          <b-select
+            class="form-select"
+            id="emaildomain_join"
+            name="emailDomain"
+            v-model="emailDomain"
           >
-            글작성
-          </button>
-          <button type="reset" class="btn btn-outline-danger mb-3" @click="moveList">목록</button>
+            <option value="ssafy.com">식사</option>
+            <option value="google.com">관광</option>
+            <option value="kakao.com">관람</option>
+          </b-select>
         </div>
-        <!-- 글작성, 목록 버튼 끝 -->
+      </div>
+      <div class="row mb-1 text-center">
+        <div class="col-4">장소</div>
+        <div class="col">
+          <input
+            id="userid_join"
+            name="userId"
+            class="form-control"
+            type="text"
+            placeholder="아이디"
+            v-model="userName"
+          />
+        </div>
+      </div>
+      <div id="idcheck-result"></div>
+      <div class="row"></div>
+      <div class="row mb-1 text-center">
+        <div class="col-4">날짜/시간</div>
+        <div class="col">
+          <input
+            type="date"
+            id="date"
+            class="form-control"
+            max="2033-05-16"
+            min="2013-05-16"
+            value="2023-05-16"
+          />
+        </div>
+      </div>
+      <div class="row mb-1 text-center">
+        <div class="col-4">인원수</div>
+        <div class="col">
+          <input
+            id="pwdcheck_join"
+            name="pwdcheck"
+            class="form-control"
+            type="text"
+            placeholder="비밀번호확인"
+            v-model="userPwd"
+          />
+        </div>
+      </div>
+      <div class="row mb-1 text-center">
+        <div class="col-4">기타</div>
+        <div class="col">
+          <input
+            id="emailid_join"
+            name="emailId"
+            class="form-control"
+            type="text"
+            placeholder="이메일"
+            v-model="emailId"
+          />
+        </div>
       </div>
     </div>
-  </div>
+    <div class="modal-footer">
+      <b-button
+        id="btn-join"
+        type="button"
+        variant="primary"
+        @click="checkValue"
+        >글작성</b-button
+      >
+      <b-button type="button" variant="danger" @click="hideModal"
+        >취소</b-button
+      >
+    </div>
+  </b-modal>
 </template>
 
 <script>
@@ -72,12 +110,19 @@ export default {
   name: "BoardWrite",
   data() {
     return {
+      showBoardWriteModal: false,
       userId: "",
       subject: "",
       content: "",
     };
   },
   methods: {
+    show() {
+      this.showBoardWriteModal = true;
+    },
+    hideModal() {
+      this.$refs["boardwrite-modal"].hide();
+    },
     registArticle() {
       let obj = {
         userId: this.userId,
