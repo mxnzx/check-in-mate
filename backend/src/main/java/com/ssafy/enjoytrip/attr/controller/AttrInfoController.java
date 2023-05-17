@@ -10,6 +10,7 @@ package com.ssafy.enjoytrip.attr.controller;
  * 
  */
 import java.util.List;
+import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
 import com.ssafy.enjoytrip.attr.model.GugunDto;
 import com.ssafy.enjoytrip.attr.model.SidoDto;
-import com.ssafy.enjoytrip.attr.model.AttrDescriptionDto;
 import com.ssafy.enjoytrip.attr.model.service.AttrInfoService;
 
 
@@ -89,8 +89,8 @@ public class AttrInfoController {
 
 	//마커 클릭시 상세 페이지 가져온다
 	@GetMapping("attrDescription")
-	public AttrDescriptionDto attrDescription(@RequestParam("contentId") String contentId) {
-		AttrDescriptionDto attrDescription;
+	public Map<String, Object> attrDescription(@RequestParam("contentId") String contentId) {
+		Map<String, Object> attrDescription;
 		try {
 			attrDescription = attrInfoService.attrDescription(contentId);
 			return attrDescription;

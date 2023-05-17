@@ -32,11 +32,6 @@
 		<result column="longitude" property="longitude" />
 		<result column="mlevel" property="mLevel" />
 	</resultMap>
-
-	<resultMap id="attrDescription" type="AttrDescriptionDto">
-		<result column="content_id" property="contentId" />
-		<result column="overview" property="overview" />
-	</resultMap>
 	
 	<select id="sidoList" resultMap="sidoList">
 		select * from sido
@@ -57,13 +52,12 @@
 		and content_type_id = #{contentTypeId}
 	</select>
 
-	<select id="attrDescription" resultMap="attrDescription">
-		select *
-		from attraction_description
-		where content_id = #{contentId}
+	<select id="attrDescription" resultType="java.util.Map">
+		select d.overview, i.title, i.first_image
+		from attraction_description d
+		join attraction_info i
+		on i.content_id = #{contentId}
+		where d.content_id = #{contentId}
 	</select>
-
-
-
 </mapper>
 

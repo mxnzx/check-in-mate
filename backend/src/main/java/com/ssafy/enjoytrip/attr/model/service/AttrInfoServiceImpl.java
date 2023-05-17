@@ -1,8 +1,10 @@
 package com.ssafy.enjoytrip.attr.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.ssafy.enjoytrip.attr.model.AttrDescriptionDto;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class AttrInfoServiceImpl implements AttrInfoService {
 	
 	@Autowired
 	private AttrInfoMapper attrInfoDao;
+
+	@Autowired
+	private SqlSession sqlSession;
 	
 	public AttrInfoServiceImpl(AttrInfoMapper attrInfoDao) {
 		super();
@@ -38,7 +43,10 @@ public class AttrInfoServiceImpl implements AttrInfoService {
 	}
 
 	@Override
-	public AttrDescriptionDto attrDescription(String contentId) throws Exception {
-		return attrInfoDao.attrDescription(contentId);
+	public Map<String, Object> attrDescription(String contentId) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("contentId", contentId);
+		Map<String, Object> resultMap = sqlSession.selectOne("attrDescription", paramMap);
+		return resultMap;
 	}
 }
