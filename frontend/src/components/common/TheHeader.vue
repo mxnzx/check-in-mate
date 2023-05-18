@@ -41,7 +41,11 @@
               <span>회원관리</span>
             </template>
             <b-dropdown-item @click="openJoinModal">회원가입</b-dropdown-item>
-            <b-dropdown-item @click="openLoginModal">로그인</b-dropdown-item>
+            <b-dropdown-item href="#">
+              <router-link :to="{ name: 'login' }" class="link">
+                <b-icon icon="key"></b-icon> 로그인
+              </router-link>
+            </b-dropdown-item>
           </b-nav-item-dropdown>
 
           <join-modal ref="JoinModal"></join-modal>
@@ -53,27 +57,46 @@
 </template>
 
 <script>
-import JoinModal from "@/components/user/JoinModal.vue";
-import LoginModal from "@/components/user/LoginModal.vue";
+import { mapState, mapGetters, mapActions } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
-  components: {
-    JoinModal,
-    LoginModal,
-  },
-
+  name: "TheHeaderNavbar",
   data() {
     return {};
   },
+  computed: {
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
+  },
   methods: {
-    openJoinModal() {
-      this.$refs.JoinModal.show();
-    },
-    openLoginModal() {
-      this.$refs.LoginModal.show();
+    ...mapActions(memberStore, ["userLogout"]),
+    // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
+    onClickLogout() {
+      // this.SET_IS_LOGIN(false);
+      // this.SET_USER_INFO(null);
+      // sessionStorage.removeItem("access-token");
+      // if (this.$route.path != "/") this.$router.push({ name: "main" });
+      console.log(this.userInfo.userid);
+      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
+      //+ satate에 isLogin, userInfo 정보 변경)
+      // this.$store.dispatch("userLogout", this.userInfo.userid);
+      this.userLogout(this.userInfo.userid);
+      sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+      sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+      if (this.$route.path != "/") this.$router.push({ name: "main" });
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+#logo {
+  width: 120px;
+}
+
+.link {
+  text-decoration: none;
+}
+</style>
