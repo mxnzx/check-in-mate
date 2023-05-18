@@ -56,12 +56,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
-//	private MemberMapper memberMapper;
-//
-//	public MemberServiceImpl(MemberMapper memberMapper) {
-//		super();
-//		this.memberMapper = memberMapper;
-//	}
+	private MemberMapper memberMapper;
+
+	public MemberServiceImpl(MemberMapper memberMapper) {
+		super();
+		this.memberMapper = memberMapper;
+	}
 //
 //	// 아이디 체크
 //	@Override
@@ -70,12 +70,13 @@ public class MemberServiceImpl implements MemberService {
 //		return memberMapper.idCheck(userId);
 //	}
 //
-//	// 회원가입
-//	@Override
-//	public void joinMember(MemberDto memberDto) throws Exception {
-////		sqlSession.getMapper(MemberMapper.class).joinMember(memberDto);
-//		memberMapper.joinMember(memberDto);
-//	}
+	// 회원가입
+	@Override
+	public void joinMember(MemberDto memberDto) throws Exception {
+//		sqlSession.getMapper(MemberMapper.class).joinMember(memberDto);
+		System.out.println("memberserviceimpl joinmember 실행");
+		memberMapper.joinMember(memberDto);
+	}
 //
 //	// 로그인
 //	@Override
@@ -97,17 +98,17 @@ public class MemberServiceImpl implements MemberService {
 //		return memberMapper.getMember(userId);
 //	}
 //
-//	// 회원정보 수정
-//	@Override
-//	public void updateMember(MemberDto memberDto) throws Exception {
-//		memberMapper.updateMember(memberDto);
-//	}
-//
-//	// 회원탈퇴
-//	@Override
-//	public void deleteMember(String userId) throws Exception {
-//		memberMapper.deleteMember(userId);		
-//	}
+	// 회원정보 수정
+	@Override
+	public void updateMember(MemberDto memberDto) throws Exception {
+		memberMapper.updateMember(memberDto);
+	}
+
+	// 회원탈퇴
+	@Override
+	public void deleteMember(String userid) throws Exception {
+		memberMapper.deleteMember(userid);		
+	}
 //
 //	@Override
 //	public String encryptPassword(String pwd) {
