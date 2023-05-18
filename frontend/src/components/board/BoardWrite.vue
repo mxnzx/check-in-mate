@@ -15,7 +15,7 @@
             name="pwdcheck"
             class="form-control"
             type="text"
-            placeholder="비밀번호확인"
+            placeholder="제목을 입력하세요"
             v-model="userPwd"
           />
         </div>
@@ -43,7 +43,7 @@
             name="userId"
             class="form-control"
             type="text"
-            placeholder="아이디"
+            placeholder="장소를 입력하세요"
             v-model="userName"
           />
         </div>
@@ -71,7 +71,7 @@
             name="pwdcheck"
             class="form-control"
             type="text"
-            placeholder="비밀번호확인"
+            placeholder="원하는 인원수를 작성해주세요"
             v-model="userPwd"
           />
         </div>
@@ -84,7 +84,7 @@
             name="emailId"
             class="form-control"
             type="text"
-            placeholder="이메일"
+            placeholder="기타 내용을 작성해주세요"
             v-model="emailId"
           />
         </div>
