@@ -53,13 +53,18 @@
         </div>
       </div>
     </div>
+    <attraction-detail-modal ref="AttractionDetailModal"></attraction-detail-modal>
   </div>
 </template>
 
 <script>
 //import axios from "axios";
+import AttractionDetailModal from "./AttractionDetailModal.vue";
 
 export default {
+  components: {
+    AttractionDetailModal,
+  },
   data() {
     return {
       map: null,
@@ -68,6 +73,7 @@ export default {
       markers: null,
     };
   },
+
   methods: {
     //창이 뜨면 시도 목록 가져온다
     init() {
@@ -161,7 +167,6 @@ export default {
 
       //리스트를 나열할 표에 출력할 여행지리스트를 붙인다
       trips.forEach((area) => {
-        console.log(area);  //찍힘
         //area의 위도, 경도를 td의 data로 넣어준다(동적 템플릿에서 이벤트처리가 불가하기 때문임)
         tripList += `
       <tr>
@@ -207,8 +212,8 @@ export default {
 
 
         //console.log(this.positions[i].contentId); //들고 옴
-        
-        
+
+
         // 마커를 생성합니다
         var marker = new window.kakao.maps.Marker({
           map: this.map, // 마커를 표시할 지도
@@ -223,7 +228,6 @@ export default {
           markerId: this.positions[i].contentId
         };
         this.markers.push(selectMarker);
-        console.log(selectMarker)
 
         // 마커에 표시할 인포윈도우를 생성합니다
         var infoWindow = new window.kakao.maps.InfoWindow({
@@ -237,48 +241,21 @@ export default {
         window.kakao.maps.event.addListener(
           marker,
           "mouseover",
-          makeOverListener(this.map, marker, infoWindow)
+          this.makeOverListener(this.map, marker, infoWindow)
         );
         window.kakao.maps.event.addListener(
           marker,
           "mouseout",
-          makeOutListener(infoWindow)
+          this.makeOutListener(infoWindow)
         );
 
         //마커 클릭시 모달 띄우기
         window.kakao.maps.event.addListener(
           marker,
           "click",
-          makeClickListener(this.map, marker, selectMarker)
+          this.makeClickListener(this.map, marker, selectMarker)
         );
       }
-
-      console.log(this.markers);
-      // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
-      function makeOverListener(map, marker, infoWindow) {
-        return function () {
-          infoWindow.open(map, marker);
-          
-        };
-      }
-
-      // 인포윈도우를 닫는 클로저를 만드는 함수입니다
-      function makeOutListener(infoWindow) {
-        return function () {
-          infoWindow.close();
-        };
-      }
-      // 마커를 클릭했을 때 해당 지역의 상세페이지 모달을 띄우는 클로저를 만드는 함수입니다
-      function makeClickListener(map, marker, selectMarker) {
-        //현재가져온 marker와 selectMarker.marker가 일치할 때, 그때 markerId를 가져온다
-
-        return ()=> {
-          console.log("모달 띄우자");
-          console.log(map, marker);
-          console.log(selectMarker);
-        }
-      }
-      
 
       // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
       this.map.setCenter(this.positions[0].latlng);
@@ -308,6 +285,36 @@ export default {
         };
       this.map = new window.kakao.maps.Map(mapContainer, mapOption);
     },
+
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+    makeOverListener(map, marker, infoWindow) {
+      return function () {
+        infoWindow.open(map, marker);
+
+      };
+    },
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    makeOutListener(infoWindow) {
+      return function () {
+        infoWindow.close();
+      };
+    },
+
+    // 마커를 클릭했을 때 해당 지역의 상세페이지 모달을 띄우는 클로저를 만드는 함수입니다
+    makeClickListener(map, marker, selectMarker) {
+      return () => {
+        //모달 띄운다
+        this.showDetailModal(selectMarker.markerId);
+      }
+    },
+
+    //선택한 마커의 모달을 띄우는 메서드
+    showDetailModal(selectContentId) {
+      this.$refs.AttractionDetailModal.show(selectContentId); 
+      console.log(selectContentId);
+    },
+
   },
 
 
@@ -331,6 +338,7 @@ export default {
     // 이벤트 위임 설정(여행지 리스트가 뜬 후에 리스트 항목을 눌렀을 때 moveCenter를 실행)
     document.getElementById("trip-list").addEventListener("click", this.handleClick);
   },
+  
 };
 </script>
 
