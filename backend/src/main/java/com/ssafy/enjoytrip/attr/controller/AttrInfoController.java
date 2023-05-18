@@ -56,12 +56,10 @@ public class AttrInfoController {
   //2. 시도 목록을 선택하면 sido_code가 일치하는 구군 목록을 가지고 온다
     @GetMapping("searchGugun")
     public List<GugunDto> searchGugun(@RequestParam("sidoCode") String sidoCode) {
-    	System.out.println(">>>>>>"+sidoCode);
     		List<GugunDto> guguns;
 			try {
 				
 				guguns = attrInfoService.gugunList(sidoCode);
-				System.out.println(guguns);
 				return guguns;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -78,7 +76,6 @@ public class AttrInfoController {
     	List<AttrInfoDto> attrInfo;
     	try {
     		attrInfo = attrInfoService.attrList(sidoCode, gugunCode, contentTypeId);
-    		System.out.println(attrInfo);
     		return attrInfo;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
