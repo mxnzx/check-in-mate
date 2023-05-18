@@ -17,6 +17,9 @@
               class="form-control"
               id="userid"
               name="userid"
+              required
+              v-model="user.userid"
+              @keyup.enter="confirm"
             />
           </div>
         </div>
@@ -29,6 +32,9 @@
               class="form-control"
               id="userpwd"
               name="userpwd"
+              required
+              v-model="user.userpwd"
+              @keyup.enter="confirm"
             />
           </div>
         </div>
@@ -48,11 +54,7 @@
     </div>
     <div class="modal-footer">
       <b-button type="button" @click="searchIdPw">id/pw 찾기</b-button>
-      <b-button
-        type="button"
-        id="btn-login"
-        variant="primary"
-        @click="loginMember"
+      <b-button type="button" id="btn-login" variant="primary" @click="confirm"
         >로그인</b-button
       >
       <b-button type="button" variant="danger" @click="hideModal"
@@ -64,14 +66,37 @@
 
 <script>
 //import axios from "axios";
+import { mapState, mapActions } from "vuex";
 
+const memberStore = "memberStore";
 export default {
   data() {
     return {
       showLoginModal: false,
+      user: {
+        userid: null,
+        userpwd: null,
+      },
     };
   },
+  computed: {
+    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
   methods: {
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      //   console.log(this.user);
+      await this.userConfirm(this.user);
+      console.log(this.user);
+      let token = sessionStorage.getItem("access-token");
+      console.log("1. confirm() token >> " + token);
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        console.log("4. confirm() userInfo :: ", this.userInfo);
+        if (this.$route.path != "/index") this.$router.push({ name: "main" });
+        this.hideModal();
+      }
+    },
     show() {
       this.showLoginModal = true;
     },
