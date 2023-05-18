@@ -31,7 +31,12 @@
           <b-navbar-nav>
             <b-nav-item href="#" style="display: flex; align-items: center">
               <router-link to="/notice/api" class="" style="margin: auto">
-                공지사항
+                <img
+                  src="@/assets/images/etc/notice_icon2.png"
+                  class=""
+                  alt="top1"
+                  style="width: 40px"
+                />
               </router-link>
             </b-nav-item>
           </b-navbar-nav>
@@ -48,23 +53,24 @@
                 />
               </template>
               <b-nav-item class="align-self-center">
-                <router-link
-                  :to="{ name: 'mypage' }"
-                  class="link align-self-center"
-                  >마이페이지</router-link
+                Signed in as {{ userInfo.userid }}
+              </b-nav-item>
+              <b-nav-item class="align-self-center">
+                <router-link :to="{ name: 'mypage' }" class="align-self-center"
+                  >My page</router-link
                 >
               </b-nav-item>
               <b-nav-item
                 class="align-self-center link"
                 @click.prevent="onClickLogout"
-                >로그아웃</b-nav-item
+                >Sign out</b-nav-item
               >
             </b-nav-item-dropdown>
 
             <!-- 사용자 이름 출력 -->
-            <b-nav-item class="align-self-center">
+            <!-- <b-nav-item class="align-self-center">
               {{ userInfo.username }}({{ userInfo.userid }})
-            </b-nav-item>
+            </b-nav-item> -->
           </b-navbar-nav>
 
           <!-- 로그인 전에 띄울거 -->
