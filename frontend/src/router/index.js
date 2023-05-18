@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import AppBoard from "@/views/AppBoard";
 import AppAttraction from "@/views/AppAttraction";
 import AppNotice from "@/views/AppNotice";
+// import AppHotPlace from "@/views/AppHotPlace";
 
 // 여행정보 공유
 import BoardList from "@/components/board/BoardList";
@@ -17,9 +18,25 @@ import NoticeWrite from "@/components/notice/NoticeWrite";
 import NoticeView from "@/components/notice/NoticeView";
 import NoticeModify from "@/components/notice/NoticeModify";
 
+// 핫플 자랑하기
+// import HotPlaceList from "@/components/hotplace/HotPlaceList";
+//import HotPlaceModal from "@/components/hotplace/HotPlaceModal";
+// import { component } from "vue/types/umd";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/hotplace",
+    component: () => import("@/components/hotplace/HotPlaceList"),
+  },
+  {
+    path: "/hotplaceModal",
+    component: () => import("@/components/hotplace/HotPlaceModal"),
+  },
+  {
+    path: "/hotplace/write",
+    component: () => import("@/components/hotplace/HotPlaceWrite"),
+  },
   {
     path: "/",
     name: "TheIndex",
