@@ -4,12 +4,43 @@
 	
 <mapper namespace="com.ssafy.enjoytrip.member.model.mapper.MemberMapper">
 
-	<resultMap type="memberDto" id="member">
+	<select id="login" parameterType="memberDto" resultType="memberDto">
+		select user_name as username, user_id as userid , email_id as email
+		from member
+		where user_id = #{userid} and user_password = #{userpwd}
+		 
+	</select>
+	
+	<select id="userInfo" parameterType="string" resultType="memberDto">
+		select user_name as username, user_id as userid, email_id as email, join_date as joindate
+		from member
+		where user_id = #{userid}
+	</select>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from member
+		where user_id = #{userid}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update member
+		set token = #{token}
+		where user_id = #{userid}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update member
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userid}
+	</update>
+
+<!-- 	<resultMap type="memberDto" id="member">
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
 	</resultMap>
 	
-	<!-- ADMIN -->
+	ADMIN
 	<resultMap type="memberDto" id="memberAll" extends="member">
 		<result column="user_password" property="userPwd"/>
 		<result column="email_id" property="emailId"/>
@@ -34,7 +65,7 @@
 		where user_id = #{userid} and user_password = #{userpwd}
 	</select>
 	
-	<!-- ADMIN -->
+	ADMIN
 	<select id="listMember" resultMap="memberAll">
 		select user_name, user_id, user_password, email_id, email_domain, join_date
 		from member
@@ -47,7 +78,7 @@
 		where user_id = #{userId}
 	</select>
 	
-<!-- 	<update id="updateMember" parameterType="memberDto">
+	<update id="updateMember" parameterType="memberDto">
 		update member
 		<trim prefix="set" suffixOverrides=",">
 			<if test="userPwd != null">user_password = #{userPwd},</if>
@@ -55,7 +86,7 @@
 			<if test="emailDomain != null">email_domain = #{emailDomain},</if>
 		</trim>
 		where user_id = #{userId}
-	</update> -->
+	</update>
 
  	<update id="updateMember" parameterType="memberDto">
 		update member
@@ -66,7 +97,7 @@
 	<delete id="deleteMember" parameterType="String">
 		delete from member
 		where user_id = #{userId}
-	</delete>
+	</delete> -->
 
 
 </mapper>	
