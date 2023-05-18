@@ -53,12 +53,12 @@
 		from member
 		where user_id = #{userid}
 	</select>
-
-	<insert id="joinMember" parameterType="memberDto">
-		insert into member (user_name, user_id, user_password, email_id, email_domain, join_date)
-		values (#{userName}, #{userId}, #{userPwd}, #{emailId}, #{emailDomain}, now())
-	</insert>
-
+	-->
+ 	<insert id="joinMember" parameterType="memberDto">
+		insert into member (user_name, user_id, user_password, join_date)
+		values (#{username}, #{userid}, #{userpwd}, now())
+	</insert> 
+	<!-- 
 	<select id="loginMember" parameterType="map" resultMap="member">
 		select user_id, user_name
 		from member
@@ -87,17 +87,17 @@
 		</trim>
 		where user_id = #{userId}
 	</update>
-
+	-->
  	<update id="updateMember" parameterType="memberDto">
 		update member
-		set user_password = #{userPwd}
-		where user_id = #{userId}
+		set user_password = #{userpwd}
+		where user_id = #{userid}
 	</update>	
 	
 	<delete id="deleteMember" parameterType="String">
 		delete from member
-		where user_id = #{userId}
-	</delete> -->
+		where user_id = #{userid}
+	</delete> 
 
 
 </mapper>	

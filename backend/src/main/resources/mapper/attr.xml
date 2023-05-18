@@ -4,7 +4,6 @@
  
 <mapper namespace="com.ssafy.enjoytrip.attr.model.mapper.AttrInfoMapper">
 
-
 	<resultMap type="SidoDto" id="sidoList">
 		<result column="sido_code" property="sidoCode" />
 		<result column="sido_name" property="sidoName" />
@@ -53,6 +52,12 @@
 		and content_type_id = #{contentTypeId}
 	</select>
 
-
+	<select id="attrDescription" resultType="java.util.Map">
+		select d.overview, i.title, i.first_image
+		from attraction_description d
+		join attraction_info i
+		on i.content_id = #{contentId}
+		where d.content_id = #{contentId}
+	</select>
 </mapper>
 

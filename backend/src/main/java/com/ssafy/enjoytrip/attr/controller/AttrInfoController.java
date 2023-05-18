@@ -1,6 +1,5 @@
 package com.ssafy.enjoytrip.attr.controller;
 
-
 /*
  *   네비게이션 항목 중 "지역별여행지" 페이지에서 이벤트 처리를 위한 Controller
  *   tripDataController는 들어온 요청에 대한 Query 처리를 수행하며 그 결과를 반환합니다.
@@ -11,6 +10,8 @@ package com.ssafy.enjoytrip.attr.controller;
  * 
  */
 import java.util.List;
+import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,12 +56,10 @@ public class AttrInfoController {
   //2. 시도 목록을 선택하면 sido_code가 일치하는 구군 목록을 가지고 온다
     @GetMapping("searchGugun")
     public List<GugunDto> searchGugun(@RequestParam("sidoCode") String sidoCode) {
-    	System.out.println(">>>>>>"+sidoCode);
     		List<GugunDto> guguns;
 			try {
 				
 				guguns = attrInfoService.gugunList(sidoCode);
-				System.out.println(guguns);
 				return guguns;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -77,7 +76,6 @@ public class AttrInfoController {
     	List<AttrInfoDto> attrInfo;
     	try {
     		attrInfo = attrInfoService.attrList(sidoCode, gugunCode, contentTypeId);
-    		System.out.println(attrInfo);
     		return attrInfo;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -85,6 +83,20 @@ public class AttrInfoController {
 		}
     	return null;
     }
+
+	//마커 클릭시 상세 페이지 가져온다
+	@GetMapping("attrDescription")
+	public Map<String, Object> attrDescription(@RequestParam("contentId") String contentId) {
+		Map<String, Object> attrDescription;
+		try {
+			attrDescription = attrInfoService.attrDescription(contentId);
+			return attrDescription;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
     
     
     
