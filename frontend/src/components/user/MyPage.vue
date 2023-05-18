@@ -6,7 +6,11 @@
       <div class="row text-center">
         <div class="col-4"></div>
         <div class="col-4">
-          <img src="@/assets/images/etc/no-profile.png" alt="profile" style="height: 100px" />
+          <img
+            src="@/assets/images/etc/no-profile.png"
+            alt="profile"
+            style="height: 100px"
+          />
         </div>
         <div class="col-4"></div>
       </div>
@@ -22,6 +26,39 @@
             readonly="readonly"
             id="id"
             name="userId"
+            :value="userInfo.userid"
+          />
+        </div>
+      </div>
+      <div class="row m-3">
+        <div class="col-4">
+          <p style="padding-top: 8px">사용자 이름</p>
+        </div>
+        <div class="col-6">
+          <input
+            class="form-mypage w-75"
+            type="text"
+            placeholder="이름"
+            readonly="readonly"
+            id="username"
+            name="username"
+            :value="userInfo.username"
+          />
+        </div>
+      </div>
+      <div class="row m-3">
+        <div class="col-4">
+          <p style="padding-top: 8px">이메일</p>
+        </div>
+        <div class="col-6">
+          <input
+            class="form-mypage w-75"
+            type="text"
+            placeholder="이메일"
+            readonly="readonly"
+            id="email"
+            name="email"
+            :value="userInfo.email + '@ssafy.com'"
           />
         </div>
       </div>
@@ -65,7 +102,12 @@
           </button>
         </div>
         <div class="col" style="text-align: left">
-          <button id="delete-btn" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <button
+            id="delete-btn"
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
             회원탈퇴
           </button>
         </div>
@@ -79,7 +121,17 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
+
+export default {
+  name: "MyPage",
+  components: {},
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
+};
 </script>
 
 <style></style>
