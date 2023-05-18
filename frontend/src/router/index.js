@@ -80,6 +80,16 @@ const routes = [
             /* webpackChunkName: "user" */ "@/components/user/UserRegister"
           ),
       },
+      // 0518 추가 ============================================
+      {
+        path: "delete/:userid",
+        name: "join",
+        component: () =>
+          import(
+            /* webpackChunkName: "user" */ "@/components/user/UserRegister"
+          ),
+      },
+      // =====================================================
       {
         path: "mypage",
         name: "mypage",

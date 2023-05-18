@@ -148,7 +148,6 @@ public class RestMemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-}
 
 
 //	private MemberService memberService;
@@ -158,10 +157,10 @@ public class RestMemberController {
 //		this.memberService = memberService;
 //	}
 //
-//	// 회원가입
-//	@PostMapping(value = "/join", headers = "content-type=application/json")
-//	public ResponseEntity<Map<String, Object>> join(@RequestBody MemberDto memberDto) {
-//		//logger.debug("memberDto info : {}", memberDto);
+	// 회원가입
+	@PostMapping(value = "/join", headers = "content-type=application/json")
+	public ResponseEntity<Map<String, Object>> join(@RequestBody MemberDto memberDto) throws Exception {
+		//logger.debug("memberDto info : {}", memberDto);
 //		Map<String, Object> responseData = new HashMap<>();
 //		try {
 //			memberService.joinMember(memberDto);
@@ -175,51 +174,59 @@ public class RestMemberController {
 //	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
 //		}
 //		return ResponseEntity.ok(responseData);
-//	}
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		System.out.println(memberDto);
+		try {
+			memberService.joinMember(memberDto);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "입력 성공");
+			map.put("resValue", memberDto);
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		} catch(RuntimeException e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "입력 실패");
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+	}
 //
-//	// 회원탈퇴
-//	@DeleteMapping("/deleteMember")
-//	public ResponseEntity<Map<String, Object>> deleteMember(@RequestBody MemberDto memberDto) {
-//		Map<String, Object> responseData = new HashMap<>();
-//		String userId = memberDto.getUserId();
-//		System.out.println(userId);
-//		// logger.debug("memberDto info : {}", memberDto);
-//		try {
-//			memberService.deleteMember(userId);
-//			// return "redirect:/user/login";
-//			responseData.put("message", "회원탈퇴 성공!!");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			responseData.put("result", "error");
-//			responseData.put("message", "회원탈퇴 실패!!");
-//			
-//		}
-//		return ResponseEntity.ok(responseData);
-//	}
-//
-//	// 회원정보 수정 ( 비밀번호 변경 )
-//	@PutMapping("/updateMember")
-//	public ResponseEntity<Map<String, Object>> updateMember(@RequestBody MemberDto memberDto) {
-//		Map<String, Object> responseData = new HashMap<>();
-//		String userId = memberDto.getUserId();
-//		String userPwd = memberDto.getUserPwd();
-//		System.out.println(memberDto + " 업데이트");
-//		try {
-//			memberService.updateMember(memberDto);
-//			// return "redirect:/user/login";
-//			responseData.put("result", memberDto);
-//			responseData.put("message", "회원정보 수정 성공!!!");
-//		    
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			// return "error/error";
-//			responseData.put("result", "error");
-//			responseData.put("message", "회원정보 수정 실패!!");
-//		}
-//		return ResponseEntity.ok(responseData);
-//
-//	}
-//
+	// 회원탈퇴
+	@DeleteMapping("/deleteMember/{userid}")
+	public ResponseEntity<Map<String, Object>> deleteMember(@PathVariable("userid") String userid) throws Exception {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		try {
+			memberService.deleteMember(userid);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "회원탈퇴 성공");
+			map.put("resValue", null);
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}catch(RuntimeException e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "회원탈퇴 실패");
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+	}
+
+	// 회원정보 수정 ( 비밀번호 변경 )
+	@PutMapping("/updateMember")
+	public ResponseEntity<Map<String, Object>> updateMember(@RequestBody MemberDto memberDto) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		try {
+			memberService.updateMember(memberDto);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "수정 성공");
+			map.put("article", memberDto);
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "수정 실패");
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+
+	}
+
 //	// 아이디 값 가져와서 기존 아이디와 비교해서 겹치는게 있는지 체크
 //	@GetMapping("/{userid}")
 //	public String idCheck(@PathVariable("userid") String userId) throws Exception {
@@ -228,3 +235,4 @@ public class RestMemberController {
 //		return cnt + "";
 //	}
 
+}
