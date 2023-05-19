@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 // views 등록
 import AppBoard from "@/views/AppBoard";
 import AppAttraction from "@/views/AppAttraction";
@@ -21,7 +22,6 @@ import NoticeWrite from "@/components/notice/NoticeWrite";
 import NoticeView from "@/components/notice/NoticeView";
 import NoticeModify from "@/components/notice/NoticeModify";
 
-// =========== 0518 ===================
 // 나의여행계획 
 import PlanList from "@/components/plan/PlanList";
 import PlanWrite from "@/components/plan/PlanWrite";
@@ -29,7 +29,6 @@ import PlanModify from "@/components/plan/PlanModify";
 import PlanDelete from "@/components/plan/PlanDelete";
 import PlanView from "@/components/plan/PlanView";
 
-// ====================================
 
 // 핫플 자랑하기
 // import HotPlaceList from "@/components/hotplace/HotPlaceList";
@@ -154,37 +153,35 @@ const routes = [
     component: AppBoard,
   },
 
-
-// ====================================
   // 나의 여행계획
   {
     path: "/myplan",
     name: "AppPlan",
     component: AppPlan,
-    redirect: "plan",
+    redirect: "myplan/list",
     children: [
       {
-        path: "",
+        path: "write",
         component: PlanWrite,
         name: "PlanWrite",
       },
       {
-        path: "",
+        path: "list",
         component: PlanList,
         name: "PlanList",
       },
       {
-        path: "",
+        path: "modify",
         component: PlanModify,
         name: "PlanModify",
       },
       {
-        path: "",
+        path: "delete",
         component: PlanDelete,
         name: "PlanDelete",
       },
       {
-        path: "",
+        path: "view/:articleNo",
         component: PlanView,
         name: "PlanView",
       },
@@ -192,9 +189,6 @@ const routes = [
 
     ]
   },
-// ====================================
-
-
 
   // 지역별 여행지
   {
