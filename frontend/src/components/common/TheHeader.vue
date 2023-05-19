@@ -1,9 +1,7 @@
 <template>
   <div class="header">
     <b-navbar toggleable="lg" type="light">
-      <b-navbar-brand href="/" class="" id="enjoyTrip"
-        >Enjoy Trip</b-navbar-brand
-      >
+      <b-navbar-brand href="/" class="" id="enjoyTrip">Enjoy Trip</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -14,7 +12,9 @@
               >지역별여행지</router-link
             ></b-nav-item
           >
-          <b-nav-item href="#"><a class="" href="">나의여행계획</a></b-nav-item>
+          <b-nav-item href="#"><router-link to="/myplan" class=""
+              >나의여행계획</router-link
+            ></b-nav-item>
           <b-nav-item href="#"
             ><router-link to="/hotplace" class="" href=""
               >핫플자랑하기</router-link
