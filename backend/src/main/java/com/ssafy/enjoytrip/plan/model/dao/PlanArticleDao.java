@@ -5,20 +5,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
-import com.ssafy.enjoytrip.plan.model.PlanArticleDto;
+import com.ssafy.enjoytrip.plan.model.PlanDto;
 
 
 
 //나의여행계획 DAO
 public interface PlanArticleDao {
 	// 나의여행계획 게시글 작성
-	void write(PlanArticleDto planArticleDto) throws SQLException;
+	void write(PlanDto planDto) throws SQLException;
 
 	// 나의여행계획 게시글 리스트 가져오기
-	List<PlanArticleDto> list() throws SQLException;
+	List<PlanDto> list() throws SQLException;
 
 	// 나의여행계획 게시글 수정
-	void modify(PlanArticleDto planArticleDto) throws SQLException;
+	void modify(PlanDto planDto) throws SQLException;
 
 	// 나의여행계획 게시글 삭제
 	void delete(int planAritcleNo) throws SQLException;
