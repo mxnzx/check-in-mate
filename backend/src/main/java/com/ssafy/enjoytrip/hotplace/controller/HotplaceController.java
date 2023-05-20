@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.hotplace.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,7 +81,8 @@ public class HotplaceController {
 			if (files != null && files.length > 0 && !files[0].isEmpty()) {
 				String realPath = servletContext.getRealPath("/upload/hotplace");
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-				String saveFolder = realPath + File.separator + today;
+//				String saveFolder = uploadPath + File.separator + today;
+				String saveFolder = uploadPath;
 				System.out.println("savefolder : >>>>>>>>>>>>>>>"  + saveFolder);
 				File folder = new File(saveFolder);
 				if (!folder.exists()) {
@@ -91,7 +96,7 @@ public class HotplaceController {
 					if (!originalFileName.isEmpty()) {
 						String saveFileName = UUID.randomUUID().toString()
 								+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-						fileInfoDto.setSavefolder(saveFolder);
+						fileInfoDto.setSavefolder(today);
 						fileInfoDto.setOriginalfile(originalFileName);
 						fileInfoDto.setSavefile(saveFileName);
 						mfile.transferTo(new File(folder, saveFileName));
@@ -122,6 +127,24 @@ public class HotplaceController {
 
 		return resEntity;
 	}
+	
+    // 이미지 가져오기
+    @GetMapping("/image/{filename:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) throws IOException {
+        // 이미지 파일이 저장된 경로
+        String imagePath = uploadPath + File.separator + filename;
+        
+        // 이미지 파일을 Resource 타입으로 로드
+        Resource imageResource = new UrlResource("file:" + imagePath);
+        
+        // 이미지 파일의 MIME 타입을 가져옴
+        String contentType = servletContext.getMimeType(imageResource.getFile().getAbsolutePath());
+        
+        // 이미지 파일을 Response에 포함하여 반환
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(imageResource);
+    }
 	
 	// 파일 , 게시글 삭제 
 	@RequestMapping(value = "/delete/{articleno}", method = RequestMethod.DELETE)

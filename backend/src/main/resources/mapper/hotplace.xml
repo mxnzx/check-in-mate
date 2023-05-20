@@ -15,6 +15,7 @@
 		<result column="hotplace_img_big" property="imgbig" />
 		<result column="hotplace_img_small" property="imgsmall" />
 		<result column="hotplace_file_save_file" property="savefile"/>
+		<result column="hotplace_file_save_folder" property="savefolder"/>
 	</resultMap>
 
 	<resultMap type="hotplaceDto" id="viewArticle" extends="article">
@@ -29,7 +30,7 @@
 
 <select id="listArticle" parameterType="map" resultMap="article">
   select h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title,
-  h.hotplace_content, h.hotplace_hit, h.register_time, m.user_name, hf.hotplace_file_save_file
+  h.hotplace_content, h.hotplace_hit, h.register_time, m.user_name, hf.hotplace_file_save_file, hf.hotplace_file_save_folder
   from hotplace h
   join member m on h.hotplace_user_id = m.user_id
   join hotplace_file_info hf on h.hotplace_article_no = hf.hotplace_file_article_no
@@ -52,12 +53,14 @@
 	</delete>
 	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title, h.hotplace_content, h.hotplace_hit, h.register_time
-		from hotplace h, member m
-		where h.hotplace_user_id = m.user_id
-		and h.hotplace_article_no = #{articleno}
+  		SELECT h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title, h.hotplace_content,
+         		h.hotplace_hit, h.register_time, hf.hotplace_file_save_file, hf.hotplace_file_save_folder
+  		FROM hotplace h
+  		LEFT JOIN member m ON h.hotplace_user_id = m.user_id
+  		LEFT JOIN hotplace_file_info hf ON h.hotplace_article_no = hf.hotplace_file_article_no
+  		WHERE h.hotplace_article_no = #{articleno}
 	</select>
-	
+
 	
 <!-- 	<update id="modifyArticle" parameterType="hotplaceDto">
 		update hotplace
