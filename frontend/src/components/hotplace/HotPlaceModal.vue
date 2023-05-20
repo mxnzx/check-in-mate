@@ -61,11 +61,10 @@
     </div>
     <div class="modal-footer" style="justify-content: center">
       <div class="inline-block">
-        <b-card-text> 제목 </b-card-text>
+        <b-card-text> {{ article.title }} </b-card-text>
       </div>
       <b-card-text>
-        This card has supporting text below as a natural lead-in to additional
-        content.
+        {{ article.content }}
       </b-card-text>
     </div>
     <div class="col-auto text-right">
@@ -91,15 +90,53 @@
 
 <script>
 export default {
+  name: "HotPlaceModal",
+  props: {},
   data() {
     return {
+      article: [],
       showHotPlaceModal: false,
+      articleno: null, // articleno를 data 속성으로 정의합니다.
     };
   },
+  created() {
+    this.$parent.$on("open-modal", this.handleOpenModal);
+  },
+  beforeDestroy() {
+    this.$parent.$off("open-modal", this.handleOpenModal);
+  },
+
   methods: {
     show() {
       this.showHotPlaceModal = true;
     },
+    handleOpenModal(articleno) {
+      this.articleno = articleno;
+      this.getArticle(); // getArticle 메서드 호출 추가
+      this.show();
+    },
+    getArticle() {
+      console.log(">>>>>>>>>>>" + this.articleno);
+      fetch(`http://localhost:9018/hotplace/view/${this.articleno}`, {
+        method: "GET",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("글 가져오기 실패");
+          }
+        })
+        .then((data) => {
+          this.article = data.article;
+          console.log(this.article);
+          //alert("핫플레이스 글 가져오기 성공");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+
     // hideModal() {
     //   this.$refs["hotPlace-modal"].hide();
     // },

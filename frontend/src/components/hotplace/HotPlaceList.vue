@@ -18,107 +18,16 @@
       <!-- 사진 리스트 시작-->
       <div>
         <b-card-group deck>
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-            @click="hotplaceModal"
-            style="cursor: pointer"
+          <HotPlaceListItem
+            v-for="article in articles"
+            :key="article.articleno"
+            :article="article"
+            @open-modal="openModal"
           >
-            <b-card-text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
-
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-          >
-            <b-card-text>
-              This card has supporting text below as a natural lead-in to
-              additional content.
-            </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
-
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-          >
-            <b-card-text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This card has even longer content
-              than the first to show that equal height action.
-            </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
+          </HotPlaceListItem>
         </b-card-group>
       </div>
       <br />
-      <div>
-        <b-card-group deck>
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-          >
-            <b-card-text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
-
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-          >
-            <b-card-text>
-              This card has supporting text below as a natural lead-in to
-              additional content.
-            </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
-
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-          >
-            <b-card-text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This card has even longer content
-              than the first to show that equal height action.
-            </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
-        </b-card-group>
-      </div>
       <!-- 사진 리스트 끝-->
       <hot-place-modal ref="HotPlaceModal"></hot-place-modal>
     </div>
@@ -127,15 +36,41 @@
 
 <script>
 import HotPlaceModal from "@/components/hotplace/HotPlaceModal.vue";
+import HotPlaceListItem from "./HotPlaceListItem.vue";
 export default {
-  components: { HotPlaceModal },
+  name: "HotPlaceList",
+  components: { HotPlaceModal, HotPlaceListItem },
+  data() {
+    return {
+      articles: [],
+    };
+  },
+
+  created() {
+    fetch("http://localhost:9018/hotplace/list")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("response >>" + this.response);
+        console.log("data >>>" + data);
+        this.articles = data;
+        console.log(this.articles);
+        console.log("list data" + data);
+      });
+  },
   methods: {
-    hotplaceModal() {
+    openModal(article) {
+      // article 데이터를 모달 컴포넌트로 전달
+      this.$refs.HotPlaceModal.show(article);
+    },
+    HotPlaceModal() {
       this.$refs.HotPlaceModal.show();
     },
     moveWrite() {
       this.$router.push("hotplace/write");
     },
+  },
+  mounted() {
+    this.articles.push({});
   },
 };
 </script>
