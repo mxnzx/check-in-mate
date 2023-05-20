@@ -21,5 +21,6 @@ public class HotplaceDto {
 	private String imgsmall;
 	private List<HotplaceFileDto> fileInfos;
 	private String savefile;
+	private String savefolder;
 
 }

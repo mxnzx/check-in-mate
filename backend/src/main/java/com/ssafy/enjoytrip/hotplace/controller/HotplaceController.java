@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class HotplaceController {
 
 	private final Logger logger = LoggerFactory.getLogger(HotplaceController.class);
 
+	@Autowired
+	ServletContext servletContext;
+	
 	@Value("${file.path}")
 	private String uploadPath;
 
@@ -70,8 +75,10 @@ public class HotplaceController {
 		try {
 			// FileUpload 관련 설정
 			if (files != null && files.length > 0 && !files[0].isEmpty()) {
+				String realPath = servletContext.getRealPath("/upload/hotplace");
 				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-				String saveFolder = uploadPath + File.separator + today;
+				String saveFolder = realPath + File.separator + today;
+				System.out.println("savefolder : >>>>>>>>>>>>>>>"  + saveFolder);
 				File folder = new File(saveFolder);
 				if (!folder.exists()) {
 					folder.mkdirs();
@@ -84,7 +91,7 @@ public class HotplaceController {
 					if (!originalFileName.isEmpty()) {
 						String saveFileName = UUID.randomUUID().toString()
 								+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-						fileInfoDto.setSavefolder(today);
+						fileInfoDto.setSavefolder(saveFolder);
 						fileInfoDto.setOriginalfile(originalFileName);
 						fileInfoDto.setSavefile(saveFileName);
 						mfile.transferTo(new File(folder, saveFileName));
@@ -146,6 +153,7 @@ public class HotplaceController {
 		HotplaceDto hotplaceDto = null;
 		try {
 			hotplaceDto = hotplaceService.getArticle(articleno);
+			System.out.println("view article >>>>>>>>>>"  + hotplaceDto);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "조회 성공");
 			map.put("article", hotplaceDto);
