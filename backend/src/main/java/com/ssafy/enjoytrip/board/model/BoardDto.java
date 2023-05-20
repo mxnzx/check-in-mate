@@ -11,7 +11,7 @@ public class BoardDto {
 	private int articleNo;
 	private String userId;
 	private String userName;
-	private String subject;
+	private String title;
 	private String content;
 	private int hit;
 	private String registerTime;
