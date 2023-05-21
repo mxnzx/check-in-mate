@@ -13,7 +13,12 @@
             class="form-control"
             placeholder="검색어..."
           />
-          <button id="btn-search" class="btn btn-dark" type="submit">
+          <button
+            id="btn-search"
+            class="btn btn-dark"
+            type="button"
+            @click="search"
+          >
             검색
           </button>
         </form>
@@ -75,20 +80,17 @@ export default {
   data() {
     return {
       articles: [], // 전체 글 목록 데이터
+      displayedArticles: [], // 현재 페이지에 해당하는 글 목록 데이터
       currentPage: 1, // 현재 페이지 번호
       pageSize: 10, // 페이지 당 글 개수
       searchKeyword: "", // 검색 키워드
     };
   },
+  created() {
+    this.fetchArticles();
+  },
   // eslint-disable-next-line no-dupe-keys, vue/no-dupe-keys
   computed: {
-    // 현재 페이지에 해당하는 글 목록 데이터 계산
-    displayedArticles() {
-      const startIdx = (this.currentPage - 1) * this.pageSize;
-      const endIdx = startIdx + this.pageSize;
-      return this.articles.slice(startIdx, endIdx);
-    },
-
     // 전체 페이지 수 계산
     totalPages() {
       const pageCount = Math.ceil(this.articles.length / this.pageSize);
@@ -111,25 +113,38 @@ export default {
       return Array.from({ length: pageCount }, (_, index) => index + 1);
     },
   },
-  created() {
-    this.fetchArticles();
-  },
+
   methods: {
     fetchArticles() {
       fetch("http://localhost:9018/notice/api/list")
         .then((response) => response.json())
         .then((data) => {
-          this.articles = data;
+          this.articles = data; // allArticles를 articles로 변경
+          this.allArticles = data;
+          this.displayedArticles = data; // 초기에 전체 글 목록을 표시
         });
     },
     moveWrite() {
       this.$router.push("write");
     },
     search() {
-      // 검색 기능 구현
-      // 키워드를 사용하여 백엔드 API에 요청하여 데이터를 가져온 후 this.articles를 업데이트해야 합니다.
-      // 현재 페이지를 1로 초기화해야 할 수도 있습니다.
-      alert("검색 기능은 구현되지 않았습니다.");
+      if (this.searchKeyword.trim() === "") {
+        // 검색 키워드가 비어있는 경우, 전체 글 목록을 보여줍니다.
+        this.displayedArticles = this.allArticles;
+        this.currentPage = 1; // 페이지 초기화
+      } else {
+        console.log(this.searchKeyword);
+        console.log(this.allArticles);
+        // 검색 키워드가 있는 경우, 제목에 해당 검색어가 포함된 글을 필터링합니다.
+        const filteredArticles = this.allArticles.filter((article) => {
+          return (
+            article.subject && article.subject.includes(this.searchKeyword)
+          );
+        });
+        console.log(filteredArticles);
+        this.displayedArticles = filteredArticles;
+        this.currentPage = 1; // 페이지 초기화
+      }
     },
     handlePageChange(page) {
       this.currentPage = page;
