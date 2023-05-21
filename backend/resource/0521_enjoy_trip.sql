@@ -316,14 +316,14 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`hotplace_file_info` (
   `hotplace_file_idx` INT NOT NULL AUTO_INCREMENT,
   `hotplace_file_article_no` INT NULL,
   `hotplace_file_save_folder` VARCHAR(500) NULL,
-  `hotplace_file_original_file` VARCHAR(50) NULL,
-  `hotplace_file_save_file` VARCHAR(50) NULL,
+  `hotplace_file_original_file` VARCHAR(500) NULL,
+  `hotplace_file_save_file` VARCHAR(500) NULL,
   PRIMARY KEY (`hotplace_file_idx`),
   INDEX `hotplace_file_info_to_hotplace_hotplace_article_no_fk_idx` (`hotplace_file_article_no` ASC) VISIBLE,
   CONSTRAINT `hotplace_file_info_to_hotplace_hotplace_article_no_fk`
     FOREIGN KEY (`hotplace_file_article_no`)
     REFERENCES `enjoytrip`.`hotplace` (`hotplace_article_no`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
