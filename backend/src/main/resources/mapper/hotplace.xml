@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.enjoytrip.hotplace.model.mapper.HotplaceMapper">
+
+	<resultMap type="hotplaceDto" id="article">
+		<result column="hotplace_article_no" property="articleno" />
+		<result column="hotplace_title" property="title" />
+		<result column="hotplace_hit" property="hit" />
+		<result column="hotplace_content" property="content" />
+		<result column="register_time" property="registertime" />
+		<result column="hotplace_user_id" property="userid" />
+		<result column="hotplace_img_big" property="imgbig" />
+		<result column="hotplace_img_small" property="imgsmall" />
+		<result column="hotplace_file_save_file" property="savefile"/>
+		<result column="hotplace_file_save_folder" property="savefolder"/>
+	</resultMap>
+
+	<resultMap type="hotplaceDto" id="viewArticle" extends="article">
+		<collection property="fileInfos" column="hotplace_file_article_no" javaType="list" ofType="hotplaceFileDto" select="fileInfoList"/>
+	</resultMap>
+	
+	 <resultMap type="hotplaceFileDto" id="file">
+	  	<result column="hotplace_file_save_folder" property="savefolder"/> 
+		<result column="hotplace_file_original_file" property="originalfile"/> 
+		<result column="hotplace_file_save_file" property="savefile"/> 
+	</resultMap> 
+
+<select id="listArticle" parameterType="map" resultMap="article">
+  select h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title,
+  h.hotplace_content, h.hotplace_hit, h.register_time, m.user_name, hf.hotplace_file_save_file, hf.hotplace_file_save_folder
+  from hotplace h
+  join member m on h.hotplace_user_id = m.user_id
+  join hotplace_file_info hf on h.hotplace_article_no = hf.hotplace_file_article_no
+</select>
+
+	<insert id="writeArticle" parameterType="hotplaceDto">
+		insert into hotplace (hotplace_user_id, hotplace_title,
+		hotplace_content, hotplace_hit, register_time)
+		values (#{userid},
+		#{title}, #{content}, 0, now())
+		<selectKey resultType="int" keyProperty="articleno"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from hotplace
+		where hotplace_article_no = #{articleno}
+	</delete>
+	
+	<select id="getArticle" parameterType="int" resultMap="viewArticle">
+  		SELECT h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title, h.hotplace_content,
+         		h.hotplace_hit, h.register_time, hf.hotplace_file_save_file, hf.hotplace_file_save_folder
+  		FROM hotplace h
+  		LEFT JOIN member m ON h.hotplace_user_id = m.user_id
+  		LEFT JOIN hotplace_file_info hf ON h.hotplace_article_no = hf.hotplace_file_article_no
+  		WHERE h.hotplace_article_no = #{articleno}
+	</select>
+
+	
+<!-- 	<update id="modifyArticle" parameterType="hotplaceDto">
+		update hotplace
+		set hotplace_title = #{title}, content = #{content}
+		where article_no = #{articleno}
+	</update> -->
+
+	<!-- 파일 입출력 -->
+	<insert id="registerFile" parameterType="hotplaceDto">
+		insert into hotplace_file_info (hotplace_file_article_no,
+		hotplace_file_save_folder, hotplace_file_original_file,
+		hotplace_file_save_file)
+		values
+		<foreach collection="fileInfos" item="fileinfo"
+			separator=" , ">
+			(#{articleno}, #{fileinfo.savefolder},
+			#{fileinfo.originalfile}, #{fileinfo.savefile})
+		</foreach>
+	</insert>
+
+	<select id="fileInfoList" resultMap="file">
+		select hotplace_file_save_folder, hotplace_file_original_file, hotplace_file_save_file
+		from hotplace_file_info
+		where hotplace_file_article_no = #{articleno}
+	</select>
+	
+	<delete id="deleteFile" parameterType="int">
+		delete from hotplace_file_info
+		where hotplace_file_article_no = #{articleno}
+	</delete>
+
+
+
+</mapper>	

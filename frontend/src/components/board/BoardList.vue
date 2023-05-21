@@ -28,7 +28,7 @@
           >
             <option selected>검색조건</option>
             <option value="article_no">글번호</option>
-            <option value="subject">제목</option>
+            <option value="title">제목</option>
             <option value="user_id">작성자</option>
           </select>
           <div class="input-group input-group-sm">

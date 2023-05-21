@@ -76,7 +76,7 @@
                       {{ comment.userId }}
                     </div>
                     <div class="flex-grow-1">
-                      {{ comment.comment }}
+                      {{ comment.content }}
                     </div>
                     <div>
                       {{ comment.registerTime }}

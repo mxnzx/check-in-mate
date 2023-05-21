@@ -1,28 +1,8 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <!-- 공지사항 글쓰기 제목 시작 -->
-      <!-- <div class="col-lg-8 col-md-10 col-sm-12">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="basic">글쓰기</mark>
-        </h2>
-      </div> -->
-      <!-- 여행정보 공유 게시판 글쓰기 제목 끝 -->
       <div class="col-lg-8 col-md-10 col-sm-12">
         <input type="hidden" name="action" value="write" />
-        <!-- 작성자입력 시작 -->
-        <!-- <div class="mb-3">
-          <label for="userId" class="form-label">작성자 </label>
-          <input
-            type="text"
-            class="form-control"
-            id="userId"
-            name="userId"
-            placeholder="아이디입력"
-            v-model="userId"
-          />
-        </div> -->
-        <!-- 작성자입력 끝 -->
         <!-- 제목입력 시작 -->
         <div class="mb-3">
           <label for="title" class="form-label"></label>
@@ -68,9 +48,9 @@
             type="button"
             id="btn-register"
             class="btn btn-outline-primary mb-3"
-            @click="registArticle"
+            @click="modifyArticle"
           >
-            글작성
+            글수정
           </button>
           <button
             type="reset"
@@ -94,6 +74,12 @@ const memberStore = "memberStore";
 
 export default {
   name: "HotplaceWrite",
+  props: {
+    article: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
@@ -102,10 +88,20 @@ export default {
       userid: "",
       title: "",
       content: "",
+      articleno: "",
     };
   },
+  created() {
+    this.title = this.article.title; // article 프롭스의 title 값을 data 속성에 대입
+    this.content = this.article.content; // article 프롭스의 content 값을 data 속성에 대입
+    this.articleno = this.article.articleno;
+    console.log("hotplace modidfy title >>>>>>>> " + this.title);
+    console.log("hotplace modidfy content >>>>>>>>" + this.content);
+    console.log("hotplace modidfy articleno >>>>>>>>" + this.articleno);
+  },
   methods: {
-    registArticle() {
+    modifyArticle() {
+      this.deleteArticle();
       let obj = {
         userid: this.userInfo.userid,
         title: this.title,
@@ -123,6 +119,7 @@ export default {
           formData.append("upfile", file);
         }
       }
+
       // 나머지 데이터도 FormData에 추가
       for (let key in obj) {
         formData.append(key, obj[key]);
@@ -134,17 +131,35 @@ export default {
       })
         .then((response) => {
           if (response.ok) {
+            console.log(obj);
             this.$router.push("/hotplace");
           } else {
-            throw new Error("핫플 등록 실패");
+            throw new Error("핫플 수정 실패");
           }
         })
         .catch((error) => {
           alert(error.message);
         });
     },
-
-    // 목록으로 이동
+    // 삭제하기
+    deleteArticle() {
+      fetch(`http://localhost:9018/hotplace/delete/${this.articleno}`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          articleno: this.articleno,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("글 삭제 성공");
+          } else {
+            throw new Error("글 삭제 실패");
+          }
+        })
+        .catch((error) => {
+          this.message = error.message;
+        });
+    },
     moveList() {
       this.$router.push("/hotplace");
     },
