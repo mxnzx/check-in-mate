@@ -49,7 +49,7 @@ export default {
     },
     getImageSrc() {
       // 이미지 파일 경로를 반환합니다.
-      return "http://localhost:9018/hotplace/image/b4e39aa1-84a4-435b-a499-a508140f04c9.png";
+      return "http://localhost:9018/hotplace/image/" + this.article.savefile;
     },
   },
 };

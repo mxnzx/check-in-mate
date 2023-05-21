@@ -5,17 +5,14 @@
     id="signUpModal"
     style="text-center"
     hide-footer
+    @hide="hideModal"
   >
     <div class="modal-body">
       <div class="carousel-inner">
         <!-- 슬라이드 쇼 -->
         <div class="carousel-item active">
           <!--가로-->
-          <img
-            class="d-block w-100"
-            src="http://localhost:9018/hotplace/image/b4e39aa1-84a4-435b-a499-a508140f04c9.png"
-            alt="First slide"
-          />
+          <img class="d-block w-100" :src="getImageSrc()" alt="First slide" />
           <!-- 사진에 글씨 쓰고 싶으면 아래 div -->
           <div class="carousel-caption d-none d-md-block"></div>
         </div>
@@ -52,7 +49,10 @@
         <!-- 인디케이터 끝 -->
       </div>
     </div>
-    <div class="modal-footer" style="justify-content: center">
+    <div
+      class="modal-footer"
+      style="justify-content: center; flex-direction: column"
+    >
       <div class="inline-block">
         <b-card-text> {{ article.title }} </b-card-text>
       </div>
@@ -131,11 +131,10 @@ export default {
     },
     // 수정으로 이동
     moveModifyArticle() {
-      this.$router.replace({
-        name: "boardModify",
-        params: { articleNo: this.article.articleNo },
+      this.$router.push({
+        name: "HotPlaceModify",
+        params: { article: this.article },
       });
-      //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
 
     // 삭제하기
@@ -159,9 +158,17 @@ export default {
         });
     },
 
-    // hideModal() {
-    //   this.$refs["hotPlace-modal"].hide();
-    // },
+    hideModal() {
+      console.log("하이드모달작동1");
+      // this.$refs["hotPlace-modal"].hide();
+    },
+    hideHotPlaceModal() {
+      this.showHotPlaceModal = false;
+    },
+    getImageSrc() {
+      // 이미지 파일 경로를 반환합니다.
+      return "http://localhost:9018/hotplace/image/" + this.article.savefile;
+    },
   },
 };
 </script>

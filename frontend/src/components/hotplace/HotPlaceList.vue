@@ -29,17 +29,17 @@
       </div>
       <br />
       <!-- 사진 리스트 끝-->
-      <hot-place-modal ref="HotPlaceModal"></hot-place-modal>
+      <!-- <hot-place-modal ref="HotPlaceModal"></hot-place-modal> -->
     </div>
   </div>
 </template>
 
 <script>
-import HotPlaceModal from "@/components/hotplace/HotPlaceModal.vue";
+// import HotPlaceModal from "@/components/hotplace/HotPlaceModal.vue";
 import HotPlaceListItem from "./HotPlaceListItem.vue";
 export default {
   name: "HotPlaceList",
-  components: { HotPlaceModal, HotPlaceListItem },
+  components: { HotPlaceListItem },
   data() {
     return {
       articles: [],
