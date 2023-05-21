@@ -57,6 +57,7 @@
             id="upfile"
             name="upfile"
             multiple="multiple"
+            ref="fileInput"
           />
         </div>
 
@@ -87,9 +88,15 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
+
 export default {
   name: "HotplaceWrite",
-
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
       userid: "",
@@ -100,20 +107,34 @@ export default {
   methods: {
     registArticle() {
       let obj = {
-        userid: "admin",
-        title: this.subject,
+        userid: this.userInfo.userid,
+        title: this.title,
         content: this.content,
       };
+      // 파일 입력 요소 가져오기
+      const fileInput = this.$refs.fileInput;
+      // FormData 객체 생성
+      const formData = new FormData();
+
+      // 파일이 선택되었을 때 FormData에 추가
+      if (fileInput.files.length > 0) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+          const file = fileInput.files[i];
+          formData.append("upfile", file);
+        }
+      }
+      // 나머지 데이터도 FormData에 추가
+      for (let key in obj) {
+        formData.append(key, obj[key]);
+      }
+      console.log(formData);
       fetch(`http://localhost:9018/hotplace/write`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(obj),
+        body: formData,
       })
         .then((response) => {
           if (response.ok) {
-            this.$router.push("list");
+            this.$router.push("/hotplace");
           } else {
             throw new Error("핫플 등록 실패");
           }
@@ -122,8 +143,10 @@ export default {
           alert(error.message);
         });
     },
+
+    // 목록으로 이동
     moveList() {
-      this.$router.push("list");
+      this.$router.push("/hotplace");
     },
   },
 };
