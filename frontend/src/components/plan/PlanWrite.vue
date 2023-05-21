@@ -1,13 +1,3 @@
-<!-- 
-    하나의 큰 포스팅 쓰기 페이지이다.
-    row1
-        [지역명]제목
-    row2
-        PlanWriteByDate컴포넌트가 하나씩 붙는다
-    row3
-        '날짜추가하기' 버튼 (row3 위로 컴포넌트가 붙는다) 
- -->
-
 <template>
   <div class="container">
     <div class="row justify-content-center">
@@ -31,7 +21,7 @@
             <div><span>장소추가하기</span></div>
             <div class="row">
               <plan-map class="col-9"></plan-map>
-              <plan-pick-list class="col-3"></plan-pick-list>
+              <plan-pick-list class="col-3 p-0"></plan-pick-list>
 
             </div>
           </div>
@@ -89,12 +79,9 @@ export default {
   }, 
   methods: {
     addDate() {
-
       this.dates.push({});  //새 날짜 컴포넌트를 배열에 추가
     }
   }
-
-
 }
 </script>
 
