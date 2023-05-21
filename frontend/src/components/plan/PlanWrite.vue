@@ -16,12 +16,10 @@
         <input type="hidden" name="action" value="write" />
         <!-- 제목입력 시작 -->
         <div class="mb-3">
-          <label for="subject" class="form-label"></label>
           <div class="plan-input-title-wrapper">
             <input type="text" class="form-control plan-input-title" id="subject" name="subject" style="border: none"
               placeholder="[지역명] 제목을 입력하세요" v-model="subject" />
           </div>
-
         </div>
         <!-- 제목입력 끝 -->
 
@@ -29,6 +27,14 @@
 
         <!-- 내용입력 시작 -->
         <div>
+          <div>
+            <div><span>장소추가하기</span></div>
+            <div class="row">
+              <plan-map class="col-9"></plan-map>
+              <plan-pick-list class="col-3"></plan-pick-list>
+
+            </div>
+          </div>
         <div class="col-12 d-flex justify-content-center by-day-text mb-2">
             DAY 1
           </div>
@@ -65,15 +71,20 @@
 
 <script>
 import PlanWriteByDate from "./PlanWriteByDate.vue";
+import PlanMap from "./PlanMap.vue";
+import PlanPickList from "./PlanPickList.vue";
+
 
 export default {
   name: "PlanWrite",
   components: {
     PlanWriteByDate,
+    PlanMap,
+    PlanPickList,
   },
   data() {
     return {
-      dates: [],  //추가도니 날짜 컴포넌트들을 저장하는 배열
+      dates: [],  //추가된 날짜 컴포넌트들을 저장하는 배열
     }
   }, 
   methods: {
