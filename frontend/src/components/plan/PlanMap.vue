@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { eventBus } from '@/main.js';
+
 export default {
   name: "KakaoMap",
   data() {
@@ -46,6 +48,8 @@ export default {
     } else {
       this.initMap();
     }
+
+    
   },
 
   methods: {
@@ -93,7 +97,7 @@ export default {
         console.log("정상적으로 검색이 완료됨>>>>>>" + this.keyword);
         //console.log(data);
         this.searchedData = data;
-        console.log(this.searchedData);
+        //console.log(this.searchedData);
 
 
         // 정상적으로 검색이 완료됐으면
@@ -122,9 +126,9 @@ export default {
       var listEl = document.getElementById('placesList'),
         menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(),
-        bounds = new window.kakao.maps.LatLngBounds(),
-        listStr = '';
-      console.log(menuEl + " " + listStr);
+        bounds = new window.kakao.maps.LatLngBounds();
+        //listStr = '';
+      //console.log(menuEl + " " + listStr);
 
       // 검색 결과 목록에 추가된 항목들을 제거합니다
       this.removeAllChildNods(listEl);
@@ -165,19 +169,23 @@ export default {
     addEventListeners(marker, itemEl, title) {
       window.kakao.maps.event.addListener(marker, 'mouseover', () => {
         this.displayInfowindow(marker, title);
+
+         //인포윈도우에 add버튼 누르면 처리할 이벤트 생성
+        document.getElementById("infowindow-add-button").addEventListener("click", () => { this.addPickList(title) });
+
       });
 
-      window.kakao.maps.event.addListener(marker, 'mouseout', ()=>{
-        this.infowindow.close();
-      });
+      // window.kakao.maps.event.addListener(marker, 'mouseout', ()=>{
+      //   this.infowindow.close();
+      // });
 
       itemEl.onmouseover = () => {
         this.displayInfowindow(marker, title);
       };
 
-      itemEl.onmouseout = () => {
-        this.infowindow.close();
-      };
+      // itemEl.onmouseout = () => {
+      //   this.infowindow.close();
+      // };
     },
 
     // 검색결과 항목을 Element로 반환하는 함수입니다
@@ -201,7 +209,7 @@ export default {
       el.innerHTML = itemStr;
       el.className = 'item';
 
-      console.log(el);
+      //console.log(el);
 
       return el;
     },
@@ -236,7 +244,7 @@ export default {
 
 
       this.markers = [];
-    },
+    }, 
     // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
     displayPagination(pagination) {
       var paginationEl = document.getElementById('pagination'),
@@ -269,13 +277,15 @@ export default {
     },
 
     // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-    // 인포윈도우에 장소명을 표시합니다
+    // 인포윈도우에 장소명과 버튼을 표시합니다
     displayInfowindow(marker, title) {
-      var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
+      var content = '<div style="padding: 5px; z-index: 1;">' +
+        '<div>' + title + '</div>' +
+        '<button id="infowindow-add-button"> add </button>' +
+        '</div>';
       this.infowindow.setContent(content);
       this.infowindow.open(this.map, marker);
-      console.log(title);
+      //현재 title을 가지고 갈 수 있다
     },
 
     // 검색결과 목록의 자식 Element를 제거하는 함수입니다
@@ -284,7 +294,14 @@ export default {
         el.removeChild(el.lastChild);
       }
     },
-  }
+
+    //pickList에 픽한 상호명을 담는다
+    addPickList(title) {
+      //planpicklist 컴포넌트에 title을 전달한다
+      // 'title-updated' 이벤트 발행
+      eventBus.$emit('pick-title-update', title);
+    },
+  },
 
 }
 </script>

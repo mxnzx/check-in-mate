@@ -12,7 +12,6 @@
     <!-- 원하는 여행지 선택 목록 시작 -->
     <div class="container">
       <div class="row">
-        <plan-pick-list></plan-pick-list>
       </div>
     </div>
     <!-- 원하는 여행지 선택 목록 끝 -->
@@ -31,11 +30,11 @@
 </template>
 
 <script>
-import PlanPickList from "./PlanPickList.vue";
+// import PlanPickList from "./PlanPickList.vue";
 
 export default {
   components: {
-    PlanPickList,
+    // PlanPickList,
     
   },
   data() {

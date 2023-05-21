@@ -2,21 +2,47 @@
   <div>
     <div style="height: 100%; background-color: antiquewhite;">
       <div class="plan-pick-list-text">추가한 여행지 목록</div>
-      <div class="row">
-        <div class="col-1 p-0">1</div>
-        <div class="col-8 p-0">여행지이름</div>
-        <div class="col-1 p-0">x</div>
+      <div v-for="(item, index) in pickList" :key="index" class="row pick-list-item">
+        <div class="col-1 p-0">{{ index + 1 }}</div>
+        <div class="col-8 p-0">{{ item }}</div>
+        <div class="col-1 p-0" @click="deletePickList(index)" style="cursor: pointer">x</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { eventBus } from "@/main";
+
 export default {
   data() {
     return {
-      
+      title: "",
+      pickList: [],   // 추가한 여행지 목록을 배열로 관리
     }
+  },
+
+  mounted() {
+    eventBus.$off('pick-title-update'); // 기존에 등록된 이벤트 리스너 제거
+    eventBus.$on('pick-title-update', (title) => {
+      console.log(title);
+      this.pickList.push(title); // 새로운 항목을 배열에 추가
+      //this.$set(this, 'title', title); // 데이터 변경을 명시적으로 알림
+      //console.log(this.title);
+    });
+  },
+
+  computed: {
+    computedTitle() {
+      return this.title;
+    }
+  },
+
+
+  methods: {
+    deletePickList(index) {
+      this.pickList.splice(index, 1); // 선택한 항목을 배열에서 제거
+    },
   }
 }
 </script>
