@@ -11,7 +11,7 @@
       <div class="col-lg-8 col-md-10 col-sm-12">
         <input type="hidden" name="action" value="write" />
         <!-- 작성자입력 시작 -->
-        <!-- <div class="mb-3">
+        <div class="mb-3" style="display: none">
           <label for="userId" class="form-label">작성자 </label>
           <input
             type="text"
@@ -19,9 +19,8 @@
             id="userId"
             name="userId"
             placeholder="아이디입력"
-            v-model="userId"
           />
-        </div> -->
+        </div>
         <!-- 작성자입력 끝 -->
         <!-- 제목입력 시작 -->
         <div class="mb-3">
@@ -77,8 +76,15 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
+
 export default {
   name: "NoticeWrite",
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
       userId: "",
@@ -89,12 +95,14 @@ export default {
   methods: {
     // 글쓰기
     registArticle() {
+      // const userId = this.userInfo.userid;
+
       let obj = {
-        userId: this.userId,
+        userId: this.userInfo.userid,
         subject: this.subject,
         content: this.content,
       };
-      console.log("write userid >> " + this.userId);
+      console.log("write userid >> " + this.userInfo.userid);
       fetch("http://localhost:9018/notice/api/write", {
         method: "POST",
         headers: {
@@ -105,9 +113,7 @@ export default {
         .then((response) => {
           if (response.ok) {
             console.log("작성성공");
-            console.log(this.userId);
-            console.log(this.subject);
-            console.log(this.content);
+            console.log(obj);
             this.$router.push("list");
           } else {
             console.log("실패");
