@@ -22,13 +22,12 @@ import NoticeWrite from "@/components/notice/NoticeWrite";
 import NoticeView from "@/components/notice/NoticeView";
 import NoticeModify from "@/components/notice/NoticeModify";
 
-// 나의여행계획 
+// 나의여행계획
 import PlanList from "@/components/plan/PlanList";
 import PlanWrite from "@/components/plan/PlanWrite";
 import PlanModify from "@/components/plan/PlanModify";
 import PlanDelete from "@/components/plan/PlanDelete";
 import PlanView from "@/components/plan/PlanView";
-
 
 // 핫플 자랑하기
 // import HotPlaceList from "@/components/hotplace/HotPlaceList";
@@ -111,6 +110,13 @@ const routes = [
     path: "/hotplace/write",
     component: () => import("@/components/hotplace/HotPlaceWrite"),
   },
+  {
+    path: "/hotplace/modify/:articleno",
+    name: "HotPlaceModify",
+    component: () => import("@/components/hotplace/HotPlaceModify"),
+    props: true,
+  },
+
   {
     path: "/",
     name: "TheIndex",
@@ -195,9 +201,7 @@ const routes = [
         component: PlanView,
         name: "PlanView",
       },
-      
-
-    ]
+    ],
   },
 
   // 지역별 여행지

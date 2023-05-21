@@ -13,7 +13,7 @@ public class CommentDto {
 	private int articleNo;
 	private String userId;
 	private String parentId;
-	private String comment;
+	private String content;
 	private String registerTime;	
 	
 }

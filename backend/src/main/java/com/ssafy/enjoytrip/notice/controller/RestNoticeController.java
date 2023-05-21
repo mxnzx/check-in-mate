@@ -49,6 +49,7 @@ public class RestNoticeController {
 //		return ResponseEntity.ok(noticeDto);
 		
 		ResponseEntity<Map<String, Object>> resEntity = null;
+		System.out.println(noticeDto);
 		try {
 			noticeService.writeArticle(noticeDto);
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -76,6 +77,7 @@ public class RestNoticeController {
 		System.out.println("공지사항 글보기 controller");
 		try {
 			noticeDto = noticeService.getArticle(articleNo);
+			noticeService.updateHit(articleNo);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "공지사항 조회 성공");
 			map.put("noticeArticle", noticeDto);

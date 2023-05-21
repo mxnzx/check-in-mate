@@ -2,8 +2,8 @@
   <tr class="text-center">
     <td>{{ article.articleNo }}</td>
     <td>
-      <router-link :to="`view/${article.articleNo}`" class="board-subject">{{
-        article.subject
+      <router-link :to="`view/${article.articleNo}`" class="board-title">{{
+        article.title
       }}</router-link>
     </td>
     <td>{{ article.userName }}</td>

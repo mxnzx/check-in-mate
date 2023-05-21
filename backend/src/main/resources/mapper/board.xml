@@ -5,12 +5,12 @@
 <mapper namespace="com.ssafy.enjoytrip.board.model.mapper.BoardMapper">
 
 	<resultMap type="boardDto" id="article">
-		<result column="article_no" property="articleNo"/>
-		<result column="board_user_id" property="userId"/>
+		<result column="join_mate_article_no" property="articleNo"/>
+		<result column="join_mate_user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
-		<result column="subject" property="subject"/>
-		<result column="content" property="content"/>
-		<result column="hit" property="hit"/>
+		<result column="join_mate_title" property="title"/>
+		<result column="join_mate_content" property="content"/>
+		<result column="join_mate_hit" property="hit"/>
 		<result column="register_time" property="registerTime"/>
 	</resultMap>
 	
@@ -25,8 +25,8 @@
 	</resultMap>
 -->
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board (board_user_id, subject, content, hit, register_time)
-		values (#{userId}, #{subject}, #{content}, 0, now())
+		insert into join_mate (join_mate_user_id, join_mate_title, join_mate_content, join_mate_hit, register_time)
+		values (#{userId}, #{title}, #{content}, 0, now())
 		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -42,10 +42,10 @@
 -->
 	<sql id="search">
 		<if test="word != null and word != ''">
-			<if test="key == 'subject'">
-				and subject like concat('%', #{word}, '%')
+			<if test="key == 'title'">
+				and title like concat('%', #{word}, '%')
 			</if>
-			<if test="key != 'subject'">
+			<if test="key != 'title'">
 				and ${key} = #{word}
 			</if>
 		</if>
@@ -53,27 +53,27 @@
 
 	<select id="listArticle" parameterType="map" resultMap="article">
 
- 		select b.article_no, b.board_user_id, b.subject, b.content, b.hit, b.register_time, m.user_name
-		from board b, member m 
-		where b.board_user_id = m.user_id
+ 		select jm.join_mate_article_no, jm.join_mate_user_id, jm.join_mate_title, jm.join_mate_content, jm.join_mate_hit, jm.register_time, m.user_name
+		from join_mate jm, member m 
+		where jm.join_mate_user_id = m.user_id
  		<include refid="search"></include>
-		order by b.article_no desc
+		order by jm.join_mate_article_no desc
 		limit #{start}, #{listsize} 
 	</select>
 	 
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
-		select count(article_no)
-		from board
+		select count(join_mate_article_no)
+		from join_mate
 		<where>
 			<include refid="search"></include>
 		</where>
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select b.article_no, b.board_user_id, b.subject, b.content, b.hit, b.register_time, m.user_name 
-		from board b, member m
-		where b.board_user_id = m.user_id
-		and b.article_no = #{articleNo}
+		select jm.join_mate_article_no, jm.join_mate_user_id, jm.join_mate_title, jm.join_mate_content, jm.join_mate_hit, jm.register_time, m.user_name 
+		from join_mate jm, member m
+		where jm.join_mate_user_id = m.user_id
+		and jm.join_mate_article_no = #{articleNo}
 	</select>
 	<!-- 
 	<select id="fileInfoList" resultMap="file">
@@ -83,15 +83,15 @@
 	</select>
 	-->
 	<update id="updateHit" parameterType="int">
-		update board
-		set hit = hit + 1
-		where article_no = #{articleNo}
+		update join_mate
+		set join_mate_hit = join_mate_hit + 1
+		where join_mate_article_no = #{articleNo}
 	</update>
 
 	<update id="modifyArticle" parameterType="boardDto">
-		update board
-		set subject = #{subject}, content = #{content}
-		where article_no = #{articleNo}
+		update join_mate
+		set join_mate_title = #{title}, join_mate_content = #{content}
+		where join_mate_article_no = #{articleNo}
 	</update>
 	<!-- 
 	<delete id="deleteFile" parameterType="int">
@@ -100,37 +100,37 @@
 	</delete>
 	-->
 	<delete id="deleteArticle" parameterType="int">
-		delete from board
-		where article_no = #{articleNo}
+		delete from join_mate
+		where join_mate_article_no = #{articleNo}
 	</delete> 
 	
 	<resultMap type = "commentDto" id= "commentMap">
-		<result column="comment_no" property="commentNo"/>
-		<result column="article_no" property="articleNo"/>
-		<result column="user_id" property="userId"/>
+		<result column="comment_comment_no" property="commentNo"/>
+		<result column="comment_article_no" property="articleNo"/>
+		<result column="comment_user_id" property="userId"/>
 		<result column="parent_id" property="parentId"/>
-		<result column="comment" property="comment"/>
+		<result column="comment_content" property="content"/>
 		<result column="register_time" property="registerTime"/>
 	</resultMap>	
 
 	<insert id="insertComment" parameterType="commentDto">
-		insert into board_comment (
-			article_no,
-			user_id,
-			comment,
+		insert into join_mate_comment (
+			comment_article_no,
+			comment_user_id,
+			comment_content,
 			register_time
-		) values (#{articleNo}, #{userId}, #{comment}, now())
+		) values (#{articleNo}, #{userId}, #{content}, now())
 	</insert>
 	
 	<select id="listComment" parameterType="int" resultMap="commentMap">
-		select comment_no, article_no, user_id, comment, register_time
-		from board_comment
-		where article_no = #{articleNo}
+		select comment_no, comment_article_no, comment_user_id, comment_content, register_time
+		from join_mate_comment
+		where comment_article_no = #{articleNo}
 		order by register_time
 	</select>
 	
 	<delete id="deleteComment" parameterType="int">
-		delete from board_comment where comment_no = #{commentNo}
+		delete from join_mate_comment where comment_no = #{commentNo}
 	</delete>
 	
 </mapper>	
