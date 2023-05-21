@@ -53,9 +53,8 @@
 
       <!-- 페이징 컴포넌트 -->
       <notice-pagination
-        v-if="totalPageCount > 1"
         :current-page="currentPage"
-        :total-pages="totalPageCount"
+        :total-pages="totalPages"
         @page-change="handlePageChange"
       ></notice-pagination>
     </div>
@@ -90,8 +89,9 @@ export default {
     },
 
     // 전체 페이지 수 계산
-    totalPageCount() {
-      return Math.ceil(this.articles.length / this.pageSize);
+    totalPages() {
+      const pageCount = Math.ceil(this.articles.length / this.pageSize);
+      return Math.max(pageCount, 1); // 게시글이 10개 미만일 때 최소값 1로 설정
     },
 
     // 현재 페이지의 시작 인덱스 계산
