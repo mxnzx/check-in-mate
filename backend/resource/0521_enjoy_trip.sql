@@ -331,3 +331,9 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+SELECT * FROM enjoytrip.member;
+INSERT INTO member (user_id, user_name, user_password, email_id, email_domain, join_date)
+VALUES
+('admin', '관리자', '1234', 'admin','ssafy.com',now()),
+('ssafy12', '김싸피', '1234', 'ssafy','ssafy.com', now());
