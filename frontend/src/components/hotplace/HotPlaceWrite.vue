@@ -25,15 +25,15 @@
         <!-- 작성자입력 끝 -->
         <!-- 제목입력 시작 -->
         <div class="mb-3">
-          <label for="subject" class="form-label"></label>
+          <label for="title" class="form-label"></label>
           <input
             type="text"
             class="form-control"
-            id="subject"
-            name="subject"
+            id="title"
+            name="title"
             style="border: none"
             placeholder="제목입력"
-            v-model="subject"
+            v-model="title"
           />
         </div>
         <!-- 제목입력 끝 -->
@@ -49,7 +49,7 @@
             placeholder="내용입력"
             v-model="content"
           ></textarea>
-        </div>  
+        </div>
         <div class="mb-3">
           <input
             type="file"
@@ -87,7 +87,46 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "HotplaceWrite",
+
+  data() {
+    return {
+      userid: "",
+      title: "",
+      content: "",
+    };
+  },
+  methods: {
+    registArticle() {
+      let obj = {
+        userid: "admin",
+        title: this.subject,
+        content: this.content,
+      };
+      fetch(`http://localhost:9018/hotplace/write`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      })
+        .then((response) => {
+          if (response.ok) {
+            this.$router.push("list");
+          } else {
+            throw new Error("핫플 등록 실패");
+          }
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
+    moveList() {
+      this.$router.push("list");
+    },
+  },
+};
 </script>
 
 <style></style>

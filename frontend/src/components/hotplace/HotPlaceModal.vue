@@ -13,28 +13,21 @@
           <!--가로-->
           <img
             class="d-block w-100"
-            src="https://images.pexels.com/photos/213399/pexels-photo-213399.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            src="http://localhost:9018/hotplace/image/b4e39aa1-84a4-435b-a499-a508140f04c9.png"
             alt="First slide"
           />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>TEST</h5>
-            <p>testtesttest</p>
-          </div>
+          <!-- 사진에 글씨 쓰고 싶으면 아래 div -->
+          <div class="carousel-caption d-none d-md-block"></div>
         </div>
+
+        <!--     슬라이드 쇼 하고 싶으면 이렇게 추가 
         <div class="carousel-item">
           <img
             class="d-block w-100"
             src="https://images.pexels.com/photos/2355519/pexels-photo-2355519.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
             alt="Second slide"
           />
-        </div>
-        <div class="carousel-item">
-          <img
-            class="d-block w-100"
-            src="https://images.pexels.com/photos/2544554/pexels-photo-2544554.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
-            alt="Third slide"
-          />
-        </div>
+        </div> -->
 
         <!-- / 슬라이드 쇼 끝 -->
 
@@ -72,7 +65,7 @@
         type="button"
         id="btn-register"
         class="btn btn-outline-primary mb-3"
-        @click="registArticle"
+        @click="moveModifyArticle"
       >
         수정
       </button>
@@ -80,7 +73,7 @@
         type="reset"
         class="btn btn-outline-danger mb-3"
         style="margin-left: 5px"
-        @click="moveList"
+        @click="deleteArticle"
       >
         삭제
       </button>
@@ -134,6 +127,35 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+        });
+    },
+    // 수정으로 이동
+    moveModifyArticle() {
+      this.$router.replace({
+        name: "boardModify",
+        params: { articleNo: this.article.articleNo },
+      });
+      //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
+    },
+
+    // 삭제하기
+    deleteArticle() {
+      fetch(`http://localhost:9018/hotplace/delete/${this.articleno}`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          articleno: this.articleno,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("글 삭제 성공");
+            this.$router.go();
+          } else {
+            throw new Error("글 삭제 실패");
+          }
+        })
+        .catch((error) => {
+          this.message = error.message;
         });
     },
 
