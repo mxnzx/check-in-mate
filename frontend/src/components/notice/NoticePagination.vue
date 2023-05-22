@@ -44,6 +44,7 @@ export default {
       }
     },
     goToPage(pageNumber) {
+      console.log(pageNumber);
       if (pageNumber >= 1 && pageNumber <= this.totalPages) {
         this.$emit("page-change", pageNumber);
       }

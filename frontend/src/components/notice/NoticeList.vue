@@ -50,7 +50,7 @@
         <tbody>
           <!-- v-if빼서 무조건 페이징 버튼 출력 -->
           <notice-list-item
-            v-for="article in displayedArticles"
+            v-for="article in pagedArticles"
             :key="article.articleNo"
             :article="article"
           ></notice-list-item>
@@ -82,7 +82,7 @@ export default {
       articles: [], // 전체 글 목록 데이터
       displayedArticles: [], // 현재 페이지에 해당하는 글 목록 데이터
       currentPage: 1, // 현재 페이지 번호
-      pageSize: 10, // 페이지 당 글 개수
+      pageSize: 5, // 페이지 당 글 개수
       searchKeyword: "", // 검색 키워드
     };
   },
@@ -91,9 +91,18 @@ export default {
   },
   // eslint-disable-next-line no-dupe-keys, vue/no-dupe-keys
   computed: {
+    // 현재 페이지에 해당하는 글 목록 데이터 계산
+    pagedArticles() {
+      const startIdx = (this.currentPage - 1) * this.pageSize;
+      const endIdx = startIdx + this.pageSize;
+      //this.displayedArticles = this.displayedArticles.slice(startIdx, endIdx);
+      return this.displayedArticles.slice(startIdx, endIdx);
+    },
     // 전체 페이지 수 계산
     totalPages() {
-      const pageCount = Math.ceil(this.articles.length / this.pageSize);
+      const pageCount = Math.ceil(
+        this.displayedArticles.length / this.pageSize
+      );
       return Math.max(pageCount, 1); // 게시글이 10개 미만일 때 최소값 1로 설정
     },
 
@@ -109,7 +118,9 @@ export default {
 
     // 페이지 번호 목록 계산
     pageNumbers() {
-      const pageCount = Math.ceil(this.articles.length / this.pageSize);
+      const pageCount = Math.ceil(
+        this.displayedArticles.length / this.pageSize
+      );
       return Array.from({ length: pageCount }, (_, index) => index + 1);
     },
   },
@@ -122,6 +133,10 @@ export default {
           this.articles = data; // allArticles를 articles로 변경
           this.allArticles = data;
           this.displayedArticles = data; // 초기에 전체 글 목록을 표시
+          console.log("articles fetcharticles >>>>>>>" + this.articles);
+          console.log(
+            "displayedArticles fetcharticles >>>>>>>" + this.displayedArticles
+          );
         });
     },
     moveWrite() {
@@ -147,6 +162,8 @@ export default {
       }
     },
     handlePageChange(page) {
+      //console.log(page);
+      console.log(this.pageSize);
       this.currentPage = page;
     },
   },
