@@ -226,7 +226,29 @@ public class RestMemberController {
 		return resEntity;
 
 	}
-
+	
+	// 아이디 찾기
+	@GetMapping("/find/{emailid}/{emaildomain}")
+	public ResponseEntity<Map<String, Object>> findIdPassword(@PathVariable("emailid") String emailid , @PathVariable("emaildomain") String emaildomain) throws Exception{
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		MemberDto memberDto = null;
+		System.out.println(emailid + "  " + emaildomain);
+		try {
+			memberDto = memberService.findId(emailid, emaildomain);
+			Map<String, Object> map = new HashMap<String, Object>();
+			System.out.println("controller findid map >> " + map);
+			System.out.println("controller findid memberDto >> " + map);
+			map.put("resmsg", "조회 성공");
+			map.put("findid", memberDto);
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		} catch(Exception e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			e.printStackTrace();
+			map.put("resmsg", "조회 실패");
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+	}
 //	// 아이디 값 가져와서 기존 아이디와 비교해서 겹치는게 있는지 체크
 //	@GetMapping("/{userid}")
 //	public String idCheck(@PathVariable("userid") String userId) throws Exception {

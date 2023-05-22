@@ -28,6 +28,9 @@ public interface MemberService {
 //	// 미구현
 //	String encryptPassword(String pwd);
 	
+	// 아이디 찾기 
+	public MemberDto findId(String emailid, String emaildomain) throws Exception;
+	
 	public MemberDto login(MemberDto memberDto) throws Exception;
 	public MemberDto userInfo(String userid) throws Exception;
 	public void saveRefreshToken(String userid, String refreshToken) throws Exception;

@@ -97,7 +97,13 @@
 	<delete id="deleteMember" parameterType="String">
 		delete from member
 		where user_id = #{userid}
-	</delete> 
+	</delete>
+ 
+ 	<select id="findId" parameterType="String" resultType="memberDto">
+		select user_id as userid
+		from member
+		where email_id = #{emailid} and email_domain = #{emaildomain}
+ 	</select>
 
 
 </mapper>	

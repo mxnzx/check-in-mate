@@ -25,6 +25,9 @@ public interface MemberMapper {
 	// 회원탈퇴
 	void deleteMember(String userid) throws SQLException;
 	
+	// 아이디 찾기
+	MemberDto findId(String emailid, String emaildomain) throws SQLException;
+	
 	public MemberDto login(MemberDto memberDto) throws SQLException;
 	public MemberDto userInfo(String userid) throws SQLException;
 	public void saveRefreshToken(Map<String, String> map) throws SQLException;

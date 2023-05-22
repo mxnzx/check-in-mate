@@ -117,4 +117,12 @@ public class MemberServiceImpl implements MemberService {
 //		return hashedPwd;
 //	}
 
+	// 아이디 찾기
+	@Override
+	public MemberDto findId(String emailid, String emaildomain) throws Exception {
+//		System.out.println("service findid >>" + sqlSession.getMapper(MemberMapper.class).findId(emailid, emaildomain));
+//		return sqlSession.getMapper(MemberMapper.class).findId(emailid, emaildomain);
+		return memberMapper.findId(emailid, emaildomain);
+	}
+
 }
