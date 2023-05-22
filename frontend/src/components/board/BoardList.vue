@@ -27,7 +27,8 @@
             aria-label="검색조건"
             v-model="searchKey"
           >
-            <option selected>검색조건</option>
+            <!-- <option disabled selected hidden>검색조건</option> -->
+            <option value="">검색조건</option>
             <option value="article_no">글번호</option>
             <option value="title">제목</option>
             <option value="user_id">작성자</option>
@@ -112,6 +113,7 @@ export default {
       currentPage: 1, // 현재 페이지 번호
       pageSize: 5, // 페이지 당 글 개수
       searchKeyword: "", // 검색 키워드
+      searchKey: "",
     };
   },
 
