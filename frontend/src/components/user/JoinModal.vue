@@ -55,9 +55,8 @@
             id="pwdcheck_join"
             name="pwdcheck"
             class="form-control"
-            type="text"
+            type="password"
             placeholder="비밀번호확인"
-            v-model="joinMemberData.userpwd"
           />
         </div>
       </div>

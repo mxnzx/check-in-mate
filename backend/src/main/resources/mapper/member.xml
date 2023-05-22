@@ -5,14 +5,14 @@
 <mapper namespace="com.ssafy.enjoytrip.member.model.mapper.MemberMapper">
 
 	<select id="login" parameterType="memberDto" resultType="memberDto">
-		select user_name as username, user_id as userid , email_id as email
+		select user_name as username, user_id as userid , email_id as emailid , email_domain as emaildomain
 		from member
 		where user_id = #{userid} and user_password = #{userpwd}
 		 
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultType="memberDto">
-		select user_name as username, user_id as userid, email_id as email, join_date as joindate
+		select user_name as username, user_id as userid, email_id as emailid, email_domain as emaildomain , join_date as joindate
 		from member
 		where user_id = #{userid}
 	</select>
@@ -55,8 +55,8 @@
 	</select>
 	-->
  	<insert id="joinMember" parameterType="memberDto">
-		insert into member (user_name, user_id, user_password, join_date)
-		values (#{username}, #{userid}, #{userpwd}, now())
+		insert into member (user_name, user_id, user_password, join_date, email_id, email_domain)
+		values (#{username}, #{userid}, #{userpwd}, now(), #{emailid}, #{emaildomain} )
 	</insert> 
 	<!-- 
 	<select id="loginMember" parameterType="map" resultMap="member">
