@@ -23,6 +23,12 @@ public interface BoardService {
 	// 조회수
 	void updateHit(int articleNo) throws Exception;
 	
+	// 댓글 개수 더하기
+	void upCommentCnt(int articleNo) throws Exception;
+	
+	// 댓글 개수 빼기
+	void downCommentCnt(int articleNo) throws Exception;
+	
 	// 여행정보 공유 글 수정하기
 	void modifyArticle(BoardDto boardDto) throws Exception;
 	// 여행정보 공유 글 삭제하기

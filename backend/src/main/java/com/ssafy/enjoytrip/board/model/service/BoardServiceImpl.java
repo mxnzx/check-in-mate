@@ -156,4 +156,16 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.deleteComment(commentNo);
 	}
 
+	// 댓글 개수 카운트
+	@Override
+	public void upCommentCnt(int articleNo) throws Exception {
+		boardMapper.upCommentCnt(articleNo);
+	}
+
+	@Override
+	public void downCommentCnt(int articleNo) throws Exception {
+		boardMapper.downCommentCnt(articleNo);
+		
+	}
+
 }

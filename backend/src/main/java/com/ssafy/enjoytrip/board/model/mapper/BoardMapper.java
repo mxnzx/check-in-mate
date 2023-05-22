@@ -29,6 +29,12 @@ public interface BoardMapper {
 
 	// 조회수 
 	void updateHit(int articleNo) throws SQLException;
+	
+	// 댓글 개수 더하기
+	void upCommentCnt(int articleNo) throws SQLException;
+
+	// 댓글 개수 빼기
+	void downCommentCnt(int articleNo) throws SQLException;
 
 	// 글 수정
 	void modifyArticle(BoardDto boardDto) throws SQLException;

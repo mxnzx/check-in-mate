@@ -125,12 +125,14 @@ public class RestBoardController {
 		try {
 			boardDto = boardService.getArticle(articleNo);
 			boardService.updateHit(articleNo);
+			System.out.println("boardServvice view >>>>" + boardDto);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "조회 성공");
 			map.put("article", boardDto);
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			// TODO: handle exception
+			System.out.println("boardServvice view >>>>" + boardDto);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "조회 실패");
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

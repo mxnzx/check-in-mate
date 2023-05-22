@@ -18,5 +18,6 @@ public class BoardDto {
 	private String category;
 	private String place;
 	private String date;
-	private int peopleNum;  
+	private int peopleNum;
+	private int commentCnt;
 }
