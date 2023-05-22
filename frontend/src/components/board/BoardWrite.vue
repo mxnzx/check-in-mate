@@ -158,6 +158,7 @@ export default {
             console.log(obj);
             //this.$router.push("list");
             this.hideModal();
+            this.$router.go();
           } else {
             console.log(obj);
             console.log("실패");

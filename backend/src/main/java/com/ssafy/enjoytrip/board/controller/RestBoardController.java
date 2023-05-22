@@ -185,10 +185,8 @@ public class RestBoardController {
 	@RequestMapping(value = "/delete/{articleNo}", method = RequestMethod.DELETE)
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable("articleNo") int articleNo,
 			RedirectAttributes redirectAttributes) throws Exception {
-//		//logger.debug("delete articleNo : {}", articleNo);
-//		boardService.deleteArticle(articleNo, uploadPath);
-//		return ResponseEntity.ok("삭제완료");
 		ResponseEntity<Map<String, Object>> resEntity = null;
+		System.out.println("board delete articleNo >>>>" + articleNo);
 		try {
 			boardService.deleteArticle(articleNo);
 			Map<String, Object> map = new HashMap<String, Object>();

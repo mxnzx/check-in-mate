@@ -10,13 +10,13 @@
     <div class="col-lg-8 col-md-10 col-sm-12">
       <!-- 제목 입력 시작 -->
       <div class="mb-3">
-        <label for="subject" class="form-label">제목 : </label>
+        <label for="title" class="form-label">제목 : </label>
         <input
           type="text"
           class="form-control"
-          id="subject"
-          name="subject"
-          v-model="article.subject"
+          id="title"
+          name="title"
+          v-model="article.title"
         />
       </div>
       <!-- 제목 입력 끝 -->
@@ -42,7 +42,12 @@
         >
           글수정
         </button>
-        <button type="button" id="btn-list" class="btn btn-outline-danger mb-3" @click="moveList">
+        <button
+          type="button"
+          id="btn-list"
+          class="btn btn-outline-danger mb-3"
+          @click="moveList"
+        >
           목록
         </button>
         <!-- 수정, 목록 버튼 끝 -->
@@ -62,9 +67,12 @@ export default {
   },
   // 글 제목, 내용  가져오기
   created() {
-    fetch(`http://localhost:9018/board/api/view/${this.$route.params.articleNo}`, {
-      method: "GET",
-    })
+    fetch(
+      `http://localhost:9018/board/api/view/${this.$route.params.articleNo}`,
+      {
+        method: "GET",
+      }
+    )
       .then((response) => {
         if (response.ok) {
           return response.json();
