@@ -29,7 +29,12 @@
           <img src="@/assets/images/etc/notice_icon.png" style="width: 30px" />
           <span>공지사항</span>
         </div>
-        <a @click="moveWrite" style="cursor: pointer">글쓰기</a>
+        <a
+          @click="moveWrite"
+          style="cursor: pointer"
+          v-if="userInfo && userInfo.userid === 'admin'"
+          >글쓰기</a
+        >
       </div>
 
       <table class="table table-hover" id="article-list">
@@ -66,12 +71,16 @@
 import NoticeListItem from "./NoticeListItem.vue";
 import NoticePagination from "./NoticePagination.vue";
 
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "NoticeList",
   components: {
     NoticeListItem,
     NoticePagination,
   },
+
   data() {
     return {
       articles: [], // 전체 글 목록 데이터
@@ -79,6 +88,7 @@ export default {
       currentPage: 1, // 현재 페이지 번호
       pageSize: 5, // 페이지 당 글 개수
       searchKeyword: "", // 검색 키워드
+      userId: "",
     };
   },
   created() {
@@ -86,6 +96,7 @@ export default {
   },
   // eslint-disable-next-line no-dupe-keys, vue/no-dupe-keys
   computed: {
+    ...mapState(memberStore, ["userInfo"]),
     // 현재 페이지에 해당하는 글 목록 데이터 계산
     pagedArticles() {
       const startIdx = (this.currentPage - 1) * this.pageSize;
