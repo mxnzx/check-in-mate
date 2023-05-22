@@ -94,20 +94,20 @@
               </div>
               <!-- 댓글 등록 -->
               <br />
-              <input
+              <!-- <input
                 type="text"
                 class="form-control"
                 id="userId"
                 name="userId"
                 placeholder="아이디입력"
                 v-model="userId"
-              /><br />
+              /><br /> -->
               <div class="d-flex justify-content-between">
                 <textarea
                   class="form-control col-10"
                   rows="3"
                   placeholder="댓글입력"
-                  v-model="comment"
+                  v-model="content"
                 ></textarea>
                 <div
                   class="commentBtn col-2"
@@ -167,15 +167,20 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "BoardView",
-
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
       articleNo: "",
       article: [],
       comments: [],
-      comment: "",
+      content: "",
       userId: "",
     };
   },
@@ -237,8 +242,8 @@ export default {
     wrtieComment() {
       let obj = {
         articleNo: this.article.articleNo,
-        userId: this.article.userId,
-        comment: this.comment,
+        userId: this.userInfo.userid,
+        content: this.content,
       };
       fetch(`http://localhost:9018/comment`, {
         method: "POST",
@@ -251,6 +256,7 @@ export default {
           if (response.ok) {
             this.$router.go();
           } else {
+            console.log();
             throw new Error("댓글 작성 실패");
           }
         })
@@ -275,6 +281,7 @@ export default {
           if (response.ok) {
             this.$router.go();
             console.log("댓글 삭제 성공");
+            console.log(commentNo);
           } else {
             throw new Error("댓글 삭제 실패");
           }

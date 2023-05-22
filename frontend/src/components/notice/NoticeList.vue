@@ -7,12 +7,7 @@
       </h2>
       <div class="col-md-5 offset-4">
         <form class="d-flex" id="form-search" @submit.prevent="search">
-          <input
-            type="text"
-            v-model="searchKeyword"
-            class="form-control"
-            placeholder="검색어..."
-          />
+          <input type="text" v-model="searchKeyword" placeholder="검색어..." />
           <button
             id="btn-search"
             class="btn btn-dark"
