@@ -2,11 +2,26 @@
   <div class="container">
     <div class="row">
       <div class="col-5" style="height: 600px">
-        <div class="row alert alert-success d-flex justify-content-center align-items-center" role="alert">전국 관광지 정보</div>
+        <div
+          class="row alert alert-success d-flex justify-content-center align-items-center"
+          role="alert"
+        >
+          전국 관광지 정보
+        </div>
         <div class="row">
-          <form id="form-search" method="GET" class="d-flex flex-fill" onsubmit="return false;" role="search">
+          <form
+            id="form-search"
+            method="GET"
+            class="d-flex flex-fill"
+            onsubmit="return false;"
+            role="search"
+          >
             <div class="d-flex flex-fill">
-              <select id="search-sido" class="form-select m-1 flex-grow-1" @change="readytoGugunList">
+              <select
+                id="search-sido"
+                class="form-select m-1 flex-grow-1"
+                @change="readytoGugunList"
+              >
                 <option value="0" selected>지역 선택</option>
               </select>
 
@@ -14,7 +29,10 @@
                 <option value="0" selected>구군 선택</option>
               </select>
 
-              <select id="search-content-id" class="form-select m-1 flex-grow-1">
+              <select
+                id="search-content-id"
+                class="form-select m-1 flex-grow-1"
+              >
                 <option value="0" selected>관광지 유형</option>
                 <option value="12">관광지</option>
                 <option value="14">문화시설</option>
@@ -27,14 +45,23 @@
               </select>
             </div>
 
-            <button id="search-btn" class="btn btn-outline-success m-1" type="button"
-              @click="getAttractionList">검색</button>
+            <button
+              id="search-btn"
+              class="btn btn-outline-success m-1"
+              type="button"
+              @click="getAttractionList"
+            >
+              검색
+            </button>
           </form>
         </div>
 
         <div class="row d-flex flex-fill" style="overflow: auto; height: 450px">
           <div class="table-responsive">
-            <table class="table table-striped align-middle w-100" style="display: none">
+            <table
+              class="table table-striped align-middle w-100"
+              style="display: none"
+            >
               <thead>
                 <tr>
                   <th>대표이미지</th>
@@ -53,7 +80,9 @@
         </div>
       </div>
     </div>
-    <attraction-detail-modal ref="AttractionDetailModal"></attraction-detail-modal>
+    <attraction-detail-modal
+      ref="AttractionDetailModal"
+    ></attraction-detail-modal>
   </div>
 </template>
 
@@ -104,7 +133,7 @@ export default {
     readytoGugunList() {
       const gugunSelect = document.getElementById("search-gugun");
       gugunSelect.innerHTML = ""; // 옵션태그 모두 삭제
-      const selectedSido = document.getElementById("search-sido").value;    //선택한 sido-code 가져오기
+      const selectedSido = document.getElementById("search-sido").value; //선택한 sido-code 가져오기
       // 새로운 option 추가
       const defaultOpt = document.createElement("option");
       defaultOpt.value = "0";
@@ -116,7 +145,8 @@ export default {
     //구군 목록 가져와서 옵션값으로 추가한다
     fetchGugunList(selectedSido) {
       console.log(selectedSido);
-      const gugunUrl = "http://127.0.0.1:9018/navigator/searchGugun?sidoCode=" + selectedSido;
+      const gugunUrl =
+        "http://127.0.0.1:9018/navigator/searchGugun?sidoCode=" + selectedSido;
       console.log("gugunUrl");
       fetch(gugunUrl, { method: "GET" })
         .then((response) => response.json())
@@ -136,7 +166,7 @@ export default {
       });
     },
 
-    //세 항목을 가지고 여행지 리스트를 가져온다 
+    //세 항목을 가지고 여행지 리스트를 가져온다
     getAttractionList() {
       let searchUrl = "http://127.0.0.1:9018/navigator/attrList";
       let sidoCode = document.getElementById("search-sido").value;
@@ -146,15 +176,15 @@ export default {
       //패치할 url 생성
       if (parseInt(sidoCode)) searchUrl += "?sidoCode=" + sidoCode;
       if (parseInt(gugunCode)) searchUrl += "&gugunCode=" + gugunCode;
-      if (parseInt(contentTypeId)) searchUrl += "&contentTypeId=" + contentTypeId;
+      if (parseInt(contentTypeId))
+        searchUrl += "&contentTypeId=" + contentTypeId;
 
       fetch(searchUrl)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          this.makeAttrList(data)
+          this.makeAttrList(data);
         });
-
     },
 
     //여행지리스트를 출력한다
@@ -162,27 +192,34 @@ export default {
       document.querySelector("table").setAttribute("style", "display: ;");
       let trips = data;
       let tripList = ``;
-      this.positions = [];    //지역명 저장할 배열
+      this.positions = []; //지역명 저장할 배열
       this.markers = [];
 
       //리스트를 나열할 표에 출력할 여행지리스트를 붙인다
       trips.forEach((area) => {
+        let imageUrl = area.imgUrl1;
+        console.log(imageUrl);
+        if (!imageUrl) {
+          // 대체 이미지 URL 설정
+          imageUrl =
+            "https://github.com/mxnzx/enjoy-trip/assets/77240765/47d9ef1c-6057-4aa6-bd7f-e8c76fd909fb";
+        }
         //area의 위도, 경도를 td의 data로 넣어준다(동적 템플릿에서 이벤트처리가 불가하기 때문임)
         tripList += `
       <tr>
-        <td data-latitude="${area.latitude}" data-longitude="${area.longitude}"><img src=${area.imgUrl1} width="100px" height="60px"></td>
+        <td data-latitude="${area.latitude}" data-longitude="${area.longitude}"><img src=${imageUrl} width="100px" height="60px"></td>
         <td data-latitude="${area.latitude}" data-longitude="${area.longitude}">${area.title}</td>
         <td data-latitude="${area.latitude}" data-longitude="${area.longitude}">${area.address1} ${area.address2}</td>
       </tr>
     `;
 
-        //마커 생성 
+        //마커 생성
         let markerInfo = {
           content: `<div class="container-fluid bg-light">
                   <p>${area.title}</p>
                 </div>
                 <div class="container-fluid row">
-                  <div class="col-3 attraction-first-card" style="background-image: url(${area.imgUrl1}); height: 3rem">
+                  <div class="col-3 attraction-first-card" style="background-image: url(${imageUrl}); height: 3rem">
                   </div>
                   <div class="col">
                     <p>${area.address1}</p>
@@ -190,9 +227,9 @@ export default {
                 </div>
                 `,
           latlng: new window.kakao.maps.LatLng(area.latitude, area.longitude),
-          contentId: area.contentId
+          contentId: area.contentId,
         };
-        this.positions.push(markerInfo);  //현재컴포넌트data인 positions에 contentId 담김
+        this.positions.push(markerInfo); //현재컴포넌트data인 positions에 contentId 담김
         //console.log(this.positions);
       });
       document.getElementById("trip-list").innerHTML = tripList;
@@ -201,18 +238,20 @@ export default {
 
     //마커를 지도에 표시하는 카카오지도 api 코드
     displayMarker() {
-      var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+      var imageSrc =
+        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
       for (var i = 0; i < this.positions.length; i++) {
         // 마커 이미지의 이미지 크기 입니다
         var imageSize = new window.kakao.maps.Size(24, 35);
 
         // 마커 이미지를 생성합니다
-        var markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-
+        var markerImage = new window.kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize
+        );
 
         //console.log(this.positions[i].contentId); //들고 옴
-
 
         // 마커를 생성합니다
         var marker = new window.kakao.maps.Marker({
@@ -225,7 +264,7 @@ export default {
         //selectMarker배열에는 카카오맵 마커와 그 markerId가 들어있다
         let selectMarker = {
           marker: marker,
-          markerId: this.positions[i].contentId
+          markerId: this.positions[i].contentId,
         };
         this.markers.push(selectMarker);
 
@@ -290,7 +329,6 @@ export default {
     makeOverListener(map, marker, infoWindow) {
       return function () {
         infoWindow.open(map, marker);
-
       };
     },
 
@@ -306,17 +344,15 @@ export default {
       return () => {
         //모달 띄운다
         this.showDetailModal(selectMarker.markerId);
-      }
+      };
     },
 
     //선택한 마커의 모달을 띄우는 메서드
     showDetailModal(selectContentId) {
-      this.$refs.AttractionDetailModal.show(selectContentId); 
+      this.$refs.AttractionDetailModal.show(selectContentId);
       console.log(selectContentId);
     },
-
   },
-
 
   mounted() {
     //화면이 뜨면 시도 불러오기
@@ -336,9 +372,10 @@ export default {
     }
 
     // 이벤트 위임 설정(여행지 리스트가 뜬 후에 리스트 항목을 눌렀을 때 moveCenter를 실행)
-    document.getElementById("trip-list").addEventListener("click", this.handleClick);
+    document
+      .getElementById("trip-list")
+      .addEventListener("click", this.handleClick);
   },
-  
 };
 </script>
 
