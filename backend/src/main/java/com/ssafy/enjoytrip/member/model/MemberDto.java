@@ -18,8 +18,10 @@ public class MemberDto {
 	private String username;
 	@ApiModelProperty(value = "회원 비밀번호")
 	private String userpwd;
-	@ApiModelProperty(value = "회원 이메일")
-	private String email;
+	@ApiModelProperty(value = "회원 이메일 아이디")
+	private String emailid;
+	@ApiModelProperty(value = "회원 이메일 도메인")
+	private String emaildomain;
 	@ApiModelProperty(value = "회원 가입일")
 	private String joindate;
 
