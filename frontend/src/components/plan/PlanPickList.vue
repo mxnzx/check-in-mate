@@ -5,7 +5,7 @@
       <!-- 추가하는 리스트 구역 -->
       <div v-for="(item, index) in pickList" :key="index" class="row pick-list-item" draggable="true" @dragstart="dragStart($event, index)">
         <div class="col-1 p-0">{{ index + 1 }}</div>
-        <div class="col-8 p-0">{{ item }}</div>
+        <div class="col-8 p-0">{{ item.place_name }}</div>
         <div class="col-1 p-0" @click="deletePickList(index)" style="cursor: pointer">x</div>
       </div>
       <!-- 담기와 삭제 버튼 -->
@@ -31,17 +31,14 @@ export default {
   data() {
     return {
       title: "",
-      pickList: [],   // 추가한 여행지 목록을 배열로 관리
+      pickList: [],   // 추가한 여행지 목록을 배열로 관리 => 모든 정보가 다 들어있음
     }
   },
 
   mounted() {
-    eventBus.$off('pick-title-update'); // 기존에 등록된 이벤트 리스너 제거
-    eventBus.$on('pick-title-update', (title) => {
-      console.log(title);
-      this.pickList.push(title); // 새로운 항목을 배열에 추가
-      //this.$set(this, 'title', title); // 데이터 변경을 명시적으로 알림
-      //console.log(this.title);
+    eventBus.$off('pick-item-update'); // 기존에 등록된 이벤트 리스너 제거
+    eventBus.$on('pick-item-update', (place) => {
+      this.pickList.push(place); // 새로운 항목을 배열에 추가
     });
   },
 

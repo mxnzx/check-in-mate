@@ -49,7 +49,7 @@ export default {
       this.initMap();
     }
 
-    
+
   },
 
   methods: {
@@ -96,7 +96,7 @@ export default {
       if (status === window.kakao.maps.services.Status.OK) {
         console.log("정상적으로 검색이 완료됨>>>>>>" + this.keyword);
         //console.log(data);
-        this.searchedData = data;
+        this.searchedData = data;   //==========> 이 데이터를 마커안에 집어넣어야함
         //console.log(this.searchedData);
 
 
@@ -120,14 +120,14 @@ export default {
       }
     },
 
-    // 검색 결과 목록과 마커를 표출하는 함수입니다
+    // 검색 결과 목록과 마커를 표출하는 함수입니다     ===============> 여기 파라미터값이 데이터값이다. 우리는 인포윈도우에 이 값을 뿌리고 거기에 이 데이터를 전부 담아야함(title담는것처럼)
     displayPlaces(places) {
 
       var listEl = document.getElementById('placesList'),
         menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(),
         bounds = new window.kakao.maps.LatLngBounds();
-        //listStr = '';
+      //listStr = '';
       //console.log(menuEl + " " + listStr);
 
       // 검색 결과 목록에 추가된 항목들을 제거합니다
@@ -151,7 +151,7 @@ export default {
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
         //this: vue컴포넌트
-        this.addEventListeners.call(this, marker, itemEl, places[i].place_name);
+        this.addEventListeners.call(this, marker, itemEl, places[i]);  //======> 이게 인포윈도우에 객체 뿌리는 거임. 각각 뿌린다. 마커를 가지ㄱ
 
         fragment.appendChild(itemEl);
       }
@@ -166,12 +166,12 @@ export default {
     },
 
     // 마커와 검색결과 항목에 이벤트 리스너를 추가하는 함수
-    addEventListeners(marker, itemEl, title) {
+    addEventListeners(marker, itemEl, place) {
       window.kakao.maps.event.addListener(marker, 'mouseover', () => {
-        this.displayInfowindow(marker, title);
+        this.displayInfowindow(marker, place);
 
-         //인포윈도우에 add버튼 누르면 처리할 이벤트 생성
-        document.getElementById("infowindow-add-button").addEventListener("click", () => { this.addPickList(title) });
+        //인포윈도우에 add버튼 누르면 처리할 이벤트 생성
+        document.getElementById("infowindow-add-button").addEventListener("click", () => { this.addPickList(place) });
 
       });
 
@@ -180,7 +180,7 @@ export default {
       // });
 
       itemEl.onmouseover = () => {
-        this.displayInfowindow(marker, title);
+        this.displayInfowindow(marker, place);
       };
 
       // itemEl.onmouseout = () => {
@@ -244,7 +244,7 @@ export default {
 
 
       this.markers = [];
-    }, 
+    },
     // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
     displayPagination(pagination) {
       var paginationEl = document.getElementById('pagination'),
@@ -278,11 +278,21 @@ export default {
 
     // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
     // 인포윈도우에 장소명과 버튼을 표시합니다
-    displayInfowindow(marker, title) {
-      var content = '<div style="padding: 5px; z-index: 1;">' +
-        '<div>' + title + '</div>' +
+    // 여기에 숨겨서 저장해놓자
+    displayInfowindow(marker, place) {
+      var placeData = JSON.stringify(place);  // place 객체를 JSON 형식의 문자열로 변환
+
+      //이제 인포윈도우에 현재 선택한 장소의 모든 데이터가 담겨있다.
+      //접근 방식은 
+      //var divElement = document.getElementById('place-info');
+      //var placeData = JSON.parse(divElement.dataset.place);
+      //console.log(placeData);  // 숨겨진 place 객체에 접근하여 사용할 수 있음
+
+      var content = '<div id="place-info" style="padding: 5px; z-index: 1;" data-place=\'' + placeData + '\'>' +
+        '<div>' + place.place_name + '</div>' +
         '<button id="infowindow-add-button"> add </button>' +
         '</div>';
+
       this.infowindow.setContent(content);
       this.infowindow.open(this.map, marker);
       //현재 title을 가지고 갈 수 있다
@@ -296,10 +306,11 @@ export default {
     },
 
     //pickList에 픽한 상호명을 담는다
-    addPickList(title) {
+    addPickList(place) {
       //planpicklist 컴포넌트에 title을 전달한다
-      // 'title-updated' 이벤트 발행
-      eventBus.$emit('pick-title-update', title);
+      // 'pick-item-update' 이벤트 발행
+      console.log(place);
+      eventBus.$emit('pick-item-update', place);
     },
   },
 
