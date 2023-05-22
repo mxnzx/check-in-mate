@@ -12,8 +12,12 @@
 		<result column="join_mate_content" property="content"/>
 		<result column="join_mate_hit" property="hit"/>
 		<result column="register_time" property="registerTime"/>
+		<result column="join_mate_category" property="category"/>
+		<result column="join_mate_place" property="place"/>
+		<result column="join_mate_date" property="date"/>
+		<result column="join_mate_people_num" property="peopleNum"/>
 	</resultMap>
-	
+
 	<resultMap type="boardDto" id="viewArticle" extends="article">
 <!-- 	<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/> -->
 	</resultMap>
@@ -25,8 +29,8 @@
 	</resultMap>
 -->
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into join_mate (join_mate_user_id, join_mate_title, join_mate_content, join_mate_hit, register_time)
-		values (#{userId}, #{title}, #{content}, 0, now())
+		insert into join_mate (join_mate_user_id, join_mate_title, join_mate_content, join_mate_hit, register_time, join_mate_category, join_mate_place,join_mate_date,join_mate_people_num)
+		values (#{userId}, #{title}, #{content}, 0, now(), #{category} , #{place} , #{date} , #{peopleNum})
 		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -70,7 +74,7 @@
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select jm.join_mate_article_no, jm.join_mate_user_id, jm.join_mate_title, jm.join_mate_content, jm.join_mate_hit, jm.register_time, m.user_name 
+		select jm.join_mate_article_no, jm.join_mate_user_id, jm.join_mate_title, jm.join_mate_content, jm.join_mate_hit, jm.register_time, m.user_name , jm.join_mate_category, jm.join_mate_place, jm.join_mate_date, jm.join_mate_people_num
 		from join_mate jm, member m
 		where jm.join_mate_user_id = m.user_id
 		and jm.join_mate_article_no = #{articleNo}
