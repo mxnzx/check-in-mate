@@ -95,6 +95,9 @@ export default {
         console.log("4. confirm() userInfo :: ", this.userInfo);
         if (this.$route.path != "/index") this.$router.push({ name: "main" });
         this.hideModal();
+      } else {
+        alert("아이디 비밀번호를 다시 확인하세요 ");
+        this.hideModal();
       }
     },
     show() {
