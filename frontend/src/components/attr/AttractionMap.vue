@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-5" style="height: 600px">
+      <div class="col-lg-5" style="height: 600px">
         <div class="row alert alert-success d-flex justify-content-center align-items-center" role="alert">전국 관광지 정보</div>
         <div class="row">
           <form id="form-search" method="GET" class="d-flex flex-fill" onsubmit="return false;" role="search">
@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="col-7">
+      <div class="col-lg-7">
         <div class="map container">
           <div id="map" style="height: 600px"></div>
         </div>
