@@ -15,7 +15,7 @@
             <h2 class="text-secondary">{{ article.articleNo }}.</h2>
           </div> -->
           <div class="col-11">
-            <h2 class="text-secondary">{{ article.subject }}</h2>
+            <h2 class="text-secondary">{{ article.title }}</h2>
           </div>
         </div>
         <!-- 글번호, 제목 끝 -->
@@ -35,7 +35,9 @@
               >
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-right">댓글 : 17</div>
+          <div class="col-md-4 align-self-center text-right">
+            댓글 : {{ article.commentCnt }}
+          </div>
         </div>
         <!-- 아이디, 등록시간, 댓글, 조회수 끝 -->
         <!-- 목록 , 수정 , 삭제 시작 -->
@@ -186,6 +188,9 @@ export default {
       comments: [],
       content: "",
       userId: "",
+      title: "",
+      commentCnt: "",
+      category: "",
     };
   },
   created() {
