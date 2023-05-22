@@ -1,7 +1,9 @@
 <template>
   <div class="header">
     <b-navbar toggleable="lg" type="light">
-      <b-navbar-brand href="/" class="" id="enjoyTrip">Enjoy Trip</b-navbar-brand>
+      <b-navbar-brand href="/" class="" id="enjoyTrip"
+        >Enjoy Trip</b-navbar-brand
+      >
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -12,9 +14,11 @@
               >지역별여행지</router-link
             ></b-nav-item
           >
-          <b-nav-item href="#"><router-link to="/myplan" class=""
+          <b-nav-item href="#"
+            ><router-link to="/myplan" class=""
               >나의여행계획</router-link
-            ></b-nav-item>
+            ></b-nav-item
+          >
           <b-nav-item href="#"
             ><router-link to="/hotplace" class="" href=""
               >핫플자랑하기</router-link
@@ -77,7 +81,12 @@
           <b-navbar-nav class="ml-auto" v-else>
             <b-nav-item-dropdown text="회원관리" right>
               <template #button-content>
-                <span>회원관리</span>
+                <img
+                  src="@/assets/images/etc/user.png"
+                  class=""
+                  alt="top1"
+                  style="width: 30px"
+                />
               </template>
               <b-dropdown-item @click="openJoinModal">회원가입</b-dropdown-item>
               <b-dropdown-item @click="openLoginModal">로그인</b-dropdown-item>
