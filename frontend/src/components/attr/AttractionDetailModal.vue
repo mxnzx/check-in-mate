@@ -68,7 +68,7 @@ export default {
           if (!this.imageUrl) {
             // 대체 이미지 URL 설정
             this.imageUrl =
-              "https://github.com/mxnzx/enjoy-trip/assets/77240765/47d9ef1c-6057-4aa6-bd7f-e8c76fd909fb";
+              "https://github.com/mxnzx/Algorithm-Solving/assets/77240765/35e01596-d91c-4292-be3e-bb88cc83dd05";
           }
         });
     },
