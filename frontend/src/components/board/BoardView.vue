@@ -53,7 +53,11 @@
         <!-- 목록 , 수정 , 삭제 끝 -->
         <!-- 내용 시작 -->
         <hr class="my-3" />
-        <div class="text-secondary">{{ article.content }}</div>
+        <div class="text-secondary">만남유형 : {{ article.category }}</div>
+        <div class="text-secondary">일시 : {{ article.date }}</div>
+        <div class="text-secondary">장소 : {{ article.place }}</div>
+        <div class="text-secondary">모집 인원수 : {{ article.peopleNum }}</div>
+        <div class="text-secondary">세부사항 : {{ article.content }}</div>
         <hr class="my-3" />
         <!-- 내용 끝 -->
         <!-- 댓글 시작 -->

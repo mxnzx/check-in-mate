@@ -125,7 +125,7 @@ export default {
       fetch("http://localhost:9018/notice/api/list")
         .then((response) => response.json())
         .then((data) => {
-          this.articles = data; // allArticles를 articles로 변경
+          this.articles = data;
           this.allArticles = data;
           this.displayedArticles = data; // 초기에 전체 글 목록을 표시
           console.log("articles fetcharticles >>>>>>>" + this.articles);
