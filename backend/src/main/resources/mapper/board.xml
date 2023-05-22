@@ -105,7 +105,7 @@
 	</delete> 
 	
 	<resultMap type = "commentDto" id= "commentMap">
-		<result column="comment_comment_no" property="commentNo"/>
+		<result column="comment_no" property="commentNo"/>
 		<result column="comment_article_no" property="articleNo"/>
 		<result column="comment_user_id" property="userId"/>
 		<result column="parent_id" property="parentId"/>
