@@ -96,16 +96,8 @@ public class RestBoardController {
 	// REST로 구현완료
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> write(@RequestBody BoardDto boardDto) throws Exception {
-
-//			BoardDto boardDto = new BoardDto();
-//			boardDto.setUserId(userId);
-//	    	boardDto.setSubject(subject);
-//	    	boardDto.setContent(content);
-//		boardService.writeArticle(boardDto);
-//		System.out.println(boardDto);
-//		return ResponseEntity.ok(boardDto);
-		
 		ResponseEntity<Map<String, Object>> resEntity = null;
+		System.out.println("여행정보공유 write >>>>>>>>>>>>>>>>>" + boardDto);
 		try {
 			boardService.writeArticle(boardDto);
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -132,6 +124,7 @@ public class RestBoardController {
 		BoardDto boardDto = null;
 		try {
 			boardDto = boardService.getArticle(articleNo);
+			boardService.updateHit(articleNo);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "조회 성공");
 			map.put("article", boardDto);
