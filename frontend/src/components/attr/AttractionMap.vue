@@ -202,7 +202,7 @@ export default {
         if (!imageUrl) {
           // 대체 이미지 URL 설정
           imageUrl =
-            "https://github.com/mxnzx/Algorithm-Solving/assets/77240765/35e01596-d91c-4292-be3e-bb88cc83dd05";
+            "https://github-production-user-asset-6210df.s3.amazonaws.com/77240765/239945602-91ba30bf-d797-4897-88d8-1785d6bfdadc.gif";
         }
         //area의 위도, 경도를 td의 data로 넣어준다(동적 템플릿에서 이벤트처리가 불가하기 때문임)
         tripList += `

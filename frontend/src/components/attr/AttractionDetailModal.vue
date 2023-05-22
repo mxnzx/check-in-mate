@@ -68,7 +68,7 @@ export default {
           if (!this.imageUrl) {
             // 대체 이미지 URL 설정
             this.imageUrl =
-              "https://github.com/mxnzx/Algorithm-Solving/assets/77240765/35e01596-d91c-4292-be3e-bb88cc83dd05";
+              "https://github-production-user-asset-6210df.s3.amazonaws.com/77240765/239945602-91ba30bf-d797-4897-88d8-1785d6bfdadc.gif";
           }
         });
     },
