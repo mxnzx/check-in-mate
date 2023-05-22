@@ -165,7 +165,8 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`join_mate_comment` (
   INDEX `comments_to_members_user_id_fk` (`comment_user_id` ASC) VISIBLE,
   CONSTRAINT `comments_to_board_article_no_fk`
     FOREIGN KEY (`comment_article_no`)
-    REFERENCES `enjoytrip`.`join_mate` (`join_mate_article_no`),
+    REFERENCES `enjoytrip`.`join_mate` (`join_mate_article_no`)
+    ON DELETE CASCADE,
   CONSTRAINT `comments_to_members_user_id_fk`
     FOREIGN KEY (`comment_user_id`)
     REFERENCES `enjoytrip`.`member` (`user_id`))
@@ -332,3 +333,17 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+use enjoytrip;
+select * from member;
+select * from hotplace;
+select * from hotplace_file_info;
+select * from join_mate;
+select * from join_mate_comment;
+select * from notice;
+
+SELECT * FROM enjoytrip.member;
+INSERT INTO member (user_id, user_name, user_password, email_id, email_domain, join_date)
+VALUES
+('admin', '관리자', '1234', 'admin','ssafy.com',now()),
+('ssafy12', '김싸피', '1234', 'ssafy','ssafy.com', now());
