@@ -1,21 +1,21 @@
-//package com.ssafy.enjoytrip.plan.controller;
-//
-//import java.util.Map;
-//
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.DeleteMapping;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.ssafy.enjoytrip.plan.model.service.PlanService;
-//
-//@RestController
-//@RequestMapping("/plan")
-//public class RestPlanController {
-//
+package com.ssafy.enjoytrip.plan.controller;
+
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.enjoytrip.plan.model.service.PlanService;
+
+@RestController
+@RequestMapping("/plan")
+public class RestPlanController {
+
 //    private PlanService planBoardService;
 //
 //    public RestPlanController(PlanService planBoardService) {
@@ -60,3 +60,5 @@
 //    }
 //
 //}
+
+}

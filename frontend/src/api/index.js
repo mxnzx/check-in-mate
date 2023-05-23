@@ -3,7 +3,7 @@ import axios from "axios";
 // local vue api axios instance
 function apiInstance() {
   const instance = axios.create({
-    baseURL: "http://localhost:9018",
+    baseURL: "http://127.0.0.1:9018",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },

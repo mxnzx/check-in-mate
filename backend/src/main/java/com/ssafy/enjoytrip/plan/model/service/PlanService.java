@@ -1,13 +1,13 @@
-//package com.ssafy.enjoytrip.plan.model.service;
-//
-//import java.sql.SQLException;
-//import java.util.List;
-//
-//import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
-//import com.ssafy.enjoytrip.plan.model.PlanDto;
-//
-//
-//public interface PlanService {
+package com.ssafy.enjoytrip.plan.model.service;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.ssafy.enjoytrip.attr.model.AttrInfoDto;
+import com.ssafy.enjoytrip.plan.model.PlanDto;
+
+
+public interface PlanService {
 //    // 나의여행계획 게시글 작성
 //    void write(PlanDto planArticleDto) throws SQLException;
 //
@@ -30,3 +30,5 @@
 //    List<AttrInfoDto> getAttraction(String keyword) throws SQLException;
 //
 //}
+
+}

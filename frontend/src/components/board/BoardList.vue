@@ -144,7 +144,7 @@ export default {
 
   // 리스트 가져오기
   // created() {
-  //   fetch("http://localhost:9018/board/api/list")
+  //   fetch("http://127.0.0.1:9018/board/api/list")
   //     .then((response) => response.json())
   //     .then((data) => {
   //       console.log("respone >>" + this.response);
@@ -166,7 +166,7 @@ export default {
   // },
   async created() {
     try {
-      const response = await fetch("http://localhost:9018/board/api/list");
+      const response = await fetch("http://127.0.0.1:9018/board/api/list");
       const data = await response.json();
       this.articles = data;
       this.allArticles = data;
