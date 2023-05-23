@@ -11,7 +11,9 @@
       <div class="row align-self-center mb-2">
         <!-- 글쓰기 앵커 시작 -->
         <div class="col-md-12" style="text-align: end">
-          <a @click="moveWrite" style="cursor: pointer"> 등록하기 </a>
+          <a @click="moveWrite" style="cursor: pointer" v-if="userInfo">
+            등록하기
+          </a>
         </div>
         <!-- 글쓰기 앵커 끝 -->
       </div>
@@ -37,6 +39,9 @@
 <script>
 // import HotPlaceModal from "@/components/hotplace/HotPlaceModal.vue";
 import HotPlaceListItem from "./HotPlaceListItem.vue";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "HotPlaceList",
   components: { HotPlaceListItem },
@@ -56,6 +61,9 @@ export default {
         console.log(this.articles);
         console.log("list data" + data);
       });
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     openModal(article) {
