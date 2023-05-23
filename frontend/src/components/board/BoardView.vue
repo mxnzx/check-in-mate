@@ -15,7 +15,7 @@
             <h2 class="text-secondary">{{ article.articleNo }}.</h2>
           </div> -->
           <div class="col-11">
-            <h2 class="text-secondary">{{ article.subject }}</h2>
+            <h2 class="text-secondary">{{ article.title }}</h2>
           </div>
         </div>
         <!-- 글번호, 제목 끝 -->
@@ -35,7 +35,9 @@
               >
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-right">댓글 : 17</div>
+          <div class="col-md-4 align-self-center text-right">
+            댓글 : {{ article.commentCnt }}
+          </div>
         </div>
         <!-- 아이디, 등록시간, 댓글, 조회수 끝 -->
         <!-- 목록 , 수정 , 삭제 시작 -->
@@ -53,7 +55,11 @@
         <!-- 목록 , 수정 , 삭제 끝 -->
         <!-- 내용 시작 -->
         <hr class="my-3" />
-        <div class="text-secondary">{{ article.content }}</div>
+        <div class="text-secondary">만남유형 : {{ article.category }}</div>
+        <div class="text-secondary">일시 : {{ article.date }}</div>
+        <div class="text-secondary">장소 : {{ article.place }}</div>
+        <div class="text-secondary">모집 인원수 : {{ article.peopleNum }}</div>
+        <div class="text-secondary">세부사항 : {{ article.content }}</div>
         <hr class="my-3" />
         <!-- 내용 끝 -->
         <!-- 댓글 시작 -->
@@ -94,20 +100,20 @@
               </div>
               <!-- 댓글 등록 -->
               <br />
-              <input
+              <!-- <input
                 type="text"
                 class="form-control"
                 id="userId"
                 name="userId"
                 placeholder="아이디입력"
                 v-model="userId"
-              /><br />
+              /><br /> -->
               <div class="d-flex justify-content-between">
                 <textarea
                   class="form-control col-10"
                   rows="3"
                   placeholder="댓글입력"
-                  v-model="comment"
+                  v-model="content"
                 ></textarea>
                 <div
                   class="commentBtn col-2"
@@ -167,16 +173,24 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "BoardView",
-
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   data() {
     return {
       articleNo: "",
       article: [],
       comments: [],
-      comment: "",
+      content: "",
       userId: "",
+      title: "",
+      commentCnt: "",
+      category: "",
     };
   },
   created() {
@@ -237,8 +251,8 @@ export default {
     wrtieComment() {
       let obj = {
         articleNo: this.article.articleNo,
-        userId: this.article.userId,
-        comment: this.comment,
+        userId: this.userInfo.userid,
+        content: this.content,
       };
       fetch(`http://localhost:9018/comment`, {
         method: "POST",
@@ -251,6 +265,7 @@ export default {
           if (response.ok) {
             this.$router.go();
           } else {
+            console.log();
             throw new Error("댓글 작성 실패");
           }
         })
@@ -275,6 +290,7 @@ export default {
           if (response.ok) {
             this.$router.go();
             console.log("댓글 삭제 성공");
+            console.log(commentNo);
           } else {
             throw new Error("댓글 삭제 실패");
           }

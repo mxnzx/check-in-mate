@@ -15,4 +15,9 @@ public class BoardDto {
 	private String content;
 	private int hit;
 	private String registerTime;
+	private String category;
+	private String place;
+	private String date;
+	private int peopleNum;
+	private int commentCnt;
 }

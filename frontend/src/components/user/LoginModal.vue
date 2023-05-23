@@ -67,7 +67,6 @@
 <script>
 //import axios from "axios";
 import { mapState, mapActions } from "vuex";
-
 const memberStore = "memberStore";
 export default {
   data() {
@@ -95,6 +94,9 @@ export default {
         console.log("4. confirm() userInfo :: ", this.userInfo);
         if (this.$route.path != "/index") this.$router.push({ name: "main" });
         this.hideModal();
+      } else {
+        alert("아이디 비밀번호를 다시 확인하세요 ");
+        this.hideModal();
       }
     },
     show() {
@@ -118,7 +120,8 @@ export default {
       }
     },
     searchIdPw() {
-      //아이디 비번 찾기 로직
+      this.hideModal();
+      this.$router.push("/user/findidpassword");
     },
   },
 };

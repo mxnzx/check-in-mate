@@ -55,9 +55,8 @@
             id="pwdcheck_join"
             name="pwdcheck"
             class="form-control"
-            type="text"
+            type="password"
             placeholder="비밀번호확인"
-            v-model="joinMemberData.userpwd"
           />
         </div>
       </div>
@@ -152,12 +151,10 @@ export default {
       ) {
         alert("비밀번호 확인!!");
         return;
-      }
-      // else if (!this.isUseId) {
-      //   alert("사용할 수 없는 아이디 입니다.");
-      //   return;
-      // }
-      else {
+        // } else if (!this.isUseId) {
+        //   alert("사용할 수 없는 아이디 입니다.");
+        //   return;
+      } else {
         //비어있는 값이 없다면 joinMember 호출
         this.joinMember();
         // let form = document.querySelector("#form-join");

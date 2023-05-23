@@ -36,7 +36,7 @@
               </span>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-right">댓글 : 17</div>
+          <div class="col-md-4 align-self-center text-right"></div>
         </div>
         <!-- 아이디, 등록시간, 댓글, 조회수 끝 -->
         <!-- 목록 , 수정 , 삭제 시작 -->

@@ -148,8 +148,6 @@ public class RestMemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-
-
 //	private MemberService memberService;
 //
 //	public RestMemberController(MemberService memberService) {
@@ -160,7 +158,7 @@ public class RestMemberController {
 	// 회원가입
 	@PostMapping(value = "/join", headers = "content-type=application/json")
 	public ResponseEntity<Map<String, Object>> join(@RequestBody MemberDto memberDto) throws Exception {
-		//logger.debug("memberDto info : {}", memberDto);
+		// logger.debug("memberDto info : {}", memberDto);
 //		Map<String, Object> responseData = new HashMap<>();
 //		try {
 //			memberService.joinMember(memberDto);
@@ -181,14 +179,15 @@ public class RestMemberController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "입력 성공");
 			map.put("resValue", memberDto);
-			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
-		} catch(RuntimeException e) {
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		} catch (RuntimeException e) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "입력 실패");
-			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		}
 		return resEntity;
 	}
+
 //
 	// 회원탈퇴
 	@DeleteMapping("/deleteMember/{userid}")
@@ -199,11 +198,11 @@ public class RestMemberController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "회원탈퇴 성공");
 			map.put("resValue", null);
-			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
-		}catch(RuntimeException e) {
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		} catch (RuntimeException e) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "회원탈퇴 실패");
-			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		}
 		return resEntity;
 	}
@@ -227,6 +226,52 @@ public class RestMemberController {
 
 	}
 
+	// 아이디 찾기
+	@GetMapping("/find/{emailid}/{emaildomain}")
+	public ResponseEntity<Map<String, Object>> findIdPassword(@PathVariable("emailid") String emailid , @PathVariable("emaildomain") String emaildomain) throws Exception{
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		MemberDto memberDto = null;
+		System.out.println(emailid + "  " + emaildomain);
+		try {
+			memberDto = memberService.findId(emailid, emaildomain);
+			Map<String, Object> map = new HashMap<String, Object>();
+			System.out.println("controller findid map >> " + map);
+			System.out.println("controller findid memberDto >> " + map);
+			map.put("resmsg", "조회 성공");
+			map.put("findid", memberDto);
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		} catch(Exception e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			e.printStackTrace();
+			map.put("resmsg", "조회 실패");
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+	}
+
+	// 비밀번호 찾기
+	@GetMapping("/find/{userid}/{username}/{emailid}/{emaildomain}")
+	public ResponseEntity<Map<String, Object>> findPassword(@PathVariable("userid") String userid, @PathVariable("username") String username, @PathVariable("emailid") String emailid, @PathVariable("emaildomain") String emaildomain){
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		MemberDto memberDto = null;
+		System.out.println(userid+ " " + username +  " " + emailid + "  " + emaildomain);
+		try {
+			memberDto = memberService.findPassword(userid, username, emailid, emaildomain);
+			Map<String, Object> map = new HashMap<String, Object>();
+			System.out.println("controller findpassword map >> " + map);
+			System.out.println("controller findpassword memberDto >> " + map);
+			map.put("resmsg", "조회 성공");
+			map.put("findpassword", memberDto);
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		} catch(Exception e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			e.printStackTrace();
+			map.put("resmsg", "조회 실패");
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+	}
+	
 //	// 아이디 값 가져와서 기존 아이디와 비교해서 겹치는게 있는지 체크
 //	@GetMapping("/{userid}")
 //	public String idCheck(@PathVariable("userid") String userId) throws Exception {

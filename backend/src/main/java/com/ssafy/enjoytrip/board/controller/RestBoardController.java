@@ -96,16 +96,8 @@ public class RestBoardController {
 	// REST로 구현완료
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> write(@RequestBody BoardDto boardDto) throws Exception {
-
-//			BoardDto boardDto = new BoardDto();
-//			boardDto.setUserId(userId);
-//	    	boardDto.setSubject(subject);
-//	    	boardDto.setContent(content);
-//		boardService.writeArticle(boardDto);
-//		System.out.println(boardDto);
-//		return ResponseEntity.ok(boardDto);
-		
 		ResponseEntity<Map<String, Object>> resEntity = null;
+		System.out.println("여행정보공유 write >>>>>>>>>>>>>>>>>" + boardDto);
 		try {
 			boardService.writeArticle(boardDto);
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -132,12 +124,15 @@ public class RestBoardController {
 		BoardDto boardDto = null;
 		try {
 			boardDto = boardService.getArticle(articleNo);
+			boardService.updateHit(articleNo);
+			System.out.println("boardServvice view >>>>" + boardDto);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "조회 성공");
 			map.put("article", boardDto);
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			// TODO: handle exception
+			System.out.println("boardServvice view >>>>" + boardDto);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "조회 실패");
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
@@ -190,10 +185,8 @@ public class RestBoardController {
 	@RequestMapping(value = "/delete/{articleNo}", method = RequestMethod.DELETE)
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable("articleNo") int articleNo,
 			RedirectAttributes redirectAttributes) throws Exception {
-//		//logger.debug("delete articleNo : {}", articleNo);
-//		boardService.deleteArticle(articleNo, uploadPath);
-//		return ResponseEntity.ok("삭제완료");
 		ResponseEntity<Map<String, Object>> resEntity = null;
+		System.out.println("board delete articleNo >>>>" + articleNo);
 		try {
 			boardService.deleteArticle(articleNo);
 			Map<String, Object> map = new HashMap<String, Object>();

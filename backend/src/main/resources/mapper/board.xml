@@ -12,8 +12,13 @@
 		<result column="join_mate_content" property="content"/>
 		<result column="join_mate_hit" property="hit"/>
 		<result column="register_time" property="registerTime"/>
+		<result column="join_mate_category" property="category"/>
+		<result column="join_mate_place" property="place"/>
+		<result column="join_mate_date" property="date"/>
+		<result column="join_mate_people_num" property="peopleNum"/>
+		<result column="join_mate_comment_cnt" property="commentCnt"/>
 	</resultMap>
-	
+
 	<resultMap type="boardDto" id="viewArticle" extends="article">
 <!-- 	<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/> -->
 	</resultMap>
@@ -25,8 +30,8 @@
 	</resultMap>
 -->
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into join_mate (join_mate_user_id, join_mate_title, join_mate_content, join_mate_hit, register_time)
-		values (#{userId}, #{title}, #{content}, 0, now())
+		insert into join_mate (join_mate_user_id, join_mate_title, join_mate_content, join_mate_hit, register_time, join_mate_category, join_mate_place,join_mate_date,join_mate_people_num, join_mate_comment_cnt)
+		values (#{userId}, #{title}, #{content}, 0, now(), #{category} , #{place} , #{date} , #{peopleNum}, 0)
 		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -70,7 +75,7 @@
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select jm.join_mate_article_no, jm.join_mate_user_id, jm.join_mate_title, jm.join_mate_content, jm.join_mate_hit, jm.register_time, m.user_name 
+		select jm.join_mate_article_no, jm.join_mate_user_id, jm.join_mate_title, jm.join_mate_content, jm.join_mate_hit, jm.register_time, m.user_name , jm.join_mate_category, jm.join_mate_place, jm.join_mate_date, jm.join_mate_people_num, jm.join_mate_comment_cnt
 		from join_mate jm, member m
 		where jm.join_mate_user_id = m.user_id
 		and jm.join_mate_article_no = #{articleNo}
@@ -85,6 +90,18 @@
 	<update id="updateHit" parameterType="int">
 		update join_mate
 		set join_mate_hit = join_mate_hit + 1
+		where join_mate_article_no = #{articleNo}
+	</update>
+	
+	<update id="upCommentCnt" parameterType="int">
+		update join_mate
+		set join_mate_comment_cnt = join_mate_comment_cnt + 1
+		where join_mate_article_no = #{articleNo}
+	</update>
+	
+		<update id="downCommentCnt" parameterType="int">
+		update join_mate
+		set join_mate_comment_cnt = join_mate_comment_cnt - 1
 		where join_mate_article_no = #{articleNo}
 	</update>
 
@@ -105,7 +122,7 @@
 	</delete> 
 	
 	<resultMap type = "commentDto" id= "commentMap">
-		<result column="comment_comment_no" property="commentNo"/>
+		<result column="comment_no" property="commentNo"/>
 		<result column="comment_article_no" property="articleNo"/>
 		<result column="comment_user_id" property="userId"/>
 		<result column="parent_id" property="parentId"/>
