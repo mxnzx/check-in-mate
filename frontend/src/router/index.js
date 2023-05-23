@@ -81,7 +81,7 @@ const routes = [
       // 0518 추가 ============================================
       {
         path: "delete/:userid",
-        name: "join",
+        name: "delete",
         component: () =>
           import(
             /* webpackChunkName: "user" */ "@/components/user/UserRegister"
@@ -94,6 +94,14 @@ const routes = [
         beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "user" */ "@/components/user/MyPage"),
+      },
+      {
+        path: "findidpassword",
+        name: "findidpassword",
+        component: () =>
+          import(
+            /* webpackChunkName: "user" */ "@/components/user/FindIdPassword"
+          ),
       },
     ],
   },

@@ -67,7 +67,6 @@
 <script>
 //import axios from "axios";
 import { mapState, mapActions } from "vuex";
-
 const memberStore = "memberStore";
 export default {
   data() {
@@ -121,7 +120,8 @@ export default {
       }
     },
     searchIdPw() {
-      //아이디 비번 찾기 로직
+      this.hideModal();
+      this.$router.push("/user/findidpassword");
     },
   },
 };
