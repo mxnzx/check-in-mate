@@ -29,11 +29,11 @@
           </div> -->
           <plan-write-by-date id="plan-by-day-01" :dayIdx="1"></plan-write-by-date>
         </div>
-        <div v-for="(date, index) in dates" :key="index" >
+        <div v-for="(date, index) in dates" :key="index">
           <div class="col-12 d-flex justify-content-center by-day-text mb-2">
             <!-- DAY {{ index + 2 }} -->
           </div>
-          <plan-write-by-date :id="'plan-by-day-' + index + 2" :dayIdx="index+2"></plan-write-by-date>
+          <plan-write-by-date :id="'plan-by-day-' + index + 2" :dayIdx="index + 2"></plan-write-by-date>
         </div>
         <!-- 내용입력 끝 -->
 
@@ -75,14 +75,18 @@ export default {
   data() {
     return {
       dates: [],  //추가된 날짜 컴포넌트들을 저장하는 배열
-      dataByDay:[],
+      dataByDay: [],
     }
   },
   methods: {
     addDate() {
       this.dates.push({});  //새 날짜 컴포넌트를 배열에 추가
     },
-    
+    registArticle() {
+      //console.log(this.$store.state);
+      //글등록하는 메서드이다. axios써서 보낼예정
+    }
+
   },
   computed: {
     ...mapState(['dataByDay']), //날짜별로 입력완료가 되었을 때 store에 저장하기 위함.
