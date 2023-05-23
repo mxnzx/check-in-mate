@@ -127,6 +127,14 @@ export default {
       content: "",
     };
   },
+  created() {
+    console.log(this.$route.query.place);
+    if (this.$route.query.place) {
+      this.join_mate_place = this.$route.query.place;
+      this.show();
+    }
+  },
+
   methods: {
     show() {
       this.showBoardWriteModal = true;

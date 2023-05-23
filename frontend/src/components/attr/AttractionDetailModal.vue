@@ -74,9 +74,9 @@ export default {
     },
     routeToBoardWrite() {
       //title을 가지고 글쓰기모달로 가서 장소에 이름을 박는다.
-      this.router.push({
-        path: "",
-        params: { place: this.attractionData.title },
+      this.$router.push({
+        path: "/board/api/list",
+        query: { place: this.attractionData.title },
       });
     },
     routeToBoardList() {
