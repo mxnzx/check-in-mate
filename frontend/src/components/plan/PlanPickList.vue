@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container p-0" style=" width:100%; height: 100%; background-color: antiquewhite; display: flex; flex-direction: column;">
+    <div class="container p-0" style=" width:100%; height: 100%; background-color:rgba(229, 232, 228, 0.262); display: flex; flex-direction: column;">
       <div class="plan-pick-list-text">추가한 여행지 목록</div>
       <!-- 추가하는 리스트 구역 -->
       <div v-for="(item, index) in pickList" :key="index" class="row pick-list-item" draggable="true" @dragstart="dragStart($event, index)">
@@ -12,10 +12,10 @@
       <div style="margin-top: auto;">
         <div class="row m-2">
           <div class="col">
-            <b-button size="sm" variant="light">add</b-button>
+            <b-button id="plan-pick-list-add-btn" size="sm" variant="light" @click="addListDataByDate">완료</b-button>
           </div>
           <div class="col">
-            <b-button size="sm" variant="light">delete</b-button>
+            <b-button id="plan-pick-list-delete-btn" size="sm" variant="light" @click="deleteAll">Reset</b-button>
           </div>
         </div>
       </div>
@@ -55,6 +55,14 @@ export default {
     },
     dragStart(event, index) {
       event.dataTransfer.setData('text/plain', index.toString());
+    },
+    addListDataByDate() {
+      eventBus.$emit('add-list-items-update-by-date', this.pickList);
+      this.pickList = this.pickList.filter(item => item.dayIdx !== this.dayIdx); // 현재 dayIdx에 해당하지 않는 항목만 남기기
+      //this.pickList = []; // pickList 배열을 빈 배열로 초기화
+    },
+    deleteAll() {
+      this.pickList = [];
     }
   }
 }

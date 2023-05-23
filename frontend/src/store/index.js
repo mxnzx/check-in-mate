@@ -6,9 +6,15 @@ import memberStore from "@/store/modules/memberStore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    dataByDay: [],  //나의여행계획에서 사용할 state
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    updateDataByDay(state, payload) {
+      state.dataByDay.push(payload); // 데이터를 배열에 push
+    },
+  },
   actions: {},
   modules: {
     memberStore,
