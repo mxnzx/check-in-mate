@@ -34,6 +34,7 @@
             style="border: none"
             placeholder="제목입력"
             v-model="title"
+            required
           />
         </div>
         <!-- 제목입력 끝 -->
@@ -48,6 +49,7 @@
             style="border: none"
             placeholder="내용입력"
             v-model="content"
+            required
           ></textarea>
         </div>
         <div class="mb-3">
@@ -58,6 +60,7 @@
             name="upfile"
             multiple="multiple"
             ref="fileInput"
+            required
           />
         </div>
 
