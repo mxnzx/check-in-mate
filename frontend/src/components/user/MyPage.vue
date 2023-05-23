@@ -146,7 +146,7 @@ export default {
     deleteMember() {
       const userId = this.userInfo.userid; // 사용자의 userid 값 가져오기
 
-      fetch(`http://localhost:9018/user/deleteMember/${userId}`, {
+      fetch(`http://127.0.0.1:9018/user/deleteMember/${userId}`, {
         method: "DELETE",
         body: JSON.stringify({
           userid: userId,
@@ -171,7 +171,7 @@ export default {
         userid: this.userInfo.userid,
       };
 
-      fetch(`http://localhost:9018/user/updateMember`, {
+      fetch(`http://127.0.0.1:9018/user/updateMember`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

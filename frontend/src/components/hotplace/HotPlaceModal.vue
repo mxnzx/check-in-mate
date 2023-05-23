@@ -110,7 +110,7 @@ export default {
     },
     getArticle() {
       console.log(">>>>>>>>>>>" + this.articleno);
-      fetch(`http://localhost:9018/hotplace/view/${this.articleno}`, {
+      fetch(`http://127.0.0.1:9018/hotplace/view/${this.articleno}`, {
         method: "GET",
       })
         .then((response) => {
@@ -139,7 +139,7 @@ export default {
 
     // 삭제하기
     deleteArticle() {
-      fetch(`http://localhost:9018/hotplace/delete/${this.articleno}`, {
+      fetch(`http://127.0.0.1:9018/hotplace/delete/${this.articleno}`, {
         method: "DELETE",
         body: JSON.stringify({
           articleno: this.articleno,
@@ -167,7 +167,7 @@ export default {
     },
     getImageSrc() {
       // 이미지 파일 경로를 반환합니다.
-      return "http://localhost:9018/hotplace/image/" + this.article.savefile;
+      return "http://127.0.0.1:9018/hotplace/image/" + this.article.savefile;
     },
   },
 };

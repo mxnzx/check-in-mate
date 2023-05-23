@@ -153,7 +153,7 @@ export default {
         content: this.join_mate_content,
       };
       console.log("write userid >> " + this.userId);
-      fetch("http://localhost:9018/board/api/write", {
+      fetch("http://127.0.0.1:9018/board/api/write", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
