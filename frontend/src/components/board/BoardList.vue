@@ -7,16 +7,6 @@
       </h2>
       <!-- 검색하기 시작 -->
       <div class="col-md-7 offset-3">
-        <!-- <select
-            name="sort_list"
-            id="sort_list"
-            class="form-select form-select-sm ms-5 me-1 w-50"
-            aria-label="검색조건"
-          >
-            <option selected>게시글 정렬</option>
-            <option value="notice">최신 순</option>
-            <option value="sort_hit">조회수 순</option>
-          </select> -->
         <form class="d-flex" id="form-search" action="">
           <input type="hidden" name="action" value="notice" />
           <input type="hidden" name="pgno" value="1" />
@@ -27,7 +17,6 @@
             aria-label="검색조건"
             v-model="searchKey"
           >
-            <!-- <option disabled selected hidden>검색조건</option> -->
             <option value="">검색조건</option>
             <option value="article_no">글번호</option>
             <option value="title">제목</option>
@@ -154,33 +143,76 @@ export default {
   },
 
   // 리스트 가져오기
-  created() {
-    fetch("http://localhost:9018/board/api/list")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("respone >>" + this.response);
-        console.log("data>> " + data);
-        this.articles = data;
-        this.allArticles = data;
-        this.displayedArticles = data;
-        console.log("list data" + data);
-        console.log("articles fetcharticles >>>>>>>" + this.articles);
-        console.log(
-          "displayedArticles fetcharticles >>>>>>>" + this.displayedArticles
-        );
-      });
+  // created() {
+  //   fetch("http://localhost:9018/board/api/list")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log("respone >>" + this.response);
+  //       console.log("data>> " + data);
+  //       this.articles = data;
+  //       this.allArticles = data;
+  //       this.displayedArticles = data;
+  //       console.log("list data" + data);
+  //       console.log("articles fetcharticles >>>>>>>" + this.articles);
+  //       console.log(
+  //         "displayedArticles fetcharticles >>>>>>>" + this.displayedArticles
+  //       );
+  //     });
+  //   console.log("동행찾기 데이터 : >>> " + this.$route.query.searchKeyword);
+  //   const searchMateword = this.$route.query.searchKeyword;
+  //   if (searchMateword) {
+  //     this.searchMate();
+  //   }
+  // },
+  async created() {
+    try {
+      const response = await fetch("http://localhost:9018/board/api/list");
+      const data = await response.json();
+      this.articles = data;
+      this.allArticles = data;
+      this.displayedArticles = data;
+      console.log("list data", data);
+      console.log("articles fetcharticles >>>>>>>", this.articles);
+      console.log(
+        "displayedArticles fetcharticles >>>>>>>",
+        this.displayedArticles
+      );
+
+      const searchMateword = this.$route.query.searchKeyword;
+      if (searchMateword) {
+        this.searchMate();
+      }
+    } catch (error) {
+      console.error("Error occurred while fetching data:", error);
+    }
   },
   methods: {
+    // 동행찾기
+    searchMate() {
+      console.log("searchMate 함수 실행");
+      console.log("mate allArticles" + this.allArticles);
+      let filteredArticles;
+      filteredArticles = this.allArticles.filter((article) => {
+        return (
+          article.title &&
+          article.title.includes(this.$route.query.searchKeyword)
+        );
+      });
+      this.displayedArticles = filteredArticles;
+      console.log(" searchMate data" + this.displayedArticles);
+    },
+
+    // 검색
     search() {
       console.log("검색버튼 클릭");
       if (this.searchKeyword.trim() === "") {
-        // 검색 키워드가 비어있는 경우, 전체 글 목록을 보여줍니다.
+        // 검색 키워드가 비어있는 경우, 전체 글 목록을 보여줌
         this.displayedArticles = this.allArticles;
         this.currentPage = 1; // 페이지 초기화
       } else {
-        // 검색 키워드가 있는 경우, 검색 조건에 따라 필터링합니다.
+        // 검색 키워드가 있는 경우, 검색 조건에 따라 필터링
         let filteredArticles;
-        console.log("검색 filteredArticles >>" + filteredArticles);
+        console.log("검색 this.allArticles >>" + this.allArticles);
         switch (this.searchKey) {
           case "article_no":
             filteredArticles = this.allArticles.filter((article) => {

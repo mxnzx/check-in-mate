@@ -81,9 +81,10 @@ export default {
     },
     routeToBoardList() {
       //리스트에서 검색기능구현되면 검색조건으로 파라미터를 들고 나간다
-      this.router.push({
-        path: "",
-        params: { place: this.attractionData.title },
+      // console.log("동행찾기 버튼 클릭");
+      this.$router.push({
+        path: "/board/api/list",
+        query: { searchKeyword: this.attractionData.title },
       });
     },
   },
