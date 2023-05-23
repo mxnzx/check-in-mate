@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.member.model.service;
 
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,6 +124,12 @@ public class MemberServiceImpl implements MemberService {
 //		System.out.println("service findid >>" + sqlSession.getMapper(MemberMapper.class).findId(emailid, emaildomain));
 //		return sqlSession.getMapper(MemberMapper.class).findId(emailid, emaildomain);
 		return memberMapper.findId(emailid, emaildomain);
+	}
+
+	@Override
+	public MemberDto findPassword(String userid, String username, String emailid, String emaildomain)
+			throws SQLException {
+		return memberMapper.findPassword(userid, username, emailid, emaildomain);
 	}
 
 }

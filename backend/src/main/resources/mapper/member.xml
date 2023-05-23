@@ -104,6 +104,16 @@
 		from member
 		where email_id = #{emailid} and email_domain = #{emaildomain}
  	</select>
+ 	
+ 	<select id="findPassword" parameterType="String" resultType="memberDto">
+ 		select user_password as userpwd
+ 		from member
+ 		where user_id = #{userid} 
+ 		and user_name = #{username}
+ 		and email_id = #{emailid}
+ 		and email_domain = #{emaildomain}
+ 		
+ 	</select>
 
 
 </mapper>	

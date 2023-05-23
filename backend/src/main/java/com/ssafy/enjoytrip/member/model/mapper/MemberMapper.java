@@ -26,7 +26,10 @@ public interface MemberMapper {
 	void deleteMember(String userid) throws SQLException;
 	
 	// 아이디 찾기
-	MemberDto findId(String emailid, String emaildomain) throws SQLException;
+	public MemberDto findId(String emailid, String emaildomain) throws SQLException;
+	
+	// 비밀번호 찾기
+	public MemberDto findPassword(String userid, String username, String emailid, String emaildomain) throws SQLException;
 	
 	public MemberDto login(MemberDto memberDto) throws SQLException;
 	public MemberDto userInfo(String userid) throws SQLException;
