@@ -47,7 +47,7 @@ export default {
   },
 
   created() {
-    fetch("http://192.168.208.83:9018/hotplace/list")
+    fetch("http://127.0.0.1:9018/hotplace/list")
       .then((response) => response.json())
       .then((data) => {
         console.log("response >>" + this.response);

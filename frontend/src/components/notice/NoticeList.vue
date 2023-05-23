@@ -133,7 +133,7 @@ export default {
 
   methods: {
     fetchArticles() {
-      fetch("http://192.168.208.83:9018/notice/api/list")
+      fetch("http://127.0.0.1:9018/notice/api/list")
         .then((response) => response.json())
         .then((data) => {
           this.articles = data;

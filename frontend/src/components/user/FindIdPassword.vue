@@ -60,7 +60,7 @@ export default {
   methods: {
     findId() {
       fetch(
-        `http://192.168.208.83:9018/user/find/${this.emailid}/${this.emaildomain}`,
+        `http://127.0.0.1:9018/user/find/${this.emailid}/${this.emaildomain}`,
         {
           method: "GET",
         }

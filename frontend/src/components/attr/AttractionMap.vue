@@ -92,7 +92,7 @@ export default {
   data() {
     return {
       map: null,
-      areaUrl: "http://192.168.208.83:9018/navigator/searchSido",
+      areaUrl: "http://127.0.0.1:9018/navigator/searchSido",
       positions: null,
       markers: null,
     };
@@ -141,7 +141,7 @@ export default {
     fetchGugunList(selectedSido) {
       console.log(selectedSido);
       const gugunUrl =
-        "http://192.168.208.83:9018/navigator/searchGugun?sidoCode=" + selectedSido;
+        "http://127.0.0.1:9018/navigator/searchGugun?sidoCode=" + selectedSido;
       console.log("gugunUrl");
       fetch(gugunUrl, { method: "GET" })
         .then((response) => response.json())
@@ -163,7 +163,7 @@ export default {
 
     //세 항목을 가지고 여행지 리스트를 가져온다
     getAttractionList() {
-      let searchUrl = "http://192.168.208.83:9018/navigator/attrList";
+      let searchUrl = "http://127.0.0.1:9018/navigator/attrList";
       let sidoCode = document.getElementById("search-sido").value;
       let gugunCode = document.getElementById("search-gugun").value;
       let contentTypeId = document.getElementById("search-content-id").value;

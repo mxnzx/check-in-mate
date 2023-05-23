@@ -166,7 +166,7 @@ export default {
       console.log("회원가입 시도");
       console.log(this.joinMemberData);
       axios
-        .post("http://192.168.208.83:9018/user/join", this.joinMemberData)
+        .post("http://127.0.0.1:9018/user/join", this.joinMemberData)
         .then(this.closeJoinModal());
     },
     closeJoinModal() {

@@ -36,7 +36,7 @@ export default {
     //     "../../../../backend/src/main/webapp/upload/hotplace/0520" +
     //       this.article.savefile
     //   );
-    //   return require("http://192.168.208.83:9018/hotplace/image/b4e39aa1-84a4-435b-a499-a508140f04c9.png");
+    //   return require("http://127.0.0.1:9018/hotplace/image/b4e39aa1-84a4-435b-a499-a508140f04c9.png");
     // },
   },
   props: {
@@ -49,7 +49,7 @@ export default {
     },
     getImageSrc() {
       // 이미지 파일 경로를 반환합니다.
-      return "http://192.168.208.83:9018/hotplace/image/" + this.article.savefile;
+      return "http://127.0.0.1:9018/hotplace/image/" + this.article.savefile;
     },
   },
 };

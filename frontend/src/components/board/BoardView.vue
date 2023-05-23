@@ -202,7 +202,7 @@ export default {
       // 비동기
       // TODO : 글번호에 해당하는 글정보 얻기.
       fetch(
-        `http://192.168.208.83:9018/board/api/view/${this.$route.params.articleNo}`,
+        `http://127.0.0.1:9018/board/api/view/${this.$route.params.articleNo}`,
         {
           method: "GET",
         }
@@ -226,7 +226,7 @@ export default {
     },
     // 댓글 목록 가져오기
     getComment() {
-      fetch(`http://192.168.208.83:9018/comment/${this.$route.params.articleNo}`, {
+      fetch(`http://127.0.0.1:9018/comment/${this.$route.params.articleNo}`, {
         method: "GET",
       })
         .then((response) => {
@@ -254,7 +254,7 @@ export default {
         userId: this.userInfo.userid,
         content: this.content,
       };
-      fetch(`http://192.168.208.83:9018/comment`, {
+      fetch(`http://127.0.0.1:9018/comment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -277,7 +277,7 @@ export default {
     // 댓글 삭제
     deleteComment(commentNo) {
       fetch(
-        `http://192.168.208.83:9018/comment/${this.article.articleNo}/${commentNo}`,
+        `http://127.0.0.1:9018/comment/${this.article.articleNo}/${commentNo}`,
         {
           method: "DELETE",
           body: JSON.stringify({
@@ -312,7 +312,7 @@ export default {
     },
     deleteArticle() {
       fetch(
-        `http://192.168.208.83:9018/board/api/delete/${this.$route.params.articleNo}`,
+        `http://127.0.0.1:9018/board/api/delete/${this.$route.params.articleNo}`,
         {
           method: "DELETE",
           body: JSON.stringify({

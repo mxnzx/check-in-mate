@@ -62,7 +62,7 @@ export default {
   },
   // 글목록 가져오기
   created() {
-    fetch(`http://192.168.208.83:9018/notice/api/view/${this.$route.params.articleNo}`, {
+    fetch(`http://127.0.0.1:9018/notice/api/view/${this.$route.params.articleNo}`, {
       method: "GET",
     })
       .then((response) => {
@@ -89,7 +89,7 @@ export default {
       console.log("moidfy articleNo :  " + this.article.articleNo);
       console.log("moidfy subject :  " + this.article.subject);
       console.log("moidfy content :  " + this.article.content);
-      fetch(`http://192.168.208.83:9018/notice/api/modify`, {
+      fetch(`http://127.0.0.1:9018/notice/api/modify`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json", // 요청 본문의 타입을 JSON으로 설정
