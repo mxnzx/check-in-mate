@@ -125,7 +125,7 @@ export default {
         formData.append(key, obj[key]);
       }
       console.log(formData);
-      fetch(`http://localhost:9018/hotplace/write`, {
+      fetch(`http://192.168.208.83:9018/hotplace/write`, {
         method: "POST",
         body: formData,
       })
@@ -143,7 +143,7 @@ export default {
     },
     // 삭제하기
     deleteArticle() {
-      fetch(`http://localhost:9018/hotplace/delete/${this.articleno}`, {
+      fetch(`http://192.168.208.83:9018/hotplace/delete/${this.articleno}`, {
         method: "DELETE",
         body: JSON.stringify({
           articleno: this.articleno,

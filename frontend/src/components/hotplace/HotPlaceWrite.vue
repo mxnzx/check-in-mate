@@ -128,7 +128,7 @@ export default {
         formData.append(key, obj[key]);
       }
       console.log(formData);
-      fetch(`http://localhost:9018/hotplace/write`, {
+      fetch(`http://192.168.208.83:9018/hotplace/write`, {
         method: "POST",
         body: formData,
       })

@@ -58,7 +58,7 @@ export default {
     getAttractionDescription() {
       axios
         .get(
-          `http://127.0.0.1:9018/navigator/attrDescription?contentId=${this.selectContentId}`
+          `http://192.168.208.83:9018/navigator/attrDescription?contentId=${this.selectContentId}`
         )
         .then((response) => {
           this.attractionData.title = response.data.title;

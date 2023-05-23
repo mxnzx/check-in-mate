@@ -108,7 +108,7 @@ export default {
     // 글 가져오기
     getArticle() {
       fetch(
-        `http://localhost:9018/notice/api/view/${this.$route.params.articleNo}`,
+        `http://192.168.208.83:9018/notice/api/view/${this.$route.params.articleNo}`,
         {
           method: "GET",
         }
@@ -143,7 +143,7 @@ export default {
     // 삭제하기
     deleteArticle() {
       fetch(
-        `http://localhost:9018/notice/api/delete/${this.$route.params.articleNo}`,
+        `http://192.168.208.83:9018/notice/api/delete/${this.$route.params.articleNo}`,
         {
           method: "DELETE",
           body: JSON.stringify({
