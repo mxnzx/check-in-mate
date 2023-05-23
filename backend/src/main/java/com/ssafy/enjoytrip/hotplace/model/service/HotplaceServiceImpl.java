@@ -76,4 +76,9 @@ public class HotplaceServiceImpl implements HotplaceService{
 		
 	}
 
+	@Override
+	public void updateHit(int articleno) throws Exception {
+		hotplaceMapper.updateHit(articleno);
+	}
+
 }

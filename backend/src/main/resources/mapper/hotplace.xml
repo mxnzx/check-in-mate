@@ -92,6 +92,11 @@
 		where hotplace_file_article_no = #{articleno}
 	</delete>
 
+	<update id="updateHit" parameterType="int">
+		update hotplace
+		set hotplace_hit = hotplace_hit + 1
+		where hotplace_article_no = #{articleno}
+	</update>
 
 
 </mapper>	

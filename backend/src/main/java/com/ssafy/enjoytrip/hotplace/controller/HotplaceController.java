@@ -176,6 +176,7 @@ public class HotplaceController {
 		HotplaceDto hotplaceDto = null;
 		try {
 			hotplaceDto = hotplaceService.getArticle(articleno);
+			hotplaceService.updateHit(articleno);
 			System.out.println("view article >>>>>>>>>>"  + hotplaceDto);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "조회 성공");

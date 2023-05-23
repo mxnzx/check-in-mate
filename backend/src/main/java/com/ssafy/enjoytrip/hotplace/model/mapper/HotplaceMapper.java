@@ -37,4 +37,9 @@ public interface HotplaceMapper {
 	// 파일 목록
 	List<HotplaceFileDto> fileInfoList(int articleno) throws Exception;
 	
+	// 조회수
+	// 조회수 
+	void updateHit(int articleno) throws SQLException;
+	
+	
 }
