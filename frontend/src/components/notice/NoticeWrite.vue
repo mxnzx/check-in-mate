@@ -103,7 +103,7 @@ export default {
         content: this.content,
       };
       console.log("write userid >> " + this.userInfo.userid);
-      fetch("http://localhost:9018/notice/api/write", {
+      fetch("http://127.0.0.1:9018/notice/api/write", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

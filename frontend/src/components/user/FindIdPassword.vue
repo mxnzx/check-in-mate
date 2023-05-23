@@ -144,7 +144,7 @@ export default {
     // 아이디 찾기
     findId() {
       fetch(
-        `http://localhost:9018/user/find/${this.emailid}/${this.emaildomain}`,
+        `http://127.0.0.1:9018/user/find/${this.emailid}/${this.emaildomain}`,
         {
           method: "GET",
         }
