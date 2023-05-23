@@ -23,7 +23,7 @@
       <div class="row align-self-center mb-2">
         <!-- 글쓰기 앵커 시작 -->
         <div class="col-md-12" style="text-align: end">
-          <a @click="planWrite" style="cursor: pointer"> 등록하기 </a>
+          <router-link to="/myplan/write" style="cursor: pointer">등록하기</router-link>
         </div>
         <!-- 글쓰기 앵커 끝 -->
       </div>
