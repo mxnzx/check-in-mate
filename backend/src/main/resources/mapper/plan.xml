@@ -2,7 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="com.ssafy.enjoytrip.plan.model.dao.PlanDao">
+<mapper namespace="com.ssafy.enjoytrip.plan.model.mapper.PlanMapper">
+
+	<resultMap type="hotplaceFileDto" id="file">
+		<result column="hotplace_file_save_folder" property="savefolder"/>
+		<result column="hotplace_file_original_file" property="originalfile"/>
+		<result column="hotplace_file_save_file" property="savefile"/>
+	</resultMap>
+
+<!--	<insert id="writeArticle" parameterType="hotplaceDto">
+		insert into hotplace (hotplace_user_id, hotplace_title,
+		hotplace_content, hotplace_hit, register_time)
+		values (#{userid},
+		#{title}, #{content}, 0, now())
+		<selectKey resultType="int" keyProperty="articleno"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>-->
+	<insert id="writeArticle" useGeneratedKeys="true" keyProperty="articleNo" keyColumn="trip_plan_article_no">
+		INSERT INTO trip_plan_board (trip_plan_title, trip_plan_user_id, trip_plan_img, trip_plan_content, register_time, trip_plan_hit)
+		VALUES ( #{mainTitle}, #{userid}, #{img}, #{mainContent}, now(), 0);
+	</insert>
+
+	<insert id="writeArticleByDay" useGeneratedKeys="true" keyProperty="dayNo" keyColumn="day_no">
+		INSERT INTO trip_plan_by_day (day_idx, title, content, trip_plan_article_no)
+		VALUES ( #{dayIdx}, #{title}, #{content}, #{articleNo});
+	</insert>
+
+	<insert id="writeArticleByDayBySeq" useGeneratedKeys="true" keyProperty="pickPlaceNo" keyColumn="pick_place_no">
+		INSERT INTO trip_plan_pick_place (place_name, place_url, start_time, address_name, x, y, day_no, seq)
+		VALUES ( #{place_name}, #{place_url}, #{startTime}, #{address_name}, #{x}, #{y}, #{dayNo}, #{seq});
+	</insert>
+
+
+
 
 
 
