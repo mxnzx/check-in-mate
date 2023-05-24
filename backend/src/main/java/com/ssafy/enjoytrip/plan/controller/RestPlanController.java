@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.plan.model.service.PlanService;
 
-@RestController
-@RequestMapping("/plan")
+//@RestController
+//@RequestMapping("/plan")
 public class RestPlanController {
 
 //    private PlanService planBoardService;

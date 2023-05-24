@@ -37,50 +37,7 @@
 </template>
 
 <script>
-// import HotPlaceModal from "@/components/hotplace/HotPlaceModal.vue";
-import HotPlaceListItem from "./HotPlaceListItem.vue";
-import { mapState } from "vuex";
-
-const memberStore = "memberStore";
-export default {
-  name: "HotPlaceList",
-  components: { HotPlaceListItem },
-  data() {
-    return {
-      articles: [],
-    };
-  },
-
-  created() {
-    fetch("http://127.0.0.1:9018/hotplace/list")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("response >>" + this.response);
-        console.log("data >>>" + data);
-        this.articles = data;
-        console.log(this.articles);
-        console.log("list data" + data);
-      });
-  },
-  computed: {
-    ...mapState(memberStore, ["userInfo"]),
-  },
-  methods: {
-    openModal(article) {
-      // article 데이터를 모달 컴포넌트로 전달
-      this.$refs.HotPlaceModal.show(article);
-    },
-    HotPlaceModal() {
-      this.$refs.HotPlaceModal.show();
-    },
-    moveWrite() {
-      this.$router.push("hotplace/write");
-    },
-  },
-  mounted() {
-    this.articles.push({});
-  },
-};
+export default {};
 </script>
 
 <style></style>

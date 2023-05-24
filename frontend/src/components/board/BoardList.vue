@@ -49,7 +49,9 @@
       <div class="row align-self-center mb-2">
         <!-- 글쓰기 앵커 시작 -->
         <div class="col-md-12" style="text-align: end">
-          <a @click="moveWrite" style="cursor: pointer"> 글쓰기 </a>
+          <a @click="moveWrite" style="cursor: pointer" v-if="userInfo">
+            글쓰기
+          </a>
         </div>
         <!-- 글쓰기 앵커 끝 -->
       </div>
@@ -87,6 +89,9 @@
 import BoardListItem from "./BoardListItem.vue";
 import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardPagination from "./BoardPagination.vue";
+import { mapState, mapGetters, mapActions } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "BoardList",
@@ -108,6 +113,9 @@ export default {
 
   // eslint-disable-next-line no-dupe-keys, vue/no-dupe-keys
   computed: {
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
+
     // 현재 페이지에 해당하는 글 목록 데이터 계산
     pagedArticles() {
       const startIdx = (this.currentPage - 1) * this.pageSize;
@@ -187,6 +195,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(memberStore, ["userLogout"]),
+
     // 동행찾기
     searchMate() {
       console.log("searchMate 함수 실행");
