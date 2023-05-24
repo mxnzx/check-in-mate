@@ -47,9 +47,15 @@
           <a
             style="padding-right: 10px; cursor: pointer"
             @click="moveModifyArticle"
+            v-if="userInfo && userInfo.userid === article.userid"
             >수정</a
           >
-          <a @click="deleteArticle" style="cursor: pointer">삭제</a>
+          <a
+            @click="deleteArticle"
+            style="cursor: pointer"
+            v-if="userInfo && userInfo.userid === article.userid"
+            >삭제</a
+          >
         </div>
         <!-- 목록 , 수정 , 삭제 끝 -->
         <!-- 내용 시작 -->

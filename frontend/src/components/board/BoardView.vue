@@ -48,9 +48,15 @@
           <a
             style="padding-right: 10px; cursor: pointer"
             @click="moveModifyArticle"
+            v-if="userInfo && userInfo.userid === article.userid"
             >수정</a
           >
-          <a @click="deleteArticle" style="cursor: pointer">삭제</a>
+          <a
+            @click="deleteArticle"
+            style="cursor: pointer"
+            v-if="userInfo && userInfo.userid === article.userid"
+            >삭제</a
+          >
         </div>
         <!-- 목록 , 수정 , 삭제 끝 -->
         <!-- 내용 시작 -->
@@ -100,14 +106,6 @@
               </div>
               <!-- 댓글 등록 -->
               <br />
-              <!-- <input
-                type="text"
-                class="form-control"
-                id="userId"
-                name="userId"
-                placeholder="아이디입력"
-                v-model="userId"
-              /><br /> -->
               <div class="d-flex justify-content-between">
                 <textarea
                   class="form-control col-10"
@@ -139,34 +137,6 @@
         </section>
         <br />
         <!-- 댓글 끝  -->
-        <!-- 버튼 3개 시작 -->
-        <!-- <div style="text-align: right">
-          <button
-            type="button"
-            id="btn-list"
-            class="btn btn-outline-primary mb-3"
-            @click="moveList"
-          >
-            글목록
-          </button>
-          <button
-            type="button"
-            id="btn-mv-modify"
-            class="btn btn-outline-success mb-3 ms-1"
-            @click="moveModifyArticle"
-          >
-            글수정
-          </button>
-          <button
-            type="button"
-            id="btn-delete"
-            class="btn btn-outline-danger mb-3 ms-1"
-            @click="deleteArticle"
-          >
-            글삭제
-          </button>
-        </div> -->
-        <!-- 버튼 3개 끝 -->
       </div>
     </div>
   </div>
