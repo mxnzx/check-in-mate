@@ -76,4 +76,15 @@ public class HotplaceServiceImpl implements HotplaceService{
 		
 	}
 
+	@Override
+	public void updateHit(int articleno) throws Exception {
+		hotplaceMapper.updateHit(articleno);
+	}
+
+	@Override
+	public void scrap(int articleno, String userid) throws Exception {
+		System.out.println("스크랩 서비스 임플");
+		hotplaceMapper.scrap(articleno, userid);
+	}
+
 }

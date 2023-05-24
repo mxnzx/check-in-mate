@@ -17,6 +17,7 @@
             type="text"
             placeholder="제목을 입력하세요"
             v-model="join_mate_title"
+            required
           />
         </div>
       </div>
@@ -28,6 +29,7 @@
             id="join_mate_category"
             name="join_mate_category"
             v-model="join_mate_category"
+            required
           >
             <option value="식사">식사</option>
             <option value="관광">관광</option>
@@ -45,6 +47,7 @@
             type="text"
             placeholder="장소를 입력하세요"
             v-model="join_mate_place"
+            required
           />
         </div>
       </div>
@@ -61,6 +64,7 @@
             min="2013-05-16"
             value="2023-05-16"
             v-model="join_mate_date"
+            required
           />
         </div>
       </div>
@@ -74,6 +78,7 @@
             type="text"
             placeholder="원하는 인원수를 작성해주세요"
             v-model="join_mate_people_num"
+            required
           />
         </div>
       </div>
@@ -87,6 +92,7 @@
             type="text"
             placeholder="기타 내용을 작성해주세요"
             v-model="join_mate_content"
+            required
           />
         </div>
       </div>
@@ -143,6 +149,17 @@ export default {
       this.$refs["boardwrite-modal"].hide();
     },
     registArticle() {
+      if (
+        !this.join_mate_title ||
+        !this.join_mate_category ||
+        !this.join_mate_place ||
+        !this.join_mate_date ||
+        !this.join_mate_people_num ||
+        !this.join_mate_content
+      ) {
+        alert("항목을 모두 입력해주세요.");
+        return;
+      }
       let obj = {
         userId: this.userInfo.userid,
         title: this.join_mate_title,
@@ -164,9 +181,9 @@ export default {
           if (response.ok) {
             console.log("작성성공");
             console.log(obj);
-            //this.$router.push("list");
             this.hideModal();
-            this.$router.go();
+            alert("동행 구하기 작성 성공!");
+            this.moveList();
           } else {
             console.log(obj);
             console.log("실패");
@@ -179,7 +196,8 @@ export default {
     },
 
     moveList() {
-      this.$router.push("list");
+      this.$router.push("/board/api/list");
+      this.$router.go();
     },
   },
 };

@@ -132,4 +132,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.findPassword(userid, username, emailid, emaildomain);
 	}
 
+	@Override
+	public void getScrap(String userid) throws SQLException {
+		memberMapper.getScrap(userid);
+	}
+
 }

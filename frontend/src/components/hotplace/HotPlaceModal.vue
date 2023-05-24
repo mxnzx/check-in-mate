@@ -60,7 +60,10 @@
         {{ article.content }}
       </b-card-text>
     </div>
-    <div class="col-auto text-right">
+    <div
+      class="col-auto text-right"
+      v-if="userInfo && userInfo.userid === article.userid"
+    >
       <button
         type="button"
         id="btn-register"
@@ -82,8 +85,14 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 export default {
   name: "HotPlaceModal",
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   props: {},
   data() {
     return {

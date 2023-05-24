@@ -1,12 +1,17 @@
 <template>
   <b-container class="bv-example-row mt-3 text-center">
     <router-view></router-view>
+    <the-footer></the-footer>
   </b-container>
 </template>
 
 <script>
+import TheFooter from "@/components/common/TheFooter.vue";
 export default {
   name: "AppUser",
+  components: {
+    TheFooter,
+  },
 };
 </script>
 

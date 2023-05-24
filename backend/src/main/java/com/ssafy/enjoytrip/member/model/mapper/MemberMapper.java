@@ -31,6 +31,9 @@ public interface MemberMapper {
 	// 비밀번호 찾기
 	public MemberDto findPassword(String userid, String username, String emailid, String emaildomain) throws SQLException;
 	
+	// 스크랩 가져오기
+	public void getScrap(String userid) throws SQLException;
+	
 	public MemberDto login(MemberDto memberDto) throws SQLException;
 	public MemberDto userInfo(String userid) throws SQLException;
 	public void saveRefreshToken(Map<String, String> map) throws SQLException;

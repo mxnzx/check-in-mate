@@ -14,6 +14,9 @@
       </b-card-text>
       <template #footer>
         <small class="text-muted">{{ article.registertime }}</small>
+        <small class="text-muted" style="justify-content: right"
+          >&#x1f496;{{ article.hit }}</small
+        >
       </template>
     </b-card>
     <br />
@@ -49,10 +52,17 @@ export default {
     },
     getImageSrc() {
       // 이미지 파일 경로를 반환합니다.
+      console.log(this.article.savefile);
       return "http://127.0.0.1:9018/hotplace/image/" + this.article.savefile;
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+</style>
