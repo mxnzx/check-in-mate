@@ -19,14 +19,10 @@
                 v-model="emailid"
               />
             </p>
-            <div class="col-1">
+            <div>
               <span
                 class="input-group-text"
-                style="
-                  background-color: white;
-                  border: none;
-                  padding-left: 2.5px;
-                "
+                style="background-color: white; border: none"
                 >@</span
               >
             </div>
@@ -54,17 +50,17 @@
             >
           </p>
         </div>
-        <label>찾은 아이디 : {{ this.userid }}</label>
       </div></b-tab
     >
 
     <!-- 비밀번호 찾기 스타트 -->
     <b-tab title="비밀번호 찾기">
       <section>
-        <div class="form-container">
+        <div class="form-container" style="text-align: -webkit-center">
           <h2>비밀번호 찾기</h2>
-          <div class="form-group">
+          <div class="form-group col-4" style="width: 100%">
             <input
+              class="form-control"
               name="from_id"
               placeholder="아이디를 입력해주세요"
               type="text"
@@ -72,8 +68,9 @@
               v-model="userid"
             />
           </div>
-          <div class="form-group">
+          <div class="form-group col-4 width:100%">
             <input
+              class="form-control"
               name="from_name"
               placeholder="이름을 입력해주세요"
               type="text"
@@ -93,14 +90,10 @@
                 v-model="emailid"
               />
             </p>
-            <div class="col-1">
+            <div>
               <span
                 class="input-group-text"
-                style="
-                  background-color: white;
-                  border: none;
-                  padding-left: 2.5px;
-                "
+                style="background-color: white; border: none"
                 >@</span
               >
             </div>
@@ -119,14 +112,15 @@
             </div>
           </div>
           <div class="form-group">
-            <button
+            <b-button
               class="btnclass"
               type="btn"
               name="send"
+              variant="primary"
               @click="findPassword"
             >
               비밀번호 찾기
-            </button>
+            </b-button>
           </div>
         </div>
       </section></b-tab
@@ -165,6 +159,7 @@ export default {
         .then((data) => {
           this.userid = data.findid.userid;
           console.log(this.userid);
+          alert("가입하신 ID는 " + this.userid + "입니다");
           //console.log(data);
         })
         .catch((error) => {
@@ -201,6 +196,7 @@ export default {
           console.log(this.userPwd);
           console.log(this.username);
           this.sendEmail(this.username, this.userPwd);
+          alert("입력하신 이메일로 비밀번호가 전송되었습니다.");
         })
         .catch((error) => {
           console.error(error);

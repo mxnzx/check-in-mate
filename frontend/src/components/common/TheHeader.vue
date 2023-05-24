@@ -1,42 +1,33 @@
 <template>
-  <div class="header">
-    <b-navbar toggleable="lg" type="light">
-      <b-navbar-brand href="/" class="" id="enjoyTrip"
-        >Enjoy Trip</b-navbar-brand
+  <nav class="navbar" style="background-color: transparent">
+    <div class="row container-fluid">
+      <!-- 여기부터 2개줄 합치기 -->
+      <div
+        class="row"
+        style="align-items: center; width: 100%; justify-content: space-between"
       >
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item
-            ><router-link to="/attraction" class=""
-              >지역별여행지</router-link
-            ></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link to="/myplan" class=""
-              >나의여행계획</router-link
-            ></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link to="/hotplace" class="" href=""
-              >핫플자랑하기</router-link
-            ></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link to="/board/api" class=""
-              >여행정보공유</router-link
-            ></b-nav-item
-          >
-        </b-navbar-nav>
-
-        <b-navbar-nav class="ml-auto">
+        <!-- 로고 시작 -->
+        <div class="" style="width: 8vmin"></div>
+        <div class="">
+          <b-navbar-brand href="/">
+            <img
+              src="@/assets/images/etc/checkinmate.png"
+              alt="MainLogo"
+              width="100px;"
+            />
+          </b-navbar-brand>
+        </div>
+        <!-- 얘까지 로고 -->
+        <b-navbar-nav
+          class="row"
+          style="flex-direction: row; justify-content: right"
+        >
+          <!-- 공지아이콘시작 -->
           <b-navbar-nav>
             <b-nav-item href="#" style="display: flex; align-items: center">
               <router-link to="/notice/api" class="" style="margin: auto">
                 <img
-                  src="@/assets/images/etc/notice_icon2.png"
+                  src="@/assets/images/etc/gongzi.png"
                   class=""
                   alt="top1"
                   style="width: 40px"
@@ -44,13 +35,14 @@
               </router-link>
             </b-nav-item>
           </b-navbar-nav>
+          <!-- 공지 아이콘 끝 -->
 
           <!-- 로그인 후에 띄울거 -->
           <b-navbar-nav class="ml-auto" v-if="userInfo">
             <b-nav-item-dropdown style="display: flex" right>
               <template #button-content>
                 <img
-                  src="@/assets/images/etc/no-profile.png"
+                  src="@/assets/images/etc/loginsaram.png"
                   class=""
                   alt="top1"
                   style="width: 30px"
@@ -96,9 +88,37 @@
           <join-modal ref="JoinModal"></join-modal>
           <login-modal ref="LoginModal"></login-modal>
         </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-  </div>
+      </div>
+      <!-- 여기까지 로고랑 아이콘  -->
+      <div class="">
+        <div class="row">
+          <ul class="nav justify-content-end">
+            <b-nav-item class="nav-item">
+              <!-- <a class="nav-link active" aria-current="page" href="#">Active</a> -->
+              <router-link to="/attraction" class="nav-link active"
+                >지역별여행지</router-link
+              >
+            </b-nav-item>
+            <b-nav-item class="nav-item">
+              <router-link to="/myplan" class="nav-link active"
+                >나의여행계획</router-link
+              >
+            </b-nav-item>
+            <b-nav-item class="nav-item">
+              <router-link to="/hotplace" class="nav-link active"
+                >핫플자랑하기</router-link
+              >
+            </b-nav-item>
+            <b-nav-item class="nav-item">
+              <router-link to="/board/api" class="nav-link active"
+                >동행모집</router-link
+              >
+            </b-nav-item>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -113,12 +133,10 @@ export default {
     JoinModal,
     LoginModal,
   },
-
   name: "TheHeaderNavbar",
   data() {
     return {};
   },
-
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
     ...mapGetters(["checkUserInfo"]),
@@ -168,5 +186,12 @@ export default {
 }
 .nav-link {
   display: flex;
+}
+.container-fluid {
+  flex-direction: column;
+}
+.navbar {
+  background-color: transparent;
+  z-index: 99;
 }
 </style>

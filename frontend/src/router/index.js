@@ -7,7 +7,7 @@ import AppAttraction from "@/views/AppAttraction";
 import AppNotice from "@/views/AppNotice";
 import AppPlan from "@/views/AppPlan";
 import AppMain from "@/views/AppMain";
-
+import AppHotPlace from "@/views/AppHotPlace";
 // import AppHotPlace from "@/views/AppHotPlace";
 
 // 여행정보 공유
@@ -106,23 +106,48 @@ const routes = [
     ],
   },
 
+  // {
+  //   path: "/hotplace",
+  //   component: () => import("@/components/hotplace/HotPlaceList"),
+  // },
+  // {
+  //   path: "/hotplaceModal",
+  //   component: () => import("@/components/hotplace/HotPlaceModal"),
+  // },
+  // {
+  //   path: "/hotplace/write",
+  //   component: () => import("@/components/hotplace/HotPlaceWrite"),
+  // },
+  // {
+  //   path: "/hotplace/modify/:articleno",
+  //   name: "HotPlaceModify",
+  //   component: () => import("@/components/hotplace/HotPlaceModify"),
+  //   props: true,
+  // },
+
   {
     path: "/hotplace",
-    component: () => import("@/components/hotplace/HotPlaceList"),
+    component: AppHotPlace, // HotPlaceView 컴포넌트를 사용합니다
+    children: [
+      {
+        path: "",
+        component: () => import("@/components/hotplace/HotPlaceList"),
+      },
+      {
+        path: "write",
+        component: () => import("@/components/hotplace/HotPlaceWrite"),
+      },
+      {
+        path: "modify/:articleno",
+        name: "HotPlaceModify",
+        component: () => import("@/components/hotplace/HotPlaceModify"),
+        props: true,
+      },
+    ],
   },
   {
     path: "/hotplaceModal",
     component: () => import("@/components/hotplace/HotPlaceModal"),
-  },
-  {
-    path: "/hotplace/write",
-    component: () => import("@/components/hotplace/HotPlaceWrite"),
-  },
-  {
-    path: "/hotplace/modify/:articleno",
-    name: "HotPlaceModify",
-    component: () => import("@/components/hotplace/HotPlaceModify"),
-    props: true,
   },
 
   {
