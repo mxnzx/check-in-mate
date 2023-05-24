@@ -103,6 +103,13 @@ const routes = [
             /* webpackChunkName: "user" */ "@/components/user/FindIdPassword"
           ),
       },
+      {
+        path: "scrap",
+        name: "scrap",
+        beforeEnter: onlyAuthUser,
+        component: () =>
+          import(/* webpackChunkName: "user" */ "@/components/user/MyScrap"),
+      },
     ],
   },
 

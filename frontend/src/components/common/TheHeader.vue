@@ -52,6 +52,11 @@
                 Signed in as {{ userInfo.userid }}
               </b-nav-item>
               <b-nav-item class="align-self-center">
+                <router-link :to="{ name: 'scrap' }" class="align-self-center"
+                  >My scrap</router-link
+                >
+              </b-nav-item>
+              <b-nav-item class="align-self-center">
                 <router-link :to="{ name: 'mypage' }" class="align-self-center"
                   >My page</router-link
                 >

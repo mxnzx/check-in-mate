@@ -24,6 +24,8 @@ public class MemberDto {
 	private String emaildomain;
 	@ApiModelProperty(value = "회원 가입일")
 	private String joindate;
+//	@ApiModelProperty(value = "스크랩")
+//	private int scraparticleno;
 
 	
 	

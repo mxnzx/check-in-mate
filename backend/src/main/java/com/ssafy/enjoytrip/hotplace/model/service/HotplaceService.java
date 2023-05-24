@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.hotplace.model.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +25,8 @@ public interface HotplaceService {
 
 	// 조회수
 	void updateHit(int articleno) throws Exception;
+	
+	// 스크랩
+	void scrap(int articleno, String userid) throws Exception;
 
 }

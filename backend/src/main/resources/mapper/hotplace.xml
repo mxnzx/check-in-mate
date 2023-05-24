@@ -27,6 +27,11 @@
 		<result column="hotplace_file_original_file" property="originalfile"/> 
 		<result column="hotplace_file_save_file" property="savefile"/> 
 	</resultMap> 
+	
+	<resultMap type="hotplaceScrapDto" id="scrap">
+		<result column="user_id" property="userid"/>
+		<result column="hotplace_article_no" property="articleno"/>
+	</resultMap>
 
 <select id="listArticle" parameterType="map" resultMap="article">
   select h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title,
@@ -97,6 +102,11 @@
 		set hotplace_hit = hotplace_hit + 1
 		where hotplace_article_no = #{articleno}
 	</update>
+	
+	<insert id="scrap" parameterType="hotplaceScrapDto" >
+		insert into scrap_hotplace (user_id, hotplace_article_no)
+		values (#{userid}, #{articleno})
+	</insert>
 
 
 </mapper>	

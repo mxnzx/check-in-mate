@@ -35,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.enjoytrip.hotplace.model.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceFileDto;
+import com.ssafy.enjoytrip.hotplace.model.HotplaceScrapDto;
 import com.ssafy.enjoytrip.hotplace.model.service.HotplaceService;
 
 @RestController
@@ -212,6 +213,30 @@ public class HotplaceController {
 		} catch (Exception e) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "수정 실패");
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+	}
+	
+	// 스크랩
+	@RequestMapping(value= "/scrap", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> scrap(@RequestParam("articleno") int articleno, @RequestParam("userid") String userid){
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		HotplaceScrapDto hotplaceScrapDto = new HotplaceScrapDto();
+		System.out.println(userid + " " + articleno);
+		try {
+			hotplaceScrapDto.setUserid(userid);
+			hotplaceScrapDto.setArticleno(articleno);
+			System.out.println("여기까지실행");
+			hotplaceService.scrap(articleno, userid);
+			System.out.println(userid + " " + articleno);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "스크랩 성공");
+			map.put("article", hotplaceScrapDto);
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "스크랩 실패");
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		}
 		return resEntity;
