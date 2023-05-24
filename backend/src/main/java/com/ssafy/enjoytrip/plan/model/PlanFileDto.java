@@ -8,5 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class PlanFileDto {
-
+    private String savefolder;
+    private String originalfile;
+    private String savefile;
 }
