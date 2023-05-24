@@ -9,8 +9,8 @@
       <b-card title="">
         <!-- 제목 시작 -->
         <div class="row justify-content-center">
-          <input type="text" class="form-control" id="subject" name="subject" style="border: none"
-            placeholder="날짜별 테마명을 입력하세요" v-model="subject" />
+          <input type="text" class="form-control" id="title" name="title" style="border: none"
+            placeholder="날짜별 테마명을 입력하세요" v-model="title" />
         </div>
         <!-- 제목 끝 -->
 
@@ -63,7 +63,7 @@ export default {
   },
   data() {
     return {
-      subject: "",
+      title: "",
       content: "",
       myPickPlace: [],
 
@@ -81,7 +81,7 @@ export default {
       //데이터를 객체로 만들어서 push할거다
       const data = {
         dayIdx: this.dayIdx,
-        subject: this.subject,
+        title: this.title,
         content: this.content,
         myPickPlace: this.myPickPlace[0]
       };

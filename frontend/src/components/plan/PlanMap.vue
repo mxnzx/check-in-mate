@@ -305,13 +305,29 @@ export default {
       }
     },
 
-    //pickList에 픽한 상호명을 담는다
+    //pickList에 픽한 정보를 담는다
+    // addPickList(place) {
+    //   //planpicklist 컴포넌트에 title을 전달한다
+    //   // 'pick-item-update' 이벤트 발행
+    //   const placeData = 
+    //   console.log(place);
+    //   eventBus.$emit('pick-item-update', place);
+    // },
+
     addPickList(place) {
       //planpicklist 컴포넌트에 title을 전달한다
       // 'pick-item-update' 이벤트 발행
-      console.log(place);
-      eventBus.$emit('pick-item-update', place);
-    },
+      const placeData = {};
+
+      for (let key in place) {
+        if (typeof place[key] !== 'function') {
+          placeData[key] = place[key];
+        }
+      }
+
+      console.log(placeData);
+      eventBus.$emit('pick-item-update', placeData);
+    }
   },
 
 }
