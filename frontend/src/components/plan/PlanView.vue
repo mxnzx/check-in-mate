@@ -19,11 +19,11 @@
     </div>
     <!-- 데이별 컴포넌트 들고오기 -->
     <div v-for="(day, index) in this.planByDay" :key="index" class="set-center-content">
-      <plan-view-by-day :day="day"></plan-view-by-day>
+      <plan-view-by-day :day="day" :index="index"></plan-view-by-day>
     </div>
     <hr>
     <div class="set-center-content">
-      <button>돌아가기</button>
+      <button @click="moveList">돌아가기</button>
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      planArticleNo: "3",
+      planArticleNo: "",
       plan: [],
       planByDay: [],
       
@@ -56,7 +56,7 @@ export default {
   methods: {
     getPlanArticle() {  
       axios
-        .get(`http://127.0.0.1:9018/plan/view/3`)
+        .get(`http://127.0.0.1:9018/plan/view/${this.$route.params.articleNo}`)
         .then((response) => {
           this.plan = response.data.planArticle;
           console.log(this.plan);
@@ -67,7 +67,9 @@ export default {
           console.error(error);
         });
     },
-
+    moveList() {
+      this.$router.push("/myplan");
+    }
   },
 
 

@@ -6,11 +6,13 @@
         <span class="bg-light">공지사항</span>
       </h2>
       <div class="col-md-5 offset-4">
-        <form class="d-flex" id="form-search" @submit.prevent="search">
+        <form class="d-flex" style="display: flex!important;
+    align-items: center;
+    flex-direction: row;" id="form-search" @submit.prevent="search">
           <input type="text" v-model="searchKeyword" placeholder="검색어..." />
           <button
             id="btn-search"
-            class="btn btn-dark"
+            class="btn btn-dark m-1"
             type="button"
             @click="search"
           >

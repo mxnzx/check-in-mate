@@ -3,7 +3,7 @@
     <!-- 여행정보 공유 게시판 제목 시작 -->
     <div class="col-lg-8 col-md-10 col-sm-12">
       <h2 class="my-3 py-2 text-center">
-        <span class="bg-light">동행 구하기</span>
+        <span class="bg-light">동행 모집</span>
       </h2>
       <!-- 검색하기 시작 -->
       <div class="col-md-7 offset-3">

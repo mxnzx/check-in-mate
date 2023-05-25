@@ -14,19 +14,19 @@
             <div class="d-flex flex-fill">
               <select
                 id="search-sido"
-                class="form-select m-1 flex-grow-1"
+                class="form-select m-2 flex-grow-1"
                 @change="readytoGugunList"
               >
                 <option value="0" selected>지역 선택</option>
               </select>
 
-              <select id="search-gugun" class="form-select m-1 flex-grow-1">
+              <select id="search-gugun" class="form-select m-2 flex-grow-1">
                 <option value="0" selected>구군 선택</option>
               </select>
 
               <select
                 id="search-content-id"
-                class="form-select m-1 flex-grow-1"
+                class="form-select m-2 flex-grow-1"
               >
                 <option value="0" selected>관광지 유형</option>
                 <option value="12">관광지</option>

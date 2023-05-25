@@ -7,6 +7,7 @@
             :src="getImageSrc()"
             alt="Image"
             class="rounded-0"
+            @click="moveView"
           ></b-card-img>
         </b-col>
         <b-col md="6">
@@ -18,6 +19,7 @@
         </b-col>
       </b-row>
     </b-card>
+    <br/>
   </div>
 </template>
 
@@ -34,6 +36,10 @@ export default {
       // 이미지 파일 경로를 반환합니다.
       console.log(this.article.img);
       return "http://127.0.0.1:9018/plan/image/" + this.article.img;
+    },
+    moveView() {
+      console.log(this.article.articleNo);
+      this.$router.push("/myplan/view/" + this.article.articleNo)
     },
   },
 };

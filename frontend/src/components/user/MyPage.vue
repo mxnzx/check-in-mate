@@ -1,16 +1,16 @@
 <template>
   <!--중앙 content Start-->
   <div class="container" style="text-align: right">
-    <div class="row" style="height: 100px"></div>
     <div class="row-4 m-1">
       <div class="row text-center">
         <div class="col-4"></div>
-        <div class="col-4">
+        <div class="col-4 user-image-area">
           <img
             src="@/assets/images/etc/no-profile.png"
             alt="profile"
             style="height: 100px"
           />
+          <button>프로필 등록</button>
         </div>
         <div class="col-4"></div>
       </div>
@@ -58,7 +58,7 @@
             readonly="readonly"
             id="email"
             name="email"
-            :value="userInfo.email + '@ssafy.com'"
+            :value="userInfo.emailid + '@' + userInfo.emaildomain"
           />
         </div>
       </div>
@@ -154,7 +154,7 @@ export default {
       })
         .then((response) => {
           if (response.ok) {
-            console.log("회원 삭제 성공");
+            alert("회원탈퇴가 완료되었습니다. ");
             this.$store.commit(`${memberStore}/SET_USER_INFO`, null);
             this.$router.push("/");
           } else {
@@ -180,7 +180,7 @@ export default {
       })
         .then((response) => {
           if (response.ok) {
-            alert("회원정보 수정 성공");
+            alert("회원정보가 수정되었습니다.");
             this.$router.push("/");
           } else {
             throw new Error("회원정보 수정 실패");
@@ -194,4 +194,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.user-image-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

@@ -145,7 +145,8 @@ export default {
           } else {
             console.log(this.articleno + "  " + this.userInfo.userid);
             console.log("실패");
-            throw new Error("스크랩 되었습니다.");
+            alert("스크랩 되었습니다.");
+            this.hideHotPlaceModal();
           }
         })
         .catch((error) => {

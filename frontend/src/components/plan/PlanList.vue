@@ -14,11 +14,10 @@
           <router-link
             to="/myplan/write"
             style="cursor: pointer"
-            v-if="userInfo"
+            v-if="userInfo" class="board-subject"
             >등록하기</router-link
           >
         </div>
-        <router-link :to="`view/${this.articleNo}`">3번게시물상세보기</router-link>
         <!-- 글쓰기 앵커 끝 -->
       </div>
 
@@ -59,11 +58,7 @@ export default {
     fetch("http://127.0.0.1:9018/plan/list")
       .then((response) => response.json())
       .then((data) => {
-        console.log("response >>" + this.response);
-        console.log("data >>>" + data);
         this.articles = data;
-        console.log(this.articles);
-        console.log("list data" + data);
       });
   },
 };

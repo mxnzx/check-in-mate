@@ -170,6 +170,7 @@ export default {
         .then(this.closeJoinModal());
     },
     closeJoinModal() {
+      alert("회원가입이 완료되었습니다.");
       this.$refs["join-modal"].hide();
     },
   },
