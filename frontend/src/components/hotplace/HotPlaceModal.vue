@@ -107,6 +107,8 @@ export default {
       article: [],
       showHotPlaceModal: false,
       articleno: null, // articleno를 data 속성으로 정의합니다.
+      savefile: "",
+      title: "",
     };
   },
   created() {
@@ -128,10 +130,10 @@ export default {
 
     scrapArticle() {
       console.log("articleno >> " + this.articleno);
-      fetch(`http://127.0.0.1:9018/hotplace/scrap`, {
+      fetch("http://127.0.0.1:9018/hotplace/scrap", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/multipart",
         },
         body: JSON.stringify(this.articleno, this.userInfo.userid),
       })
@@ -141,8 +143,9 @@ export default {
             alert("스크랩 성공!");
             this.moveList();
           } else {
+            console.log(this.articleno + "  " + this.userInfo.userid);
             console.log("실패");
-            throw new Error("스크랩 실패");
+            throw new Error("스크랩 되었습니다.");
           }
         })
         .catch((error) => {
