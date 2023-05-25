@@ -196,7 +196,7 @@ public class HotplaceController {
 
 	// 핫플레이스 글 수정하기 ( 삭제 후 입력 ) 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> modify(@RequestParam("articleno") int articleno , @RequestParam("userid") String userid,
+	public ResponseEntity<Map<String, Object>> modify(@PathVariable("articleno") int articleno , @RequestParam("userid") String userid,
 			@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam("upfile") MultipartFile[] files) throws Exception {
 		ResponseEntity<Map<String, Object>> resEntity = null;
@@ -221,15 +221,15 @@ public class HotplaceController {
 	
 	// 스크랩
 	@RequestMapping(value = "/scrap", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> scrap(@RequestParam("articleno") String articleno, @RequestParam("userid") String userid) {
+	public ResponseEntity<Map<String, Object>> scrap(@RequestParam("articleno") int articleno, @RequestParam("userid") String userid) {
 	    ResponseEntity<Map<String, Object>> resEntity = null;
 	    HotplaceScrapDto hotplaceScrapDto = new HotplaceScrapDto();
 	    System.out.println(userid + " " + articleno);
 	    try {
 	        hotplaceScrapDto.setUserid(userid);
-	        hotplaceScrapDto.setArticleno(Integer.parseInt(articleno)); // 문자열을 int로 변환
+	        hotplaceScrapDto.setArticleno(articleno); 
 	        System.out.println("여기까지 실행");
-	        hotplaceService.scrap(hotplaceScrapDto.getArticleno(), userid); // 변환된 int 값 사용
+	        hotplaceService.scrap(articleno, userid); //
 	        System.out.println(userid + " " + articleno);
 	        Map<String, Object> map = new HashMap<String, Object>();
 	        map.put("resmsg", "스크랩 성공");
