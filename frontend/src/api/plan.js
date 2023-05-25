@@ -2,8 +2,6 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-
-
 async function sendImg(mainImage, success, fail) {
     const formData = new FormData();
     if (mainImage.files.length > 0) {

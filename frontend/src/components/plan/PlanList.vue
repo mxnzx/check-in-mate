@@ -1,15 +1,3 @@
-<!-- 
-    목록 뽑아내는 컴포넌트이다
-    row1
-        MY TRIP PLAN
-    row2
-        검색창
-    row3
-        col1 게시물1
-        col2 게시물2
-        col3 게시물3
--->
-
 <template>
   <div class="row justify-content-center">
     <!-- 여행정보 공유 게시판 제목 시작 -->
@@ -30,6 +18,7 @@
             >등록하기</router-link
           >
         </div>
+        <router-link :to="`view/${this.articleNo}`">3번게시물상세보기</router-link>
         <!-- 글쓰기 앵커 끝 -->
       </div>
 

@@ -61,28 +61,43 @@ public class RestPlanController {
      //========================================================================
      
     //게시글 상세보기
-    @GetMapping("view/{articleno}")
-    public ResponseEntity<Map<String, Object>> detail() {
-        return null;
+    @GetMapping("view/{articleNo}")
+    public ResponseEntity<Map<String, Object>> view(@PathVariable("articleNo") int articleNo) throws Exception {
+        PlanDto planDto = null;
+        System.out.println("나의여행계획 컨트롤러 들어옴 >>> articleNo"+ articleNo);
+
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        try {
+            planDto = planService.viewPlanArticle(articleNo);
+            //planService.updateHit(articleNo);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("planArticle", planDto);
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("resmsg", "공지사항 조회 실패");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        return resEntity;
     }
 
     // 이미지 가져오기
-//    @GetMapping("image/{filename:.+}")
-//    public ResponseEntity<Resource> getImage(@PathVariable String filename) throws IOException {
-//        // 이미지 파일이 저장된 경로
-//        String imagePath = uploadPath + File.separator + filename;
-//
-//        // 이미지 파일을 Resource 타입으로 로드
-//        Resource imageResource = new UrlResource("file:" + imagePath);
-//
-//        // 이미지 파일의 MIME 타입을 가져옴
-//        String contentType = servletContext.getMimeType(imageResource.getFile().getAbsolutePath());
-//
-//        // 이미지 파일을 Response에 포함하여 반환
-//        return ResponseEntity.ok()
-//                .contentType(MediaType.parseMediaType(contentType))
-//                .body(imageResource);
-//    }
+    @GetMapping("image/{filename:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) throws IOException {
+        // 이미지 파일이 저장된 경로
+        String imagePath = uploadPath + File.separator + filename;
+
+        // 이미지 파일을 Resource 타입으로 로드
+        Resource imageResource = new UrlResource("file:" + imagePath);
+
+        // 이미지 파일의 MIME 타입을 가져옴
+        String contentType = servletContext.getMimeType(imageResource.getFile().getAbsolutePath());
+
+        // 이미지 파일을 Response에 포함하여 반환
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(imageResource);
+    }
 
     // 게시글 작성 : step1) 이미지저장후, 저장된 src를 가져온다
     @PostMapping("write/image")
