@@ -35,6 +35,31 @@
 		VALUES ( #{place_name}, #{place_url}, #{startTime}, #{address_name}, #{x}, #{y}, #{dayNo}, #{seq});
 	</insert>
 
+	<select id="viewPlanArticle" parameterType="int" resultType="PlanDto">
+		SELECT trip_plan_article_no as articleNo, register_time as registerTime, trip_plan_title as mainTitle, trip_plan_user_id as userid, trip_plan_hit as hit, trip_plan_img as img, trip_plan_content as mainContent
+		FROM trip_plan_board
+		WHERE trip_plan_article_no = #{articleNo};
+	</select>
+
+	<select id="viewPlanArticleByDay" parameterType="int" resultType="DataByDayDto">
+		SELECT day_no as dayNo, day_idx as dayIdx, title as title, content as content, trip_plan_article_no as articleNo
+		FROM trip_plan_by_day
+		WHERE trip_plan_article_no = #{articleNo};
+	</select>
+
+	<select id="viewPlanArticleByDayBySeq" parameterType="int" resultType="MyPickPlaceDto">
+		SELECT pp.place_name as place_name, pp.place_url as place_url, pp.start_time as startTime, pp.address_name as address_name, pp.x as x, pp.y as y, pp.seq as seq, bd.day_idx as day_idx
+		FROM trip_plan_by_day bd
+		JOIN trip_plan_pick_place pp ON bd.day_no = pp.day_no
+		WHERE bd.trip_plan_article_no = #{articleNo}
+			AND bd.day_idx = #{day};
+	</select>
+
+
+
+
+
+
 
 
 
