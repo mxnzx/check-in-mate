@@ -18,5 +18,6 @@ public class MyPickPlaceDto {
     private String y;   //경도
     private int seq;    //순서
     private int dayNo;  //fk
+    private int day_idx;    //일수별
 
 }

@@ -32,7 +32,13 @@ public interface PlanMapper {
 	void delete(int planAritcleNo) throws SQLException;
 
 	// 특정 나의여행계획 게시글 가져오기
-	PlanDto getArticle(int planAritcleNo) throws SQLException;
+	PlanDto viewPlanArticle(int articleNo) throws SQLException;
+
+	// 특정 나의여행계획 게시글의 일수별 가져오기
+	List<DataByDayDto> viewPlanArticleByDay(int articleNo) throws SQLException;
+
+	// 특정 나의여행계획 게시글 중 일수별 여행지 순서 테이블 작성
+	List<MyPickPlaceDto> viewPlanArticleByDayBySeq(int articleNo, int day) throws SQLException;
 
     // 파일 등록
     void registerFile(List<PlanFileDto> fileInfos) throws Exception;

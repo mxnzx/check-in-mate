@@ -54,9 +54,24 @@ public class RestPlanController {
     }
 
     //게시글 상세보기
-    @GetMapping("view/{articleno}")
-    public ResponseEntity<Map<String, Object>> detail() {
-        return null;
+    @GetMapping("view/{articleNo}")
+    public ResponseEntity<Map<String, Object>> view(@PathVariable("articleNo") int articleNo) throws Exception {
+        PlanDto planDto = null;
+        System.out.println("나의여행계획 컨트롤러 들어옴 >>> articleNo"+ articleNo);
+
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        try {
+            planDto = planService.viewPlanArticle(articleNo);
+            //planService.updateHit(articleNo);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("planArticle", planDto);
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("resmsg", "공지사항 조회 실패");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        return resEntity;
     }
 
     // 이미지 가져오기

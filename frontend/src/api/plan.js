@@ -2,8 +2,6 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-
-
 async function sendImg(mainImage, success, fail) {
     const formData = new FormData();
     if (mainImage.files.length > 0) {
@@ -28,4 +26,8 @@ async function addPlan(plan, success, fail) {
     await api.post(`/plan/write/article`, plan).then(success).catch(fail);
 }
 
-export { sendImg , addPlan}
+// async function getArticle(articleNo, success, fail) {
+//     api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+//     await api.get(`/plan/view/${articleNo}`).then(success).catch(fail);
+// }
+export { sendImg , addPlan }

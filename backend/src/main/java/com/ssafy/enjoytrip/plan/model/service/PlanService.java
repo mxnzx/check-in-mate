@@ -22,7 +22,7 @@ public interface PlanService {
     void delete(int planAritcleNo, String path) throws SQLException;
 
     // 특정 나의여행계획 게시글 가져오기
-    PlanDto getArticle(int planAritcleNo) throws SQLException;
+    PlanDto viewPlanArticle(int articleNo) throws SQLException;
 
 //    // 조회수 갱신
 //    void updateHit(int planAritcleNo) throws SQLException;

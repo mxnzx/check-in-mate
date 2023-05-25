@@ -70,7 +70,16 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public PlanDto getArticle(int planAritcleNo) throws SQLException {
-        return null;
+    public PlanDto viewPlanArticle(int articleNo) throws SQLException {
+        // 1번 테이블
+        PlanDto planDto = sqlSession.getMapper(PlanMapper.class).viewPlanArticle(articleNo);
+        //2번 테이블
+        planDto.setDataByDay(sqlSession.getMapper(PlanMapper.class).viewPlanArticleByDay(articleNo));
+        //3번 테이블
+        for (int i=0; i<planDto.getDataByDay().size();i++) {
+            //article이 일치하고, day가 i+1인 애들을 뽑고싶어
+            planDto.getDataByDay().get(i).setMyPickPlace(sqlSession.getMapper(PlanMapper.class).viewPlanArticleByDayBySeq(articleNo, i+1));
+        }
+        return planDto;
     }
 }
