@@ -26,8 +26,4 @@ async function addPlan(plan, success, fail) {
     await api.post(`/plan/write/article`, plan).then(success).catch(fail);
 }
 
-// async function getArticle(articleNo, success, fail) {
-//     api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
-//     await api.get(`/plan/view/${articleNo}`).then(success).catch(fail);
-// }
-export { sendImg , addPlan }
+export { sendImg , addPlan}
