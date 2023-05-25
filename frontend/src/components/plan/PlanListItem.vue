@@ -1,57 +1,42 @@
 <template>
-    <div>
-        <b-card-group deck>
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-            @click="this.showPlanView"
-            style="cursor: pointer"
-          >
+  <div>
+    <b-card no-body class="overflow-hidden" style="max-width: 540px">
+      <b-row no-gutters>
+        <b-col md="6">
+          <b-card-img
+            :src="getImageSrc()"
+            alt="Image"
+            class="rounded-0"
+          ></b-card-img>
+        </b-col>
+        <b-col md="6">
+          <b-card-body :title="article.mainTitle">
             <b-card-text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
+              {{ article.mainContent }}
             </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
-          <b-card
-            title="Title"
-            img-src="https://picsum.photos/300/300/?image=41"
-            img-alt="Image"
-            img-top
-            @click="this.showPlanView"
-            style="cursor: pointer"
-          >
-            <b-card-text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </b-card-text>
-            <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template>
-          </b-card>
-        </b-card-group>
-    </div>
-
+          </b-card-body>
+        </b-col>
+      </b-row>
+    </b-card>
+  </div>
 </template>
 
 <script>
 export default {
-    methods: {
-        showPlanView() {
-            console.log("글 상세보기 띄워라");
-        }
-    }
-    
-
-}
+  props: {
+    article: Object,
+  },  
+  methods: {
+    showPlanView() {
+      console.log("글 상세보기 띄워라");
+    },
+    getImageSrc() {
+      // 이미지 파일 경로를 반환합니다.
+      console.log(this.article.img);
+      return "http://127.0.0.1:9018/plan/image/" + this.article.img;
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

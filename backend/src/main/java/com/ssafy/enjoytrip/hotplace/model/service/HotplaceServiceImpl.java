@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.hotplace.model.service;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.enjoytrip.board.model.mapper.BoardMapper;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceFileDto;
+import com.ssafy.enjoytrip.hotplace.model.HotplaceScrapDto;
 import com.ssafy.enjoytrip.hotplace.model.mapper.HotplaceMapper;
 import com.ssafy.enjoytrip.util.SizeConstant;
 
@@ -85,6 +87,11 @@ public class HotplaceServiceImpl implements HotplaceService{
 	public void scrap(int articleno, String userid) throws Exception {
 		System.out.println("스크랩 서비스 임플");
 		hotplaceMapper.scrap(articleno, userid);
+	}
+	
+	@Override
+	public HotplaceScrapDto getScrap(String userid) throws SQLException {
+		return hotplaceMapper.getScrap(userid);
 	}
 
 }
