@@ -47,12 +47,19 @@ public class RestPlanController {
         this.planService = planService;
     }
 
+    
+     //========================================================================
+     
     // 게시글 보기
-    @GetMapping("list")
-    public ResponseEntity<Map<String, Object>> list() {
-        return null;
+    @GetMapping("/list")
+    public List<PlanDto> list(@RequestParam Map<String, String> map) throws Exception{
+		return planService.list(map);
+    	
     }
 
+    
+     //========================================================================
+     
     //게시글 상세보기
     @GetMapping("view/{articleno}")
     public ResponseEntity<Map<String, Object>> detail() {
@@ -162,6 +169,10 @@ public class RestPlanController {
 //    public ResponseEntity<Map<String, Object>> getAttraction() {
 //        return null;
 //    }
+
+    
+    
+
 
 }
 

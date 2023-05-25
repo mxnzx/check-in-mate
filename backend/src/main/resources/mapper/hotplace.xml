@@ -57,6 +57,7 @@
   from hotplace h
   join member m on h.hotplace_user_id = m.user_id
   join hotplace_file_info hf on h.hotplace_article_no = hf.hotplace_file_article_no
+  order by h.hotplace_hit desc , h.hotplace_article_no
 </select>
 
 	<insert id="writeArticle" parameterType="hotplaceDto">

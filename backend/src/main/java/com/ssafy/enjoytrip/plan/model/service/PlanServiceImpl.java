@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,8 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public List<PlanDto> list(Map<String, String> map) throws SQLException {
-        return null;
+    	Map<String, Object> param = new HashMap<String, Object>();
+        return planMapper.list(param);
     }
 
     @Override
