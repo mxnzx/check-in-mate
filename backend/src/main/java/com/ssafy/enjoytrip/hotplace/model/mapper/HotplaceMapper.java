@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.enjoytrip.hotplace.model.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.HotplaceFileDto;
+import com.ssafy.enjoytrip.hotplace.model.HotplaceScrapDto;
 
 
 @Mapper
@@ -43,5 +44,6 @@ public interface HotplaceMapper {
 	// 스크랩
 	void scrap(int articleno, String userid) throws SQLException;
 	
-	
+	// 스크랩 가져오기
+	public HotplaceScrapDto getScrap(String userid) throws SQLException;
 }

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -240,5 +241,25 @@ public class HotplaceController {
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		}
 		return resEntity;
+	}
+	
+	// 스크랩 가져오기
+	@GetMapping("/scrap/{userid}")
+	public ResponseEntity<Map<String, Object>> getScrap(@PathVariable("userid") String userid){
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		HotplaceScrapDto hotplaceScrapDto = null;
+		try {
+			hotplaceScrapDto = hotplaceService.getScrap(userid);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resmsg", "스크랩 가져오기 성공");
+			map.put("getScrap", hotplaceScrapDto);
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		} catch(Exception e) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			e.printStackTrace();
+			map.put("resmsg", "스크랩 가져오기 실패");
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;		
 	}
 }

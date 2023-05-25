@@ -1,44 +1,40 @@
-<template></template>
+<template>
+  <div>
+    <b-card
+      :title="article.title"
+      :img-src="getImageSrc()"
+      img-alt="Image"
+      img-top
+      style="cursor: pointer"
+      :style="{ width: '300px' }"
+    >
+    </b-card>
+    <br />
+    <!-- <hot-place-modal ref="HotPlaceModal"></hot-place-modal> -->
+  </div>
+</template>
 
 <script>
-import MyScrapListItem from "./MyScrapListItem.vue";
-import { mapState } from "vuex";
-
-const memberStore = "memberStore";
 export default {
-  name: "HotPlaceList",
-  components: { MyScrapListItem },
+  name: "MyScrapListItem",
+  components: {},
   data() {
     return {
       articles: [],
     };
   },
-
-  created() {
-    fetch("http://127.0.0.1:9018/hotplace/list")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("response >>" + this.response);
-        console.log("data >>>" + data);
-        this.articles = data;
-        console.log(this.articles);
-        console.log("list data" + data);
-      });
-  },
-  computed: {
-    ...mapState(memberStore, ["userInfo"]),
+  props: {
+    article: Object,
   },
   methods: {
-    openModal(article) {
-      // article 데이터를 모달 컴포넌트로 전달
-      this.$refs.HotPlaceModal.show(article);
+    getImageSrc() {
+      // 이미지 파일 경로를 반환합니다.
+      console.log(this.article);
+      return (
+        "http://127.0.0.1:9018/hotplace/image/" +
+        this.article.savefile[0].savefile
+      );
     },
-    HotPlaceModal() {
-      this.$refs.HotPlaceModal.show();
-    },
-  },
-  mounted() {
-    this.articles.push({});
   },
 };
 </script>
