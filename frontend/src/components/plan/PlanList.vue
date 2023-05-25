@@ -23,13 +23,25 @@
       <div class="row align-self-center mb-2">
         <!-- 글쓰기 앵커 시작 -->
         <div class="col-md-12" style="text-align: end">
-          <router-link to="/myplan/write" style="cursor: pointer">등록하기</router-link>
+          <router-link
+            to="/myplan/write"
+            style="cursor: pointer"
+            v-if="userInfo"
+            >등록하기</router-link
+          >
         </div>
         <!-- 글쓰기 앵커 끝 -->
       </div>
-      
+
       <div>
-        <plan-list-item ref="PlanListItem"></plan-list-item>
+        <b-card-group deck style="justify-content: center">
+          <plan-list-item
+            v-for="article in articles"
+            :key="article.articleNo"
+            :article="article"
+          >
+          </plan-list-item>
+        </b-card-group>
       </div>
       <br />
     </div>
@@ -38,7 +50,9 @@
 
 <script>
 import PlanListItem from "./PlanListItem.vue";
+import { mapState } from "vuex";
 
+const memberStore = "memberStore";
 export default {
   name: "PlanList",
   components: {
@@ -46,10 +60,24 @@ export default {
   },
   data() {
     return {
-      articles: []
-    }
-  }
-}
+      articles: [],
+    };
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
+  created() {
+    fetch("http://127.0.0.1:9018/plan/list")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("response >>" + this.response);
+        console.log("data >>>" + data);
+        this.articles = data;
+        console.log(this.articles);
+        console.log("list data" + data);
+      });
+  },
+};
 </script>
 
 <style>

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -195,7 +196,7 @@ public class HotplaceController {
 
 	// 핫플레이스 글 수정하기 ( 삭제 후 입력 ) 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> modify(@RequestParam("articleno") int articleno , @RequestParam("userid") String userid,
+	public ResponseEntity<Map<String, Object>> modify(@PathVariable("articleno") int articleno , @RequestParam("userid") String userid,
 			@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam("upfile") MultipartFile[] files) throws Exception {
 		ResponseEntity<Map<String, Object>> resEntity = null;
@@ -219,26 +220,46 @@ public class HotplaceController {
 	}
 	
 	// 스크랩
-	@RequestMapping(value= "/scrap", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> scrap(@RequestParam("articleno") int articleno, @RequestParam("userid") String userid){
+	@RequestMapping(value = "/scrap", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> scrap(@RequestParam("articleno") int articleno, @RequestParam("userid") String userid) {
+	    ResponseEntity<Map<String, Object>> resEntity = null;
+	    HotplaceScrapDto hotplaceScrapDto = new HotplaceScrapDto();
+	    System.out.println(userid + " " + articleno);
+	    try {
+	        hotplaceScrapDto.setUserid(userid);
+	        hotplaceScrapDto.setArticleno(articleno); 
+	        System.out.println("여기까지 실행");
+	        hotplaceService.scrap(articleno, userid); //
+	        System.out.println(userid + " " + articleno);
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("resmsg", "스크랩 성공");
+	        map.put("article", hotplaceScrapDto);
+	        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	    } catch (Exception e) {
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("resmsg", "스크랩 실패");
+	        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	    }
+	    return resEntity;
+	}
+	
+	// 스크랩 가져오기
+	@GetMapping("/scrap/{userid}")
+	public ResponseEntity<Map<String, Object>> getScrap(@PathVariable("userid") String userid){
 		ResponseEntity<Map<String, Object>> resEntity = null;
-		HotplaceScrapDto hotplaceScrapDto = new HotplaceScrapDto();
-		System.out.println(userid + " " + articleno);
+		HotplaceScrapDto hotplaceScrapDto = null;
 		try {
-			hotplaceScrapDto.setUserid(userid);
-			hotplaceScrapDto.setArticleno(articleno);
-			System.out.println("여기까지실행");
-			hotplaceService.scrap(articleno, userid);
-			System.out.println(userid + " " + articleno);
+			hotplaceScrapDto = hotplaceService.getScrap(userid);
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("resmsg", "스크랩 성공");
-			map.put("article", hotplaceScrapDto);
-			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		} catch (Exception e) {
+			map.put("resmsg", "스크랩 가져오기 성공");
+			map.put("getScrap", hotplaceScrapDto);
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		} catch(Exception e) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("resmsg", "스크랩 실패");
-			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+			e.printStackTrace();
+			map.put("resmsg", "스크랩 가져오기 실패");
+			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 		}
-		return resEntity;
+		return resEntity;		
 	}
 }

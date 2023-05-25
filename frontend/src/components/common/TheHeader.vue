@@ -48,22 +48,32 @@
                   style="width: 30px"
                 />
               </template>
-              <b-nav-item class="align-self-center">
+              <b-nav-item
+                class="align-self-center"
+                style="padding-left: 1vh; font-size: 15px"
+              >
                 Signed in as {{ userInfo.userid }}
               </b-nav-item>
               <b-nav-item class="align-self-center">
-                <router-link :to="{ name: 'scrap' }" class="align-self-center"
+                <router-link
+                  :to="{ name: 'scrap' }"
+                  class="align-self-center"
+                  style="padding-left: 1vh"
                   >My scrap</router-link
                 >
               </b-nav-item>
               <b-nav-item class="align-self-center">
-                <router-link :to="{ name: 'mypage' }" class="align-self-center"
+                <router-link
+                  :to="{ name: 'mypage' }"
+                  class="align-self-center"
+                  style="padding-left: 1vh"
                   >My page</router-link
                 >
               </b-nav-item>
               <b-nav-item
                 class="align-self-center link"
                 @click.prevent="onClickLogout"
+                style="padding-left: 1vh"
                 >Sign out</b-nav-item
               >
             </b-nav-item-dropdown>
@@ -85,8 +95,12 @@
                   style="width: 30px"
                 />
               </template>
-              <b-dropdown-item @click="openJoinModal">회원가입</b-dropdown-item>
-              <b-dropdown-item @click="openLoginModal">로그인</b-dropdown-item>
+              <b-dropdown-item @click="openJoinModal" style="padding-left: 3vh"
+                >회원가입</b-dropdown-item
+              >
+              <b-dropdown-item @click="openLoginModal" style="padding-left: 3vh"
+                >로그인</b-dropdown-item
+              >
             </b-nav-item-dropdown>
           </b-navbar-nav>
 

@@ -272,28 +272,6 @@ public class RestMemberController {
 		return resEntity;
 	}
 	
-	// 스크랩 가져오기
-	@GetMapping("/scrap")
-	public ResponseEntity<Map<String, Object>> getScrap(@PathVariable("userid") String userid){
-//		ResponseEntity<Map<String, Object>> resEntity = null;
-//		MemberDto memberDto = null;
-//		try {
-//			memberDto = memberService.findPassword(userid, username, emailid, emaildomain);
-//			Map<String, Object> map = new HashMap<String, Object>();
-//			System.out.println("controller findpassword map >> " + map);
-//			System.out.println("controller findpassword memberDto >> " + map);
-//			map.put("resmsg", "스크랩 가져오기 성공");
-//			map.put("findpassword", memberDto);
-//			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
-//		} catch(Exception e) {
-//			Map<String, Object> map = new HashMap<String, Object>();
-//			e.printStackTrace();
-//			map.put("resmsg", "스크랩 가져오기 실패");
-//			resEntity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
-//		}
-//		return resEntity;		
-		return null;
-	}
 	
 //	// 아이디 값 가져와서 기존 아이디와 비교해서 겹치는게 있는지 체크
 //	@GetMapping("/{userid}")

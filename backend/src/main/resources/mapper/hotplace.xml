@@ -28,10 +28,28 @@
 		<result column="hotplace_file_save_file" property="savefile"/> 
 	</resultMap> 
 	
-	<resultMap type="hotplaceScrapDto" id="scrap">
+<resultMap type="HotplaceScrapDto" id="scrap">
+  <id column="hotplace_article_no" property="articleno"/>
+  <result column="user_id" property="userid"/>
+  <result column="hotplace_title" property="title"/>
+  <collection property="savefile" ofType="HotplaceFileDto" resultMap="fileResultMap"/>
+</resultMap>
+
+<resultMap type="hotplaceDto" id="hotplaceResultMap">
+  <result column="hotplace_title" property="title"/>
+</resultMap>
+
+<resultMap type="hotplaceFileDto" id="fileResultMap">
+  <result column="hotplace_file_save_file" property="savefile"/>
+</resultMap>
+
+<!-- 	<resultMap type="hotplaceScrapDto" id="scrap">
 		<result column="user_id" property="userid"/>
 		<result column="hotplace_article_no" property="articleno"/>
-	</resultMap>
+		<collection column="hotplace_file_save_file" property="savefile" javaType="String" ofType="hotplaceFileDto" select="fileInfoList"/>
+		<collection column="hotplace_title" property="title"  javaType="String" ofType="hotplaceDto" select="listArticle"/>		
+	</resultMap> -->
+	
 
 <select id="listArticle" parameterType="map" resultMap="article">
   select h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title,
@@ -39,6 +57,7 @@
   from hotplace h
   join member m on h.hotplace_user_id = m.user_id
   join hotplace_file_info hf on h.hotplace_article_no = hf.hotplace_file_article_no
+  order by h.hotplace_hit desc , h.hotplace_article_no
 </select>
 
 	<insert id="writeArticle" parameterType="hotplaceDto">
@@ -107,6 +126,44 @@
 		insert into scrap_hotplace (user_id, hotplace_article_no)
 		values (#{userid}, #{articleno})
 	</insert>
+	
+<!-- 	<select id="listArticle" parameterType="map" resultMap="article">
+  			select h.hotplace_article_no, h.hotplace_user_id, h.hotplace_title,
+  			h.hotplace_content, h.hotplace_hit, h.register_time, m.user_name, hf.hotplace_file_save_file, hf.hotplace_file_save_folder
+  			from hotplace h
+  			join member m on h.hotplace_user_id = m.user_id
+  			join hotplace_file_info hf on h.hotplace_article_no = hf.hotplace_file_article_no
+		</select> -->
+	
+	
+<!-- 	<resultMap type="hotplaceScrapDto" id="scrap">
+		<result column="user_id" property="userid"/>
+		<result column="hotplace_article_no" property="articleno"/>
+		<collection column="hotplace_file_article_no" property="savefile" javaType="int" ofType="hotplaceFileDto" select="fileInfoList"/>
+		<collection column="hotplace_title" property="title"  javaType="String" ofType="MemberDto" select="listArticle"/>		
+	</resultMap> -->
+	
+	
+	<select id="getScrap" parameterType="hotplaceScrapDto" resultMap="scrap">
+  			select 		h.hotplace_article_no
+  					  , h.hotplace_title
+  					  , hf.hotplace_file_save_file
+  					  , m.user_id
+  			from 
+  						scrap_hotplace sh
+  						
+  			join 		hotplace h 
+  				on 		
+  						h.hotplace_article_no = sh.hotplace_article_no
+  			join 
+  						member m 
+  				on 
+  						sh.user_id = m.user_id
+  			join 
+  						hotplace_file_info hf 
+  				on 
+  						h.hotplace_article_no = hf.hotplace_file_article_no
+	</select>
 
 
 </mapper>	

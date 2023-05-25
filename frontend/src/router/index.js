@@ -174,6 +174,10 @@ const routes = [
     path: "/login",
     component: () => import("@/components/user/LoginPage.vue"),
   },
+  {
+    path: "/scrap",
+    component: () => import("@/components/user/MyScrap.vue"),
+  },
   // 여행정보 공유
   {
     path: "/board/api",

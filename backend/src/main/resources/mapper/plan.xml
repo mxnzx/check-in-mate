@@ -8,7 +8,7 @@
 		<result column="hotplace_file_save_folder" property="savefolder"/>
 		<result column="hotplace_file_original_file" property="originalfile"/>
 		<result column="hotplace_file_save_file" property="savefile"/>
-	</resultMap>
+	</resultMap>	
 
 <!--	<insert id="writeArticle" parameterType="hotplaceDto">
 		insert into hotplace (hotplace_user_id, hotplace_title,
@@ -61,7 +61,11 @@
 
 
 
-
+	<!-- 리스트 가져오기  -->
+	<select id="list" parameterType="map" resultType="PlanDto">
+		select trip_plan_title as mainTitle, trip_plan_user_id as userid, trip_plan_img as img, trip_plan_content as mainContent
+		from trip_plan_board
+	</select>
 
 
 

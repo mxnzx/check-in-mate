@@ -60,14 +60,21 @@
         {{ article.content }}
       </b-card-text>
     </div>
-    <div
-      class="col-auto text-right"
-      v-if="userInfo && userInfo.userid === article.userid"
-    >
+    <div class="col-auto text-right">
+      <button
+        type="button"
+        id="btn-scrap"
+        class="btn btn-outline-primary mb-3"
+        @click="scrapArticle"
+      >
+        스크랩
+      </button>
       <button
         type="button"
         id="btn-register"
         class="btn btn-outline-primary mb-3"
+        style="margin-left: 5px"
+        v-if="userInfo && userInfo.userid === article.userid"
         @click="moveModifyArticle"
       >
         수정
@@ -76,6 +83,7 @@
         type="reset"
         class="btn btn-outline-danger mb-3"
         style="margin-left: 5px"
+        v-if="userInfo && userInfo.userid === article.userid"
         @click="deleteArticle"
       >
         삭제
@@ -99,6 +107,8 @@ export default {
       article: [],
       showHotPlaceModal: false,
       articleno: null, // articleno를 data 속성으로 정의합니다.
+      savefile: "",
+      title: "",
     };
   },
   created() {
@@ -117,6 +127,32 @@ export default {
       this.getArticle(); // getArticle 메서드 호출 추가
       this.show();
     },
+
+    scrapArticle() {
+      console.log("articleno >> " + this.articleno);
+      fetch("http://127.0.0.1:9018/hotplace/scrap", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/multipart",
+        },
+        body: JSON.stringify(this.articleno, this.userInfo.userid),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("스크랩 성공");
+            alert("스크랩 성공!");
+            this.moveList();
+          } else {
+            console.log(this.articleno + "  " + this.userInfo.userid);
+            console.log("실패");
+            throw new Error("스크랩 되었습니다.");
+          }
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
+
     getArticle() {
       console.log(">>>>>>>>>>>" + this.articleno);
       fetch(`http://127.0.0.1:9018/hotplace/view/${this.articleno}`, {
